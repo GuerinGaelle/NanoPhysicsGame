@@ -18,7 +18,45 @@ public class CharacterBehaviour : MonoBehaviour {
     private Rigidbody2D rigid;
 
     //--------------- PUBLIC VARIABLES ----------------//
-  
+
+    // Gravity
+    private bool hasGravity = false;
+    public bool HasGravity
+    {
+        get
+        {
+            return hasGravity;
+        }
+        set
+        {
+            hasGravity = value;
+            if (value == true)
+                rigid.gravityScale = 1;
+            else
+                rigid.gravityScale = 0;
+        }
+    }
+
+    // Inertia
+    private bool hasInertia = false;
+    public bool HasInertia
+    {
+        get
+        {
+            return hasInertia;
+        }
+        set
+        {
+            hasInertia = value;
+            if (value == true)
+                rigid.drag = 0;
+            else
+                rigid.drag = 50;
+        }
+    }
+
+    public int Energy;
+
     public float Speed = 15; // Speed of the player (control)
     public float BrownianIntensity = 0.1f; // Intensity of the random movement
 
@@ -45,7 +83,7 @@ public class CharacterBehaviour : MonoBehaviour {
     {
         rigid = GetComponent<Rigidbody2D>();
     }
-	
+
 	void FixedUpdate()
     {
         // Take the inputs
