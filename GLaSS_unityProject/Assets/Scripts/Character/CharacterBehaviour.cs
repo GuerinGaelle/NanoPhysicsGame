@@ -22,6 +22,23 @@ public class CharacterBehaviour : MonoBehaviour {
     public float Speed = 15; // Speed of the player (control)
     public float BrownianIntensity = 0.1f; // Intensity of the random movement
 
+    private bool isStuck; // Don't Get or Set isStuck -> use IsStuck
+    public bool IsStuck
+    {
+        get
+        {
+            return isStuck;
+        }
+        set
+        {
+            isStuck = value;
+            if (value == true)
+                FreezeMovement();
+            else
+                RestoreMovement();
+        }
+    }
+
     //-------------------------------------------------//
 
     void Awake()
@@ -37,10 +54,10 @@ public class CharacterBehaviour : MonoBehaviour {
             movDirection.Normalize();
 
         // Create random movement
-        Vector2 brownian = AddbrownianMovement(new Vector2());
+        Vector2 _brownian = GetBrownianMovement();
 
         // Move the player + add brownian movement
-        Move(movDirection + brownian);
+        Move(movDirection + _brownian);
     }
 
     /// <summary>
@@ -54,11 +71,26 @@ public class CharacterBehaviour : MonoBehaviour {
     /// <summary>
     /// Adds random noise to the movement
     /// </summary>
-    Vector2 AddbrownianMovement(Vector2 movement)
+    Vector2 GetBrownianMovement()
     {
+        Vector2 _movement = new Vector2();
         float _noise = Mathf.PerlinNoise(Time.time, Time.time);
-        movement += new Vector2(Random.Range(-_noise, _noise), Random.Range(-_noise, _noise));
+        _movement += new Vector2(Random.Range(-_noise, _noise), Random.Range(-_noise, _noise));
 
-        return movement * BrownianIntensity;
-    } 
+        return _movement * BrownianIntensity;
+    }
+
+    private void FreezeMovement()
+    {
+        rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    private void RestoreMovement()
+    {
+        // Bitwise thingy
+        //rigid.constraints &= ~RigidbodyConstraints2D.FreezePositionX; // bitwise NOT
+        //rigid.constraints &= ~RigidbodyConstraints2D.FreezePositionY; // for unfreeze
+
+        rigid.constraints = RigidbodyConstraints2D.None;
+    }
 }
