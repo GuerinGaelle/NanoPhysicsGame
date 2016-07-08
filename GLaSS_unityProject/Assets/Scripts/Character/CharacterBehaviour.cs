@@ -34,7 +34,7 @@ public class CharacterBehaviour : MonoBehaviour {
         {
             hasGravity = value;
             if (value == true)
-                rigid.gravityScale = 1;
+                rigid.gravityScale = 20;
             else
                 rigid.gravityScale = 0;
         }
@@ -124,21 +124,23 @@ public class CharacterBehaviour : MonoBehaviour {
         Vector2 _brownian = GetBrownianMovement();
 
         // Move the player + add brownian movement
-        Move(movDirection + _brownian);
+        Move(movDirection, _brownian);
         RotateDirection(movDirection);
     }
 
     /// <summary>
     /// Takes a Vector2 and add forces to the rigidbody2D
+    /// Also takes the drag in account to keep a stable speed accross all drag values.. (not perfect but gets the job done xD)
     /// </summary>
-    void Move(Vector2 dir)
+    void Move(Vector2 inputDir, Vector2 BrownianDir)
     {
-        rigid.AddForce(dir * Time.fixedDeltaTime * Speed * 1000);
+        rigid.AddForce(inputDir * Time.fixedDeltaTime * Speed * 400 * (rigid.drag / 10));
+        rigid.AddForce(BrownianDir * Time.fixedDeltaTime * Speed * 100 * ((rigid.drag / 4) + 1)); // f***ing drag !
     }
 
     void RotateDirection(Vector2 direction)
     {
-        if (direction.magnitude <= 0.1f) // yep, to avoid dead zones{
+        if (direction.magnitude <= 0.1f) // yep, to avoid dead zones
         {
             transform.DOKill();
             return;
