@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 // CODING STANDARDS / CONVENTIONS  
 // Static fields : UpperCamelCase
@@ -96,6 +97,7 @@ public class CharacterBehaviour : MonoBehaviour {
 
         // Move the player + add brownian movement
         Move(movDirection + _brownian);
+        RotateDirection(movDirection);
     }
 
     /// <summary>
@@ -104,6 +106,23 @@ public class CharacterBehaviour : MonoBehaviour {
     void Move(Vector2 dir)
     {
         rigid.AddForce(dir * Time.fixedDeltaTime * Speed * 1000);
+    }
+
+    void RotateDirection(Vector2 direction)
+    {
+        if (direction.magnitude <= 0.1f) // yep, to avoid dead zones{
+        {
+            transform.DOKill();
+            return;
+        }
+
+        float _angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion _q = Quaternion.AngleAxis(_angle - 180, Vector3.forward);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, _q, 0.9f);
+
+        transform.DORotate(_q.eulerAngles, 0.5f, RotateMode.Fast);
+
+        //transform.DORotate(_rot, 0.25f, RotateMode.FastBeyond360);
     }
 
     /// <summary>
