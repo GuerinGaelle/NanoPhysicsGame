@@ -5,7 +5,9 @@ using DG.Tweening;
 
 public class CameraBehaviour : MonoBehaviour {
 
-    public float Smooth = 0.15f;
+    public float CloseSmooth = 2f;
+    public float NormalSmooth = 0.2f;
+
     private GameObject player;
 
 	// Use this for initialization
@@ -18,10 +20,15 @@ public class CameraBehaviour : MonoBehaviour {
 	void Update ()
     {
         Vector3 _newPos = new Vector3(player.transform.position.x, player.transform.position.y, -10);
+        float _dist = Vector2.Distance(_newPos, transform.position);
 
-        if(Vector2.Distance(_newPos, transform.position) > 0.2f) // We're not moving for small Brownian effects
+        if (_dist < 0.2f)
         {
-            transform.DOMove(_newPos, Smooth).SetEase(Ease.InOutSine); // using the tweening engine
+            transform.DOMove(_newPos, CloseSmooth).SetEase(Ease.InOutSine);
+        }
+        else
+        {
+            transform.DOMove(_newPos, NormalSmooth).SetEase(Ease.InOutSine);
         }
     }
 }

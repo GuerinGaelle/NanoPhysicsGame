@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance;
     public CharacterBehaviour Player;
 
+    public GameObject Canvas;
+
     //-------------------------------------------------//
 
     void Awake()
@@ -18,6 +21,7 @@ public class GameManager : MonoBehaviour {
             Instance = this;
 
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterBehaviour>();
+        Canvas = GameObject.Find("Canvas");
     }
 	
 	// Update is called once per frame
@@ -32,5 +36,29 @@ public class GameManager : MonoBehaviour {
         {
             Player.IsStuck = false;
         }
+    }
+
+
+    public void ToggleGravity()
+    {
+        Player.HasGravity = !Player.HasGravity;
+    }
+
+    public void ToggleInertia()
+    {
+        Player.HasInertia = !Player.HasInertia;
+    }
+
+    public void ToggleBrownianMovement()
+    {
+        if (Player.BrownianIntensity > 0)
+            Player.BrownianIntensity = 0;
+        else
+            Player.BrownianIntensity = 0.1f; // TODO change from Magic number to static variable maybe ?
+    }
+
+    public void ToggleVanDerWaals()
+    {
+        // TODO toggle VDWaals function (to do when the behaviour is working well)
     }
 }

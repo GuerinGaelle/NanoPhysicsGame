@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using UnityEngine.UI;
 
 // CODING STANDARDS / CONVENTIONS  
 // Static fields : UpperCamelCase
@@ -14,9 +15,10 @@ public class CharacterBehaviour : MonoBehaviour {
     //-------------------------------------------------//
     //------------------- VARIABLES -------------------//
     //-------------------------------------------------//
-    //--------------- RIVATE VARIABLES ----------------//
+    //--------------- PRIVATE VARIABLES ---------------//
 
     private Rigidbody2D rigid;
+    private Slider energyBar;
 
     //--------------- PUBLIC VARIABLES ----------------//
 
@@ -50,13 +52,31 @@ public class CharacterBehaviour : MonoBehaviour {
         {
             hasInertia = value;
             if (value == true)
-                rigid.drag = 0;
+            {
+                rigid.drag = 1;
+            }
             else
+            {
                 rigid.drag = 50;
+            }
         }
     }
 
-    public int Energy;
+    private float energy = 1000; // Max = 1000
+    public float Energy
+    {
+        get
+        {
+            return energy;
+        }
+        set
+        {
+            energy = value;
+            energyBar.value = value;
+        }
+    }
+
+    public float EnergyConsumptionMultiplier = 2.0f;
 
     public float Speed = 15; // Speed of the player (control)
     public float BrownianIntensity = 0.1f; // Intensity of the random movement
@@ -80,9 +100,15 @@ public class CharacterBehaviour : MonoBehaviour {
 
     //-------------------------------------------------//
 
-    void Awake()
+    void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
+        energyBar = GameManager.Instance.Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
+    }
+
+    void Update()
+    {
+        
     }
 
 	void FixedUpdate()
@@ -91,6 +117,8 @@ public class CharacterBehaviour : MonoBehaviour {
         Vector2 movDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (movDirection.magnitude > 1)
             movDirection.Normalize();
+        if(movDirection.magnitude > 0)
+            Energy -= Time.fixedDeltaTime * EnergyConsumptionMultiplier;
 
         // Create random movement
         Vector2 _brownian = GetBrownianMovement();
