@@ -54,10 +54,12 @@ public class CharacterBehaviour : MonoBehaviour {
             if (value == true)
             {
                 rigid.drag = 1;
+                rigid.angularDrag = 0;
             }
             else
             {
                 rigid.drag = 50;
+                rigid.angularDrag = 10;
             }
         }
     }

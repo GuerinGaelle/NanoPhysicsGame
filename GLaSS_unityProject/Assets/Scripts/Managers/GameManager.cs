@@ -38,27 +38,48 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-
     public void ToggleGravity()
     {
         Player.HasGravity = !Player.HasGravity;
+        ColoriseButton(Player.HasGravity, "Gravity_Button");
     }
 
     public void ToggleInertia()
     {
         Player.HasInertia = !Player.HasInertia;
+        ColoriseButton(Player.HasInertia, "Inertia_Button");
     }
 
     public void ToggleBrownianMovement()
     {
         if (Player.BrownianIntensity > 0)
+        {
             Player.BrownianIntensity = 0;
+            ColoriseButton(true, "Brownian_Button");
+        }
         else
+        {
             Player.BrownianIntensity = 0.1f; // TODO change from Magic number to static variable maybe ?
+            ColoriseButton(false, "Brownian_Button");
+        }          
     }
 
     public void ToggleVanDerWaals()
     {
         // TODO toggle VDWaals function (to do when the behaviour is working well)
+    }
+
+    private void ColoriseButton(bool boolean, string button)
+    {
+        // COLORS of the Button
+        ColorBlock newColorBlock = new ColorBlock();
+        newColorBlock = ColorBlock.defaultColorBlock;
+
+        if (boolean)
+        {
+            newColorBlock.normalColor = Color.grey;
+            newColorBlock.highlightedColor = Color.grey;
+        }
+        GameObject.Find(button).GetComponent<Button>().colors = newColorBlock;
     }
 }
