@@ -136,7 +136,7 @@ public class CharacterBehaviour : MonoBehaviour {
     /// </summary>
     void Move(Vector2 inputDir, Vector2 BrownianDir)
     {
-        rigid.AddForce(inputDir * Time.fixedDeltaTime * Speed * 400 * (rigid.drag / 10));
+        rigid.AddForce((inputDir * Time.fixedDeltaTime * Speed * 400) * ((rigid.drag / 15) + 0.1f));
         rigid.AddForce(BrownianDir * Time.fixedDeltaTime * Speed * 100 * ((rigid.drag / 4) + 1)); // f***ing drag !
     }
 
