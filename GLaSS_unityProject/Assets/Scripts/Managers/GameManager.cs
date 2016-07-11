@@ -70,6 +70,11 @@ public class GameManager : MonoBehaviour {
         {
             Player.IsStuck = false;
             Player.CanFeelVDW = false;
+
+            foreach (VDWBehaviour vdwObj in GameObject.FindObjectsOfType<VDWBehaviour>())
+            {
+                vdwObj.StopJoint();
+            }
             ColoriseButton(true, "VDW_Button");
         }
         else

@@ -201,6 +201,5 @@ public class CharacterBehaviour : MonoBehaviour {
 
         //rigid.constraints = RigidbodyConstraints2D.None;
         rigid.mass = 1;
-        GetComponent<DistanceJoint2D>().enabled = false;
     }
 }

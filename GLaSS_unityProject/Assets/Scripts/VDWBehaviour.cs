@@ -1,29 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum VDW_Type
+{
+    StuckToPlayer,
+    StuckToObject_moving,
+    StuckToObject_static
+}
+
 public class VDWBehaviour : MonoBehaviour {
 
-    public bool StuckToMe = true; // true = player is child. False = player is parent
-    public bool AmIStatic = true; // Walls = true, big animals + small particules = false
+    private DistanceJoint2D joint;
+    public VDW_Type typeOfVDW;
 
-    void Awake()
+    void Start()
     {
-
+        if (typeOfVDW != VDW_Type.StuckToObject_static)
+        {
+            joint = this.GetComponent<DistanceJoint2D>();
+            StopJoint();
+        }      
     }
-
-	void Start ()
-    {
-	
-	}
-	
-	void Update ()
-    {
-	
-	}
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if(other.GetComponent<Rigidbody2D>() && other.GetComponent<CharacterBehaviour>().CanFeelVDW)
+        if(other.GetComponent<CharacterBehaviour>() && other.GetComponent<CharacterBehaviour>().CanFeelVDW)
         {
             MoveToSurface(other.gameObject);
         }
@@ -31,7 +32,7 @@ public class VDWBehaviour : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.transform.GetComponent<Rigidbody2D>() && other.gameObject.GetComponent<CharacterBehaviour>().CanFeelVDW)
+        if (other.gameObject.GetComponent<CharacterBehaviour>() && other.gameObject.GetComponent<CharacterBehaviour>().CanFeelVDW)
         {
             Stuck(other.gameObject);
         }
@@ -45,25 +46,28 @@ public class VDWBehaviour : MonoBehaviour {
 
     void Stuck(GameObject obj)
     {
-        // TODO add an in-game feedback to better know when we're stuck
-
-        if (StuckToMe)
+        switch (typeOfVDW)
         {
-            obj.GetComponent<CharacterBehaviour>().IsStuck = true;
-            if (!AmIStatic)
-            {
-                obj.GetComponent<DistanceJoint2D>().enabled = true;
-                obj.GetComponent<DistanceJoint2D>().connectedBody = this.GetComponent<Rigidbody2D>();
+            case VDW_Type.StuckToPlayer:                
+                joint.enabled = true;
+                joint.connectedBody = obj.gameObject.GetComponent<Rigidbody2D>();
+                break;
+            case VDW_Type.StuckToObject_moving:
+                obj.GetComponent<CharacterBehaviour>().IsStuck = true;
+                joint.enabled = true;
+                joint.connectedBody = obj.gameObject.GetComponent<Rigidbody2D>();
+                break;
+            case VDW_Type.StuckToObject_static:
+                obj.GetComponent<CharacterBehaviour>().IsStuck = true;
+                break;
+            default:
+                break;
+        }
+    }
 
-                //obj.transform.SetParent(this.transform, true);
-            }           
-        }
-        else
-        {
-            //this.transform.SetParent(obj.transform, true);
-            //this.GetComponent<Rigidbody2D>().isKinematic = true;
-            obj.GetComponent<DistanceJoint2D>().enabled = true;
-            obj.GetComponent<DistanceJoint2D>().connectedBody = this.GetComponent<Rigidbody2D>();
-        }
+    public void StopJoint()
+    {
+        if(joint != null)
+            joint.enabled = false;
     }
 }
