@@ -37,6 +37,7 @@ public class CharacterBehaviour : MonoBehaviour {
             {
                 rigid.gravityScale = 20;
                 rigid.mass = 3;
+                IsStuck = false;
 
                 if (HasInertia)
                     rigid.gravityScale = 1;
