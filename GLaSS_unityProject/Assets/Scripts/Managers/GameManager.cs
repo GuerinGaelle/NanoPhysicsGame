@@ -27,14 +27,21 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button0))
         {
-            Player.IsStuck = true;
+            ToggleGravity();
         }
-
-        if (Input.GetKeyDown(KeyCode.G))
+        else if(Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
-            Player.IsStuck = false;
+            ToggleInertia();
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick1Button2))
+        {
+            ToggleBrownianMovement();
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick1Button3))
+        {
+            ToggleVanDerWaals();
         }
     }
 
@@ -42,6 +49,12 @@ public class GameManager : MonoBehaviour {
     {
         Player.HasGravity = !Player.HasGravity;
         ColoriseButton(Player.HasGravity, "Gravity_Button");
+
+        if (Player.IsStuck)
+        {
+            Player.IsStuck = false;
+        }
+            
     }
 
     public void ToggleInertia()
