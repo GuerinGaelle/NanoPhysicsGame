@@ -8,6 +8,7 @@ public enum VDW_Type
     StuckToObject_static
 }
 
+[RequireComponent(typeof(DistanceJoint2D))]
 public class VDWBehaviour : MonoBehaviour {
 
     private DistanceJoint2D joint;
@@ -15,11 +16,8 @@ public class VDWBehaviour : MonoBehaviour {
 
     void Start()
     {
-        if (typeOfVDW != VDW_Type.StuckToObject_static)
-        {
-            joint = this.GetComponent<DistanceJoint2D>();
-            StopJoint();
-        }      
+        joint = this.GetComponent<DistanceJoint2D>();
+        StopJoint();  
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -41,7 +39,7 @@ public class VDWBehaviour : MonoBehaviour {
     void MoveToSurface(GameObject obj)
     {
         Vector2 dir = transform.position - obj.transform.position;
-        obj.GetComponent<Rigidbody2D>().AddForce(dir * 100 * Time.fixedDeltaTime);
+        obj.GetComponent<Rigidbody2D>().AddForce(dir * 5000 * Time.fixedDeltaTime);
     }
 
     void Stuck(GameObject obj)

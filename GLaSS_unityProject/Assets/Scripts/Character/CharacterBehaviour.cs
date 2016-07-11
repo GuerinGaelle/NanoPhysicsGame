@@ -168,11 +168,8 @@ public class CharacterBehaviour : MonoBehaviour {
 
         float _angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion _q = Quaternion.AngleAxis(_angle - 180, Vector3.forward);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, _q, 0.9f);
 
         transform.DORotate(_q.eulerAngles, 0.5f, RotateMode.Fast);
-
-        //transform.DORotate(_rot, 0.25f, RotateMode.FastBeyond360);
     }
 
     /// <summary>
@@ -189,17 +186,11 @@ public class CharacterBehaviour : MonoBehaviour {
 
     private void FreezeMovement()
     {
-        //rigid.constraints = RigidbodyConstraints2D.FreezeAll;
         rigid.mass = 500;
     }
 
     public void RestoreMovement()
     {
-        // Bitwise thingy
-        //rigid.constraints &= ~RigidbodyConstraints2D.FreezePositionX; // bitwise NOT
-        //rigid.constraints &= ~RigidbodyConstraints2D.FreezePositionY; // for unfreeze
-
-        //rigid.constraints = RigidbodyConstraints2D.None;
         rigid.mass = 1;
     }
 }
