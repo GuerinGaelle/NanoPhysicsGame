@@ -66,7 +66,17 @@ public class GameManager : MonoBehaviour {
 
     public void ToggleVanDerWaals()
     {
-        // TODO toggle VDWaals function (to do when the behaviour is working well)
+        if (Player.CanFeelVDW)
+        {
+            Player.IsStuck = false;
+            Player.CanFeelVDW = false;
+            ColoriseButton(true, "VDW_Button");
+        }
+        else
+        {
+            Player.CanFeelVDW = true;
+            ColoriseButton(false, "VDW_Button");
+        }
     }
 
     private void ColoriseButton(bool boolean, string button)

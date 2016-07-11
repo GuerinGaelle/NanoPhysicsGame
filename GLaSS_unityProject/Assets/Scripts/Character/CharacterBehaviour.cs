@@ -34,9 +34,18 @@ public class CharacterBehaviour : MonoBehaviour {
         {
             hasGravity = value;
             if (value == true)
+            {
                 rigid.gravityScale = 20;
+                rigid.mass = 3;
+
+                if (HasInertia)
+                    rigid.gravityScale = 1;
+            }
             else
+            {
                 rigid.gravityScale = 0;
+                rigid.mass = 1;
+            }    
         }
     }
 
@@ -55,11 +64,15 @@ public class CharacterBehaviour : MonoBehaviour {
             {
                 rigid.drag = 1;
                 rigid.angularDrag = 0;
+                if (HasGravity)
+                    rigid.gravityScale = 1;
             }
             else
             {
                 rigid.drag = 50;
                 rigid.angularDrag = 10;
+                if (HasGravity)
+                    rigid.gravityScale = 20;
             }
         }
     }
@@ -100,6 +113,8 @@ public class CharacterBehaviour : MonoBehaviour {
         }
     }
 
+    public bool CanFeelVDW = true;
+
     //-------------------------------------------------//
 
     void Start()
@@ -126,8 +141,11 @@ public class CharacterBehaviour : MonoBehaviour {
         Vector2 _brownian = GetBrownianMovement();
 
         // Move the player + add brownian movement
-        Move(movDirection, _brownian);
-        RotateDirection(movDirection);
+        if (!IsStuck)
+        {
+            Move(movDirection, _brownian);
+            RotateDirection(movDirection);
+        }       
     }
 
     /// <summary>
@@ -171,15 +189,18 @@ public class CharacterBehaviour : MonoBehaviour {
 
     private void FreezeMovement()
     {
-        rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+        //rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+        rigid.mass = 500;
     }
 
-    private void RestoreMovement()
+    public void RestoreMovement()
     {
         // Bitwise thingy
         //rigid.constraints &= ~RigidbodyConstraints2D.FreezePositionX; // bitwise NOT
         //rigid.constraints &= ~RigidbodyConstraints2D.FreezePositionY; // for unfreeze
 
-        rigid.constraints = RigidbodyConstraints2D.None;
+        //rigid.constraints = RigidbodyConstraints2D.None;
+        rigid.mass = 1;
+        GetComponent<DistanceJoint2D>().enabled = false;
     }
 }
