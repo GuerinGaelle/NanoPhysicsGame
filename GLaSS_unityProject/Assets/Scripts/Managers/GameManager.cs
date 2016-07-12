@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour {
 
     public GameObject Canvas;
 
+    [HideInInspector]
+    public GameObject feedbackVDW;
     //-------------------------------------------------//
 
     void Awake()
@@ -22,6 +24,8 @@ public class GameManager : MonoBehaviour {
 
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterBehaviour>();
         Canvas = GameObject.Find("Canvas");
+
+        feedbackVDW = Resources.Load<GameObject>("Prefabs/Signes_Feedbacks/VDWFeedback");
     }
 	
 	// Update is called once per frame

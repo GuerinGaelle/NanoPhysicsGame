@@ -19,6 +19,9 @@ public class CameraBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        if (player == null)
+            return;
+
         Vector3 _newPos = new Vector3(player.transform.position.x, player.transform.position.y, -10);
         float _dist = Vector2.Distance(_newPos, transform.position);
 

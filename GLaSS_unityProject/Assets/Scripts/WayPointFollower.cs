@@ -35,7 +35,7 @@ public class WayPointFollower : MonoBehaviour {
 
     void MoveToWayPoint(float time)
     {
-        Vector2 newPos = Vector2.Lerp(MovingObject.transform.position, wayPoints[currWayPoint].position, time);
+        Vector2 newPos = Vector2.Lerp(MovingObject.transform.position, wayPoints[currWayPoint].position, time / TimeBetweenWayPoints);
         MovingObject.GetComponent<Rigidbody2D>().MovePosition(newPos);
 
         //MovingObject.GetComponent<Rigidbody2D>().MovePosition(point.position);
@@ -48,7 +48,7 @@ public class WayPointFollower : MonoBehaviour {
 
         while (shouldMove)
         {
-            while(time <= 1)
+            while(time <= TimeBetweenWayPoints)
             {
                 time += Time.deltaTime;
                 MoveToWayPoint(time);

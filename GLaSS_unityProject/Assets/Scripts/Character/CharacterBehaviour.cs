@@ -35,7 +35,11 @@ public class CharacterBehaviour : MonoBehaviour {
             hasGravity = value;
             if (value == true)
             {
-                rigid.gravityScale = 20;
+                foreach (AreaEffector2D areaEffect2d in GameObject.FindObjectsOfType<AreaEffector2D>())
+                {
+                    areaEffect2d.colliderMask -= 1 << LayerMask.NameToLayer("Player");
+                }
+
                 rigid.mass = 3;
                 IsStuck = false;
 
@@ -44,7 +48,11 @@ public class CharacterBehaviour : MonoBehaviour {
             }
             else
             {
-                rigid.gravityScale = 0;
+                foreach (AreaEffector2D areaEffect2d in GameObject.FindObjectsOfType<AreaEffector2D>())
+                {
+                    areaEffect2d.colliderMask += 1 << LayerMask.NameToLayer("Player");
+                }
+
                 rigid.mass = 1;
             }    
         }
@@ -147,7 +155,7 @@ public class CharacterBehaviour : MonoBehaviour {
         {
             Move(movDirection, _brownian);
             RotateDirection(movDirection);
-        }       
+        }
     }
 
     /// <summary>
@@ -158,6 +166,11 @@ public class CharacterBehaviour : MonoBehaviour {
     {
         rigid.AddForce((inputDir * Time.fixedDeltaTime * Speed * 400) * ((rigid.drag / 15) + 0.1f));
         rigid.AddForce(BrownianDir * Time.fixedDeltaTime * Speed * 100 * ((rigid.drag / 4) + 1)); // f***ing drag !
+
+        if (HasGravity)
+        {
+            rigid.AddForce(Vector2.down * Time.fixedDeltaTime * 20000);
+        }           
     }
 
     void RotateDirection(Vector2 direction)
@@ -192,7 +205,11 @@ public class CharacterBehaviour : MonoBehaviour {
 
     private void FreezeMovement()
     {
-        rigid.mass = 500;
+        if (!HasGravity) // yolo
+        {
+            Instantiate(GameManager.Instance.feedbackVDW, transform.position, Quaternion.identity);
+            rigid.mass = 500;
+        }           
     }
 
     public void RestoreMovement()

@@ -11,13 +11,15 @@ public enum VDW_Type
 [RequireComponent(typeof(DistanceJoint2D))]
 public class VDWBehaviour : MonoBehaviour {
 
+    private GameObject feedbackVDW;
+
     private DistanceJoint2D joint;
     public VDW_Type typeOfVDW;
 
     void Start()
     {
         joint = this.GetComponent<DistanceJoint2D>();
-        StopJoint();  
+        StopJoint();
     }
 
     void OnTriggerStay2D(Collider2D other)
