@@ -104,13 +104,9 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D co) {
-		if (co.gameObject.tag == "Player") {
-			Debug.Log ("Game Over!");
-			Destroy (co.gameObject);
-			Time.timeScale = 0;
-			//TODO: More
-
-		}
-			
+		if (co.gameObject.tag == "Player")
+        {
+            GameManager.Instance.TouchedEnemy();
+        }		
 	}
 }

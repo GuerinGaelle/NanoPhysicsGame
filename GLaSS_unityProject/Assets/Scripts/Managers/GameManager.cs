@@ -102,4 +102,10 @@ public class GameManager : MonoBehaviour {
         }
         GameObject.Find(button).GetComponent<Button>().colors = newColorBlock;
     }
+
+    public void TouchedEnemy()
+    {
+        Debug.LogError("DEATH !");
+        Destroy(Player.gameObject);
+    }
 }
