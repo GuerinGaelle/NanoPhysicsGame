@@ -115,6 +115,7 @@ public class CharacterBehaviour : MonoBehaviour {
     }
 
     public bool CanFeelVDW = true;
+    public bool CanFeelBrownian = true;
 
     //-------------------------------------------------//
 
@@ -179,8 +180,12 @@ public class CharacterBehaviour : MonoBehaviour {
     Vector2 GetBrownianMovement()
     {
         Vector2 _movement = new Vector2();
-        float _noise = Mathf.PerlinNoise(Time.time, Time.time);
-        _movement += new Vector2(Random.Range(-_noise, _noise), Random.Range(-_noise, _noise));
+
+        if (CanFeelBrownian)
+        {         
+            float _noise = Mathf.PerlinNoise(Time.time, Time.time);
+            _movement += new Vector2(Random.Range(-_noise, _noise), Random.Range(-_noise, _noise));
+        }
 
         return _movement * BrownianIntensity;
     }

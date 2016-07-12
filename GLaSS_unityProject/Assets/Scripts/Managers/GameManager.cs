@@ -65,16 +65,8 @@ public class GameManager : MonoBehaviour {
 
     public void ToggleBrownianMovement()
     {
-        if (Player.BrownianIntensity > 0)
-        {
-            Player.BrownianIntensity = 0;
-            ColoriseButton(true, "Brownian_Button");
-        }
-        else
-        {
-            Player.BrownianIntensity = 0.1f; // TODO change from Magic number to static variable maybe ?
-            ColoriseButton(false, "Brownian_Button");
-        }          
+        Player.CanFeelBrownian = !Player.CanFeelBrownian;
+        ColoriseButton(!Player.CanFeelBrownian, "Brownian_Button");      
     }
 
     public void ToggleVanDerWaals()
