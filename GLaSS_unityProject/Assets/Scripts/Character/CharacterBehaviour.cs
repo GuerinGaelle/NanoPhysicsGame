@@ -95,6 +95,8 @@ public class CharacterBehaviour : MonoBehaviour {
 
     public float EnergyConsumptionMultiplier = 2.0f;
 
+    public float BaseSpeed = 15;
+    [HideInInspector]
     public float Speed = 15; // Speed of the player (control)
     public float BrownianIntensity = 0.1f; // Intensity of the random movement
 
