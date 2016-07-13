@@ -16,7 +16,8 @@ public class Enemy : MonoBehaviour {
 	private float randomY;
 	private Vector2 randomXY;
 
-	// Area Boundaries (TODO later: change to private, keep them public for debugging)
+	// Area Boundaries 
+	// TODO later: change to private, keep them public for debugging)
 	private Bounds enemyMovementArea;
 	public Vector2 min;
 	public Vector2 max;

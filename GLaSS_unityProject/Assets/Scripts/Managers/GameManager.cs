@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
 
     [HideInInspector]
     public GameObject feedbackVDW;
+	public static Vector2 Checkpoint;
     //-------------------------------------------------//
 
     void Awake()
@@ -171,6 +172,10 @@ public class GameManager : MonoBehaviour {
     void DestroyPlayer()
     {  
         Instantiate(feedbackVDW, Player.transform.position, Quaternion.identity);
-        Destroy(Player.gameObject);
+        //Destroy(Player.gameObject);
+		Player.gameObject.transform.position = Checkpoint;
+		Player.gameObject.transform.rotation = new Quaternion ();
+		Player.animator.SetBool ("isAlive", true);
+		Player.IsStuck = false;
     }
 }
