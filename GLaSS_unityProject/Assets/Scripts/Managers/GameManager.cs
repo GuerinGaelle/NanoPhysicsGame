@@ -169,8 +169,8 @@ public class GameManager : MonoBehaviour {
     }
 
     void DestroyPlayer()
-    {
+    {  
+        Instantiate(feedbackVDW, Player.transform.position, Quaternion.identity);
         Destroy(Player.gameObject);
-        Instantiate(feedbackVDW, transform.position, Quaternion.identity);
     }
 }
