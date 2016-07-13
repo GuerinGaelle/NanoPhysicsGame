@@ -16,7 +16,7 @@ GameObject:
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 1638116407661442457, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -93,10 +93,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnergyConsumptionMultiplier: 2
+  BaseSpeed: 15
   Speed: 15
   BrownianIntensity: 0.1
   CanFeelVDW: 1
   CanFeelBrownian: 1
+  animator: {fileID: 0}
 --- !u!212 &21250910
 SpriteRenderer:
   m_ObjectHideFlags: 1
