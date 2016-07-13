@@ -20,7 +20,6 @@ public class CharacterBehaviour : MonoBehaviour {
     private Rigidbody2D rigid;
     private Slider energyBar;
 
-   
 
     //--------------- PUBLIC VARIABLES ----------------//
 
@@ -131,7 +130,7 @@ public class CharacterBehaviour : MonoBehaviour {
     {
         rigid = GetComponent<Rigidbody2D>();
         energyBar = GameManager.Instance.Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
-        animator = GetComponent<Animator>();
+        animator = transform.GetChild(0).GetComponent<Animator>();
     }
 
     void Update()

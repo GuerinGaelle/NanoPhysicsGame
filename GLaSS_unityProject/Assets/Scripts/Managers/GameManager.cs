@@ -49,7 +49,6 @@ public class GameManager : MonoBehaviour {
             ToggleVanDerWaals();
         }
 
-
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
