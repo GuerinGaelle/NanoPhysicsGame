@@ -20,6 +20,8 @@ public class CharacterBehaviour : MonoBehaviour {
     private Rigidbody2D rigid;
     private Slider energyBar;
 
+   
+
     //--------------- PUBLIC VARIABLES ----------------//
 
     // Gravity
@@ -120,12 +122,16 @@ public class CharacterBehaviour : MonoBehaviour {
     public bool CanFeelVDW = true;
     public bool CanFeelBrownian = true;
 
+    [HideInInspector]
+    public Animator animator;
+
     //-------------------------------------------------//
 
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         energyBar = GameManager.Instance.Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -161,6 +167,12 @@ public class CharacterBehaviour : MonoBehaviour {
     {
         rigid.AddForce((inputDir * Time.fixedDeltaTime * Speed * 400) * ((rigid.drag / 15) + 0.1f));
         rigid.AddForce(BrownianDir * Time.fixedDeltaTime * Speed * 100 * ((rigid.drag / 4) + 1)); // f***ing drag !
+
+        // Not good since at each frame
+        if(inputDir != Vector2.zero)
+            animator.SetBool("isMoving", true);
+        else
+            animator.SetBool("isMoving", false);
 
         if (HasGravity)
         {

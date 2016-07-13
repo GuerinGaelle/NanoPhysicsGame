@@ -154,7 +154,10 @@ public class GameManager : MonoBehaviour {
 
     public void TouchedEnemy()
     {
-        Debug.LogError("DEATH !");
-        Destroy(Player.gameObject);
+        if (Player.animator.GetBool("isAlive"))
+        {
+            Player.IsStuck = true;
+            Player.animator.SetBool("isAlive", false);
+        }  
     }
 }
