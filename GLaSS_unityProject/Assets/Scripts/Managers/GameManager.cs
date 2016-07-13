@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour {
         if(Instance == null)
             Instance = this;
 
-        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterBehaviour>();
+        Player = GameObject.FindObjectOfType<CharacterBehaviour>();
         Canvas = GameObject.Find("Canvas");
 
         feedbackVDW = Resources.Load<GameObject>("Prefabs/Signes_Feedbacks/VDWFeedback");
