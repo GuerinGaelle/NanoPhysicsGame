@@ -33,35 +33,41 @@ public class WayPointFollower : MonoBehaviour {
         //MovingObject.GetComponent<Rigidbody2D>().MovePosition(newPos);
     }
 
-    void MoveToWayPoint(float time)
+    void MoveToWayPoint(Rigidbody2D rigid, Vector3 oldPos, Vector3 newPos, float time)
     {
-        Vector2 newPos = Vector2.Lerp(MovingObject.transform.position, wayPoints[currWayPoint].position, time / TimeBetweenWayPoints);
-        MovingObject.GetComponent<Rigidbody2D>().MovePosition(newPos);
-
-        //MovingObject.GetComponent<Rigidbody2D>().MovePosition(point.position);
+        Vector2 pos = Vector2.Lerp(oldPos, newPos, time / TimeBetweenWayPoints);
+        rigid.MovePosition(pos);
     }
 
     IEnumerator FollowPath()
     {
-        int i = 0;
-        float time = 0;
+        int _nbPoint = 0;
+        float _time = 0;
+        Rigidbody2D _rigid = MovingObject.GetComponent<Rigidbody2D>();
 
         while (shouldMove)
         {
-            while(time <= TimeBetweenWayPoints)
+            Vector3 _newPos = wayPoints[currWayPoint].position;
+            Vector3 _oldPos = new Vector3();
+            if (_nbPoint != 0)
+                _oldPos = wayPoints[currWayPoint-1].position;
+            else
+                _oldPos = wayPoints[wayPoints.Count-1].position;
+
+            while (_time <= TimeBetweenWayPoints)
             {
-                time += Time.deltaTime;
-                MoveToWayPoint(time);
+                _time += Time.deltaTime;
+                MoveToWayPoint(_rigid, _oldPos, _newPos, _time);
                 yield return new WaitForEndOfFrame();
             }
 
-            if (i != wayPoints.Count - 1)
-                i++;
+            if (_nbPoint != wayPoints.Count - 1)
+                _nbPoint++;
             else
-                i = 0;
+                _nbPoint = 0;
 
-            currWayPoint = i;
-            time = 0;
+            currWayPoint = _nbPoint;
+            _time = 0;
             yield return new WaitForEndOfFrame();
         }
 
