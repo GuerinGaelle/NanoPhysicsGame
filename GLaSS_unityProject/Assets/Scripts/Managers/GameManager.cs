@@ -54,6 +54,18 @@ public class GameManager : MonoBehaviour {
         Player.HasGravity = !Player.HasGravity;
         ColoriseButton(Player.HasGravity, "Gravity_Button");
 
+        // We stop the others
+        if (Player.HasGravity)
+        {
+            if (Player.HasInertia)
+                ToggleInertia();
+            if (!Player.CanFeelBrownian)
+                ToggleBrownianMovement();
+            if (!Player.CanFeelVDW)
+                ToggleVanDerWaals();
+        }
+        
+
         if (Player.IsStuck)
         {
             Player.IsStuck = false;
@@ -65,12 +77,34 @@ public class GameManager : MonoBehaviour {
     {
         Player.HasInertia = !Player.HasInertia;
         ColoriseButton(Player.HasInertia, "Inertia_Button");
+
+        // We stop the others
+        if (Player.HasInertia)
+        {
+            if (Player.HasGravity)
+                ToggleGravity();
+            if (!Player.CanFeelBrownian)
+                ToggleBrownianMovement();
+            if (!Player.CanFeelVDW)
+                ToggleVanDerWaals();
+        }
     }
 
     public void ToggleBrownianMovement()
     {
         Player.CanFeelBrownian = !Player.CanFeelBrownian;
-        ColoriseButton(!Player.CanFeelBrownian, "Brownian_Button");      
+        ColoriseButton(!Player.CanFeelBrownian, "Brownian_Button");
+
+        // We stop the others
+        if (!Player.CanFeelBrownian)
+        {
+            if (Player.HasGravity)
+                ToggleGravity();
+            if (Player.HasInertia)
+                ToggleInertia();
+            if (!Player.CanFeelVDW)
+                ToggleVanDerWaals();
+        }
     }
 
     public void ToggleVanDerWaals()
@@ -90,6 +124,17 @@ public class GameManager : MonoBehaviour {
         {
             Player.CanFeelVDW = true;
             ColoriseButton(false, "VDW_Button");
+        }
+
+        // We stop the others
+        if (!Player.CanFeelVDW)
+        {
+            if (Player.HasGravity)
+                ToggleGravity();
+            if (Player.HasInertia)
+                ToggleInertia();
+            if (!Player.CanFeelBrownian)
+                ToggleBrownianMovement();
         }
     }
 

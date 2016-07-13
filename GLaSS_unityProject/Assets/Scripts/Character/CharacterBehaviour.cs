@@ -42,9 +42,6 @@ public class CharacterBehaviour : MonoBehaviour {
 
                 rigid.mass = 3;
                 IsStuck = false;
-
-                if (HasInertia)
-                    rigid.gravityScale = 1;
             }
             else
             {
@@ -73,15 +70,11 @@ public class CharacterBehaviour : MonoBehaviour {
             {
                 rigid.drag = 1;
                 rigid.angularDrag = 0;
-                if (HasGravity)
-                    rigid.gravityScale = 1;
             }
             else
             {
                 rigid.drag = 50;
                 rigid.angularDrag = 10;
-                if (HasGravity)
-                    rigid.gravityScale = 20;
             }
         }
     }
@@ -182,7 +175,7 @@ public class CharacterBehaviour : MonoBehaviour {
         }
 
         float _angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion _q = Quaternion.AngleAxis(_angle - 180, Vector3.forward);
+        Quaternion _q = Quaternion.AngleAxis(_angle, Vector3.forward);
 
         transform.DORotate(_q.eulerAngles, 0.5f, RotateMode.Fast);
     }
