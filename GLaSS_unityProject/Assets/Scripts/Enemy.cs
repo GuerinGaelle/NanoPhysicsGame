@@ -1,6 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum enemyMoveType
+{
+	RandomMovement,
+	CircleMovement,
+	VerticalMovement,
+	HorizontalMovement
+}
+
 public class Enemy : MonoBehaviour {
 
 	// Random Numbers
@@ -13,7 +21,7 @@ public class Enemy : MonoBehaviour {
 	public Vector2 min;
 	public Vector2 max;
 	public Vector2 size;
-	public Vector2 center;
+
 
 	// Enemy Properties
 	private Rigidbody2D enemyRigid;
@@ -21,18 +29,29 @@ public class Enemy : MonoBehaviour {
 	private Vector2 posCorrection;
 	private Transform parentTransform;
 
+	// Note: need to increase speed + maxVelocity values for larger areas!
+	public enemyMoveType typeOfMovement;
 	public float speed = 600f;
 	public float maxVelocity = 2.8f;
 	public float space = 0.2f;
 
-	private bool enemyRandomMove = true;
+	//public float frequency = 20f;
+	//public float wavelength = 10f;
+	//private bool enemyRandomMove = true;
+
+	public float angle = 0f;
+	public float circleSpeed = (2 * Mathf.PI) / 2;
+	public float radius = 0.05f;
+	public Vector2 center;
+
 
 	void Awake() {
 		enemyPosition = GameObject.Find ("Enemy").transform.position;
 		enemyRigid = GetComponent<Rigidbody2D> ();
 
-		// Change the parent object to modify the area of movement of the enemy
+		// In editor: Modify the parent object to change the area of movement of the enemy
 		parentTransform = GetComponentInParent<Transform> ();
+
 		float posX = parentTransform.position.x;
 		float posY = parentTransform.position.y;
 		float scaleX = parentTransform.lossyScale.x;
@@ -43,14 +62,34 @@ public class Enemy : MonoBehaviour {
 		min = enemyMovementArea.min;
 		max = enemyMovementArea.max;
 
+		// Extra awake Settings for the circular/horizontal/vertical motion:
+		center = enemyMovementArea.center;
+		if (scaleX == scaleY) { 						// if we are in a square, auto-set the radius
+			radius = (scaleX / 2) - (scaleX / 8); 		// Make it half of the area of movement, and a little bit less to look cuter :)
+		}
+
 	}
 		
 	void FixedUpdate() {
-		if (enemyRandomMove) {
+		switch (typeOfMovement) {
+		case enemyMoveType.RandomMovement:
 			CreateRandomVector ();
 			EnemyRandomMove ();
+			break;
+		case enemyMoveType.CircleMovement:
+			EnemyCircleMove();
+			break;
+		case enemyMoveType.VerticalMovement:
+			EnemyVerticalMove ();
+			break;
+		case enemyMoveType.HorizontalMovement:
+			EnemyHorizontalMove ();
+			break;
 		}
+
+
 	}
+
 	void CreateRandomVector() {
 		randomX = Random.Range (min.x, max.x);
 		randomY = Random.Range (min.y, max.y);
@@ -65,7 +104,7 @@ public class Enemy : MonoBehaviour {
 			direction = (randomXY - enemyPosition).normalized;	
 			enemyRigid.AddForce (direction * Time.fixedDeltaTime * speed);
 
-			// clamp the acceleration
+			// clamp the acceleration to maxVelocity.
 			if (Mathf.Abs(enemyRigid.velocity.x) > maxVelocity){
 				enemyRigid.velocity = new Vector2(Mathf.Sign(enemyRigid.velocity.x) * maxVelocity, enemyRigid.velocity.y);
 			}
@@ -101,6 +140,34 @@ public class Enemy : MonoBehaviour {
 
 			enemyPosition = transform.position;
 		} 
+	}
+
+
+	void EnemyCircleMove() {
+		angle += circleSpeed * Time.fixedDeltaTime;
+		float x = Mathf.Cos (angle) * radius + center.x;
+		float y = Mathf.Sin (angle) * radius + center.y;
+
+		this.gameObject.transform.position = new Vector2 (x, y);
+	}
+
+
+	void EnemyVerticalMove() {
+		transform.position = center;
+		angle += circleSpeed * Time.fixedDeltaTime;
+		//float x = Mathf.Cos (angle) * radius + center.x;
+		float y = Mathf.Sin (angle) * radius + center.y;
+		float x = center.x;
+		transform.position = new Vector2 (x, y);
+	}
+
+	void EnemyHorizontalMove() {
+		//transform.position = center;
+		angle += circleSpeed * Time.fixedDeltaTime;
+		//float x = Mathf.Cos (angle) * radius + center.x;
+		float x = Mathf.Sin (angle) * radius + center.x;
+		float y = center.y;
+		transform.position = new Vector2 (x, y);
 	}
 
 	void OnTriggerEnter2D(Collider2D co) {
