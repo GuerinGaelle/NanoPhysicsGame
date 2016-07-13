@@ -54,6 +54,7 @@ public class VDWBehaviour : MonoBehaviour {
             case VDW_Type.StuckToPlayer:                
                 joint.enabled = true;
                 joint.connectedBody = obj.gameObject.GetComponent<Rigidbody2D>();
+                this.transform.gameObject.layer = LayerMask.NameToLayer("Player");
                 break;
             case VDW_Type.StuckToObject_moving:
                 obj.GetComponent<CharacterBehaviour>().IsStuck = true;
@@ -72,5 +73,7 @@ public class VDWBehaviour : MonoBehaviour {
     {
         if(joint != null)
             joint.enabled = false;
+
+        this.transform.gameObject.layer = LayerMask.NameToLayer("Default");
     }
 }
