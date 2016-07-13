@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -22,7 +23,7 @@ public class GameManager : MonoBehaviour {
         if(Instance == null)
             Instance = this;
 
-        Player = GameObject.FindObjectOfType<CharacterBehaviour>();
+        Player = FindObjectOfType<CharacterBehaviour>();
         Canvas = GameObject.Find("Canvas");
 
         feedbackVDW = Resources.Load<GameObject>("Prefabs/Signes_Feedbacks/VDWFeedback");
@@ -46,6 +47,12 @@ public class GameManager : MonoBehaviour {
         else if (Input.GetKeyDown(KeyCode.Joystick1Button3))
         {
             ToggleVanDerWaals();
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 
@@ -158,6 +165,13 @@ public class GameManager : MonoBehaviour {
         {
             Player.IsStuck = true;
             Player.animator.SetBool("isAlive", false);
+            Invoke("DestroyPlayer", 0.5f);
         }  
+    }
+
+    void DestroyPlayer()
+    {
+        Destroy(Player.gameObject);
+        Instantiate(feedbackVDW, transform.position, Quaternion.identity);
     }
 }
