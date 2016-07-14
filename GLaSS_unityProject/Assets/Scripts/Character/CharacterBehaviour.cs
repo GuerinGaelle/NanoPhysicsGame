@@ -18,7 +18,7 @@ public class CharacterBehaviour : MonoBehaviour {
     //--------------- PRIVATE VARIABLES ---------------//
 
     private Rigidbody2D rigid;
-    private Slider energyBar;
+    //private Slider energyBar;
 
 
     //--------------- PUBLIC VARIABLES ----------------//
@@ -80,22 +80,6 @@ public class CharacterBehaviour : MonoBehaviour {
         }
     }
 
-    private float energy = 1000; // Max = 1000
-    public float Energy
-    {
-        get
-        {
-            return energy;
-        }
-        set
-        {
-            energy = value;
-            energyBar.value = value;
-        }
-    }
-
-    public float EnergyConsumptionMultiplier = 2.0f;
-
     public float BaseSpeed = 15;
     [HideInInspector]
     public float Speed = 15; // Speed of the player (control)
@@ -118,9 +102,29 @@ public class CharacterBehaviour : MonoBehaviour {
         }
     }
 
-    public bool CanFeelVDW = true;
-    public bool CanFeelBrownian = true;
+	public bool CanFeelVDW = true;
+	public bool CanFeelBrownian = true;
 
+	// Saturation bar settings:
+	public float barIncreaseSpeed = 13f;
+	public float barDecreaseSpeed = 9f;
+	public bool lockedPowers = false;
+	public Slider saturationBar;
+
+	private float saturation = 0;
+	public float Saturation
+	{
+		get
+		{
+			return saturation;
+		}
+		set
+		{
+			saturation = value;
+			saturationBar.value = value;
+		}
+	}
+		
     [HideInInspector]
     public Animator animator;
 
@@ -129,23 +133,46 @@ public class CharacterBehaviour : MonoBehaviour {
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
-        energyBar = GameManager.Instance.Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
+        //energyBar = GameManager.Instance.Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
+		saturationBar = GameManager.Instance.Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
         animator = transform.GetChild(0).GetComponent<Animator>();
     }
+		
 
-    void Update()
-    {
-        
-    }
+	public void HandleSaturationBar() {
+		bool powerActivated = HasGravity || HasInertia || !CanFeelVDW || !CanFeelBrownian;
+		float currSaturation = saturationBar.value;
+		float maxSaturation = saturationBar.maxValue;
+		float minSaturation = saturationBar.minValue;
+
+		if (powerActivated && currSaturation < maxSaturation) { 	// if any power is activated, increase the bar
+			Saturation += Time.fixedDeltaTime * barIncreaseSpeed; 	
+		}
+		if (!powerActivated && currSaturation > minSaturation) { 	// if no power is activated, decrease the bar
+			Saturation -= Time.fixedDeltaTime * barDecreaseSpeed;
+		}
+
+		if (currSaturation == maxSaturation) { 		// if the bar goes to 100% then lock all the powers
+			lockedPowers = true;
+		}
+		if (lockedPowers) {
+			if (currSaturation == minSaturation) { // when the bar reaches 0% unlock the powers
+				lockedPowers = false;
+			}
+		}
+
+	}
 
 	void FixedUpdate()
     {
+		// Upodate the saturation bar 
+		HandleSaturationBar ();
         // Take the inputs
         Vector2 movDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (movDirection.magnitude > 1)
             movDirection.Normalize();
-        if(movDirection.magnitude > 0)
-            Energy -= Time.fixedDeltaTime * EnergyConsumptionMultiplier;
+        //if(movDirection.magnitude > 0)
+            //Energy -= Time.fixedDeltaTime * EnergyConsumptionMultiplier;
 
         // Create random movement
         Vector2 _brownian = GetBrownianMovement();
@@ -156,6 +183,7 @@ public class CharacterBehaviour : MonoBehaviour {
             Move(movDirection, _brownian);
             RotateDirection(movDirection);
         }
+
     }
 
     /// <summary>

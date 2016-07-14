@@ -12,7 +12,7 @@ public class Checkpoint : MonoBehaviour {
 		if (col.gameObject.name == "Player") {
 			GameManager.Checkpoint = energyWellPos;
 
-			GameManager.Instance.Player.Energy = 1000; // TODO dont use magic number
+			//GameManager.Instance.Player.Energy = 1000; // TODO dont use magic number
 		}
 	}
 }

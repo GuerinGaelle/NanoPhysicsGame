@@ -57,7 +57,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 105276}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.48, y: 9.88, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -140,12 +140,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b346c5e09804a041bbf86a456c733d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnergyConsumptionMultiplier: 2
   BaseSpeed: 15
   Speed: 15
   BrownianIntensity: 0.1
   CanFeelVDW: 1
   CanFeelBrownian: 1
+  barIncreaseSpeed: 13
+  barDecreaseSpeed: 9
+  lockedPowers: 0
+  saturationBar: {fileID: 0}
   animator: {fileID: 0}
 --- !u!212 &21231444
 SpriteRenderer:

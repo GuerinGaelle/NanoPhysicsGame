@@ -13,12 +13,31 @@ public class GameManager : MonoBehaviour {
     public CharacterBehaviour Player;
 
     public GameObject Canvas;
+	public float increaseSpeed = 100f;
+	public float decreaseSpeed = 50f;
 
     [HideInInspector]
     public GameObject feedbackVDW;
 	public static Vector2 Checkpoint;
-    //-------------------------------------------------//
+	public Slider saturationBar;
+    
+	//-------------------------------------------------//
 
+	/*private float saturation = 0;
+    public float Saturation
+    {
+        get
+        {
+            return saturation;
+        }
+        set
+        {
+            saturation = value;
+			saturationBar.value = value;
+        }
+    }*/
+
+	//-------------------------------------------------//
     void Awake()
     {
         if(Instance == null)
@@ -28,29 +47,42 @@ public class GameManager : MonoBehaviour {
         Canvas = GameObject.Find("Canvas");
 
         feedbackVDW = Resources.Load<GameObject>("Prefabs/Signes_Feedbacks/VDWFeedback");
+		saturationBar = Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
     }
 	
 	// Update is called once per frame
 	void Update ()
-    {
-        if (Input.GetKeyDown(KeyCode.Joystick1Button0))
-        {
-            ToggleGravity();
-        }
-        else if(Input.GetKeyDown(KeyCode.Joystick1Button1))
-        {
-            ToggleInertia();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button2))
-        {
-            ToggleBrownianMovement();
-        }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button3))
-        {
-            ToggleVanDerWaals();
-        }
+	{	// Powers get locked if the saturation bar reaches maximum
+		if (Player.lockedPowers) {
+			// TODO : Colorise gray so they look disactivated
+			Player.HasGravity = false; 
+			ColoriseButton (Player.HasGravity, "Gravity_Button");
+			Player.HasInertia = false;
+			ColoriseButton (Player.HasInertia, "Inertia_Button");
+			Player.CanFeelBrownian = true;
+			ColoriseButton (!Player.CanFeelBrownian, "Brownian_Button");
+			Player.CanFeelVDW = true;
+			ColoriseButton (!Player.CanFeelVDW, "VDW_Button");
+		} else {
+			if (Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.G))
+			{
+				ToggleGravity();
+			}
+			else if(Input.GetKeyDown(KeyCode.Joystick1Button1) || Input.GetKeyDown(KeyCode.H))
+			{
+				ToggleInertia();
+			}
+			else if (Input.GetKeyDown(KeyCode.Joystick1Button2) || Input.GetKeyDown(KeyCode.F))
+			{
+				ToggleBrownianMovement();
+			}
+			else if (Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.T))
+			{
+				ToggleVanDerWaals();
+			}
+		}
 
-        if (Input.GetKeyDown(KeyCode.R))
+		if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
@@ -58,28 +90,23 @@ public class GameManager : MonoBehaviour {
 
     public void ToggleGravity()
     {
-        Player.HasGravity = !Player.HasGravity;
-        ColoriseButton(Player.HasGravity, "Gravity_Button");
+		Player.HasGravity = !Player.HasGravity;
+		ColoriseButton (Player.HasGravity, "Gravity_Button");
 
-        // We stop the others
-        if (Player.HasGravity)
-        {
-            if (Player.HasInertia)
-                ToggleInertia();
-            if (!Player.CanFeelBrownian)
-                ToggleBrownianMovement();
-            if (!Player.CanFeelVDW)
-                ToggleVanDerWaals();
-        }
-        
-
-        if (Player.IsStuck)
-        {
-            Player.IsStuck = false;
-        }
-            
+		// We stop the others
+		if (Player.HasGravity) {
+			if (Player.HasInertia)
+				ToggleInertia ();
+			if (!Player.CanFeelBrownian)
+				ToggleBrownianMovement ();
+			if (!Player.CanFeelVDW)
+				ToggleVanDerWaals ();
+		}
+		if (Player.IsStuck) {
+			Player.IsStuck = false;
+		
+		}
     }
-
     public void ToggleInertia()
     {
         Player.HasInertia = !Player.HasInertia;
@@ -96,27 +123,26 @@ public class GameManager : MonoBehaviour {
                 ToggleVanDerWaals();
         }
     }
-
+		
     public void ToggleBrownianMovement()
-    {
-        Player.CanFeelBrownian = !Player.CanFeelBrownian;
-        ColoriseButton(!Player.CanFeelBrownian, "Brownian_Button");
+	{
+		Player.CanFeelBrownian = !Player.CanFeelBrownian;
+		ColoriseButton (!Player.CanFeelBrownian, "Brownian_Button");
 
-        // We stop the others
-        if (!Player.CanFeelBrownian)
-        {
-            if (Player.HasGravity)
-                ToggleGravity();
-            if (Player.HasInertia)
-                ToggleInertia();
-            if (!Player.CanFeelVDW)
-                ToggleVanDerWaals();
-        }
-    }
+		// We stop the others
+		if (!Player.CanFeelBrownian) {
+			if (Player.HasGravity)
+				ToggleGravity ();
+			if (Player.HasInertia)
+				ToggleInertia ();
+			if (!Player.CanFeelVDW)
+				ToggleVanDerWaals ();
+		}
+	}
 
     public void ToggleVanDerWaals()
     {
-        if (Player.CanFeelVDW)
+		if (Player.CanFeelVDW)
         {
             Player.IsStuck = false;
             Player.CanFeelVDW = false;
