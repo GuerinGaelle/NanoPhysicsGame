@@ -20,10 +20,10 @@ public class GameManager : MonoBehaviour {
     public GameObject feedbackVDW;
 	public static Vector2 Checkpoint;
 	public Slider saturationBar;
-    
-	//-------------------------------------------------//
 
-	/*private float saturation = 0;
+    //-------------------------------------------------//
+
+    /*private float saturation = 0;
     public float Saturation
     {
         get
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour {
         }
     }*/
 
-	//-------------------------------------------------//
+    //-------------------------------------------------//
     void Awake()
     {
         if(Instance == null)
@@ -63,26 +63,32 @@ public class GameManager : MonoBehaviour {
 			ColoriseButton (!Player.brownianBehaviour.canFeelBrownian, "Brownian_Button");
 			Player.CanFeelVDW = true;
 			ColoriseButton (!Player.CanFeelVDW, "VDW_Button");
-		} else {
-			if (Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.G))
+		}
+        else
+        {
+			if (Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.G)
+                || Input.GetKeyUp(KeyCode.Joystick1Button0) || Input.GetKeyUp(KeyCode.G))
 			{
 				ToggleGravity();
 			}
-			else if(Input.GetKeyDown(KeyCode.Joystick1Button1) || Input.GetKeyDown(KeyCode.H))
+			else if(Input.GetKeyDown(KeyCode.Joystick1Button1) || Input.GetKeyDown(KeyCode.H)
+                || Input.GetKeyUp(KeyCode.Joystick1Button1) || Input.GetKeyUp(KeyCode.H))
 			{
 				ToggleInertia();
 			}
-			else if (Input.GetKeyDown(KeyCode.Joystick1Button2) || Input.GetKeyDown(KeyCode.F))
+			else if (Input.GetKeyDown(KeyCode.Joystick1Button2) || Input.GetKeyDown(KeyCode.F)
+                || Input.GetKeyUp(KeyCode.Joystick1Button2) || Input.GetKeyUp(KeyCode.F))
 			{
 				ToggleBrownianMovement();
 			}
-			else if (Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.T))
+			else if (Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.T)
+                || Input.GetKeyUp(KeyCode.Joystick1Button3) || Input.GetKeyUp(KeyCode.T))
 			{
 				ToggleVanDerWaals();
 			}
 		}
 
-		if (Input.GetKeyDown(KeyCode.R))
+		if (Input.GetKeyDown(KeyCode.R)) // TODO remove it for GOLD version
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
