@@ -13,6 +13,7 @@ GameObject:
   - 50: {fileID: 5008474}
   - 114: {fileID: 11403498}
   - 61: {fileID: 6120044}
+  - 114: {fileID: 11443840}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -142,14 +143,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BaseSpeed: 15
   Speed: 15
-  BrownianIntensity: 0.1
+  brownianBehaviour: {fileID: 0}
   CanFeelVDW: 1
-  CanFeelBrownian: 1
   barIncreaseSpeed: 13
   barDecreaseSpeed: 9
   lockedPowers: 0
   saturationBar: {fileID: 0}
   animator: {fileID: 0}
+--- !u!114 &11443840
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 235ab798d85d4374592f5698c90f4d8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanFeelBrownian: 0
+  BrownianIntensity: 0.1
 --- !u!212 &21231444
 SpriteRenderer:
   m_ObjectHideFlags: 1

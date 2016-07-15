@@ -59,8 +59,8 @@ public class GameManager : MonoBehaviour {
 			ColoriseButton (Player.HasGravity, "Gravity_Button");
 			Player.HasInertia = false;
 			ColoriseButton (Player.HasInertia, "Inertia_Button");
-			Player.CanFeelBrownian = true;
-			ColoriseButton (!Player.CanFeelBrownian, "Brownian_Button");
+			Player.brownianBehaviour.canFeelBrownian = true;
+			ColoriseButton (!Player.brownianBehaviour.canFeelBrownian, "Brownian_Button");
 			Player.CanFeelVDW = true;
 			ColoriseButton (!Player.CanFeelVDW, "VDW_Button");
 		} else {
@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour {
 		if (Player.HasGravity) {
 			if (Player.HasInertia)
 				ToggleInertia ();
-			if (!Player.CanFeelBrownian)
+			if (!Player.brownianBehaviour.canFeelBrownian)
 				ToggleBrownianMovement ();
 			if (!Player.CanFeelVDW)
 				ToggleVanDerWaals ();
@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour {
         {
             if (Player.HasGravity)
                 ToggleGravity();
-            if (!Player.CanFeelBrownian)
+            if (!Player.brownianBehaviour.canFeelBrownian)
                 ToggleBrownianMovement();
             if (!Player.CanFeelVDW)
                 ToggleVanDerWaals();
@@ -126,11 +126,11 @@ public class GameManager : MonoBehaviour {
 		
     public void ToggleBrownianMovement()
 	{
-		Player.CanFeelBrownian = !Player.CanFeelBrownian;
-		ColoriseButton (!Player.CanFeelBrownian, "Brownian_Button");
+		Player.brownianBehaviour.canFeelBrownian = !Player.brownianBehaviour.canFeelBrownian;
+		ColoriseButton (!Player.brownianBehaviour.canFeelBrownian, "Brownian_Button");
 
 		// We stop the others
-		if (!Player.CanFeelBrownian) {
+		if (!Player.brownianBehaviour.canFeelBrownian) {
 			if (Player.HasGravity)
 				ToggleGravity ();
 			if (Player.HasInertia)
@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour {
                 ToggleGravity();
             if (Player.HasInertia)
                 ToggleInertia();
-            if (!Player.CanFeelBrownian)
+            if (!Player.brownianBehaviour.canFeelBrownian)
                 ToggleBrownianMovement();
         }
     }

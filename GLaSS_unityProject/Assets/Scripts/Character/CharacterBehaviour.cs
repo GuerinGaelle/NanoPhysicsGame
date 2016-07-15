@@ -18,8 +18,6 @@ public class CharacterBehaviour : MonoBehaviour {
     //--------------- PRIVATE VARIABLES ---------------//
 
     private Rigidbody2D rigid;
-    //private Slider energyBar;
-
 
     //--------------- PUBLIC VARIABLES ----------------//
 
@@ -83,7 +81,8 @@ public class CharacterBehaviour : MonoBehaviour {
     public float BaseSpeed = 15;
     [HideInInspector]
     public float Speed = 15; // Speed of the player (control)
-    public float BrownianIntensity = 0.1f; // Intensity of the random movement
+
+    public BrownianBehaviour brownianBehaviour;
 
     private bool isStuck; // Don't Get or Set isStuck -> use IsStuck
     public bool IsStuck
@@ -103,7 +102,6 @@ public class CharacterBehaviour : MonoBehaviour {
     }
 
 	public bool CanFeelVDW = true;
-	public bool CanFeelBrownian = true;
 
 	// Saturation bar settings:
 	public float barIncreaseSpeed = 13f;
@@ -136,11 +134,12 @@ public class CharacterBehaviour : MonoBehaviour {
         //energyBar = GameManager.Instance.Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
 		saturationBar = GameManager.Instance.Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
         animator = transform.GetChild(0).GetComponent<Animator>();
+        brownianBehaviour = GetComponent<BrownianBehaviour>();
     }
 		
 
 	public void HandleSaturationBar() {
-		bool powerActivated = HasGravity || HasInertia || !CanFeelVDW || !CanFeelBrownian;
+		bool powerActivated = HasGravity || HasInertia || !CanFeelVDW || !brownianBehaviour.canFeelBrownian;
 		float currSaturation = saturationBar.value;
 		float maxSaturation = saturationBar.maxValue;
 		float minSaturation = saturationBar.minValue;
@@ -171,16 +170,11 @@ public class CharacterBehaviour : MonoBehaviour {
         Vector2 movDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (movDirection.magnitude > 1)
             movDirection.Normalize();
-        //if(movDirection.magnitude > 0)
-            //Energy -= Time.fixedDeltaTime * EnergyConsumptionMultiplier;
-
-        // Create random movement
-        Vector2 _brownian = GetBrownianMovement();
 
         // Move the player + add brownian movement
         if (!IsStuck)
         {
-            Move(movDirection, _brownian);
+            Move(movDirection);
             RotateDirection(movDirection);
         }
 
@@ -190,10 +184,9 @@ public class CharacterBehaviour : MonoBehaviour {
     /// Takes a Vector2 and add forces to the rigidbody2D
     /// Also takes the drag in account to keep a stable speed accross all drag values.. (not perfect but gets the job done xD)
     /// </summary>
-    void Move(Vector2 inputDir, Vector2 BrownianDir)
+    void Move(Vector2 inputDir)
     {
         rigid.AddForce((inputDir * Time.fixedDeltaTime * Speed * 400) * ((rigid.drag / 15) + 0.1f));
-        rigid.AddForce(BrownianDir * Time.fixedDeltaTime * Speed * 100 * ((rigid.drag / 4) + 1)); // f***ing drag !
 
         // Not good since at each frame
         if(inputDir != Vector2.zero)
@@ -219,22 +212,6 @@ public class CharacterBehaviour : MonoBehaviour {
         Quaternion _q = Quaternion.AngleAxis(_angle, Vector3.forward);
 
         transform.DORotate(_q.eulerAngles, 0.5f, RotateMode.Fast);
-    }
-
-    /// <summary>
-    /// Adds random noise to the movement
-    /// </summary>
-    Vector2 GetBrownianMovement()
-    {
-        Vector2 _movement = new Vector2();
-
-        if (CanFeelBrownian)
-        {         
-            float _noise = Mathf.PerlinNoise(Time.time, Time.time);
-            _movement += new Vector2(Random.Range(-_noise, _noise), Random.Range(-_noise, _noise));
-        }
-
-        return _movement * BrownianIntensity;
     }
 
     private void FreezeMovement()

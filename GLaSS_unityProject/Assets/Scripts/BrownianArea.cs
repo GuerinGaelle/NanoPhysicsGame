@@ -4,7 +4,7 @@ using System.Collections;
 public class BrownianArea : MonoBehaviour {
 
     [Range(0f, 10f)]
-    public float BrownianIntensity;
+    public float brownianIntensity;
 
 	void Start ()
     {
@@ -18,18 +18,17 @@ public class BrownianArea : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Player")
+        if(other.GetComponent<BrownianBehaviour>())
         {
-            other.GetComponent<CharacterBehaviour>().BrownianIntensity = BrownianIntensity;
+            other.GetComponent<BrownianBehaviour>().currentBrownianIntensity = brownianIntensity;
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.GetComponent<BrownianBehaviour>())
         {
-            // TODO : Change magic number to base BrownianIntensity.
-            other.GetComponent<CharacterBehaviour>().BrownianIntensity = 0.1f;
+            other.GetComponent<BrownianBehaviour>().currentBrownianIntensity = other.GetComponent<BrownianBehaviour>().baseBrownianIntensity;
         }
     }
 }
