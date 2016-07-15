@@ -43,7 +43,6 @@ GameObject:
   - 61: {fileID: 6129646}
   - 50: {fileID: 5037148}
   - 232: {fileID: 23298046}
-  - 114: {fileID: 11497356}
   m_Layer: 0
   m_Name: WayPointWall_Taxi
   m_TagString: Untagged
@@ -61,7 +60,7 @@ GameObject:
   - 4: {fileID: 412788}
   - 114: {fileID: 11422648}
   m_Layer: 0
-  m_Name: Wall_Taxi_waypoint
+  m_Name: Moving_Wall_waypoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -210,18 +209,6 @@ MonoBehaviour:
   MovingObject: {fileID: 450872}
   WaypointContainer: {fileID: 499548}
   TimeBetweenWayPoints: 1
---- !u!114 &11497356
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 165078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a61248a895e13645b6e0b68501307c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  typeOfVDW: 1
 --- !u!212 &21291720
 SpriteRenderer:
   m_ObjectHideFlags: 1
