@@ -11,8 +11,6 @@ public class Checkpoint : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col) {
 		if (col.gameObject.name == "Player") {
 			GameManager.Checkpoint = energyWellPos;
-
-			//GameManager.Instance.Player.Energy = 1000; // TODO dont use magic number
 		}
 	}
 }

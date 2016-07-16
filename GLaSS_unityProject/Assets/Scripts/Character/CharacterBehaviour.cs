@@ -103,69 +103,24 @@ public class CharacterBehaviour : MonoBehaviour {
 
 	public bool CanFeelVDW = true;
 
-	// Saturation bar settings:
-	public float barIncreaseSpeed = 13f;
-	public float barDecreaseSpeed = 9f;
-	public bool lockedPowers = false;
-	public Slider saturationBar;
 
-	private float saturation = 0;
-	public float Saturation
-	{
-		get
-		{
-			return saturation;
-		}
-		set
-		{
-			saturation = value;
-			saturationBar.value = value;
-		}
-	}
-		
     [HideInInspector]
     public Animator animator;
 
     //-------------------------------------------------//
 
-    void Start()
+    void Awake()
     {
-        rigid = GetComponent<Rigidbody2D>();
-        //energyBar = GameManager.Instance.Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
-		saturationBar = GameManager.Instance.Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
-        animator = transform.GetChild(0).GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody2D>();    
+		animator = transform.GetChild(0).GetComponent<Animator>();
         brownianBehaviour = GetComponent<BrownianBehaviour>();
     }
 		
 
-	public void HandleSaturationBar() {
-		bool powerActivated = HasGravity || HasInertia || !CanFeelVDW || !brownianBehaviour.canFeelBrownian;
-		float currSaturation = saturationBar.value;
-		float maxSaturation = saturationBar.maxValue;
-		float minSaturation = saturationBar.minValue;
-
-		if (powerActivated && currSaturation < maxSaturation) { 	// if any power is activated, increase the bar
-			Saturation += Time.fixedDeltaTime * barIncreaseSpeed; 	
-		}
-		if (!powerActivated && currSaturation > minSaturation) { 	// if no power is activated, decrease the bar
-			Saturation -= Time.fixedDeltaTime * barDecreaseSpeed;
-		}
-
-		if (currSaturation == maxSaturation) { 		// if the bar goes to 100% then lock all the powers
-			lockedPowers = true;
-		}
-		if (lockedPowers) {
-			if (currSaturation == minSaturation) { // when the bar reaches 0% unlock the powers
-				lockedPowers = false;
-			}
-		}
-
-	}
 
 	void FixedUpdate()
     {
-		// Upodate the saturation bar 
-		HandleSaturationBar ();
+
         // Take the inputs
         Vector2 movDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (movDirection.magnitude > 1)

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance;
     public CharacterBehaviour Player;
+	public PowerControl PowerController;
 
     public GameObject Canvas;
 	public float increaseSpeed = 100f;
@@ -19,25 +20,42 @@ public class GameManager : MonoBehaviour {
     [HideInInspector]
     public GameObject feedbackVDW;
 	public static Vector2 Checkpoint;
+	//public Slider saturationBar;
+
+	public bool isGravityUnlocked = false;
+	public bool isInertiaUnlocked = false;
+	public bool isVDWUnlocked = false;
+	public bool isBrownianUnlocked = false;
+	public bool lockedPowers;
+	public bool powersOverheat = false;
+
+	public Image gravityButtonImage;
+	public Image inertiaButtonImage;
+	public Image brownianButtonImage;
+	public Image vdwButtonImage;
+
+
+	// Saturation bar settings:
+	public float barIncreaseSpeed = 13f;
+	public float barDecreaseSpeed = 9f;
+
 	public Slider saturationBar;
 
-    //-------------------------------------------------//
-
-    /*private float saturation = 0;
-    public float Saturation
-    {
-        get
-        {
-            return saturation;
-        }
-        set
-        {
-            saturation = value;
+	private float saturation = 0;
+	public float Saturation
+	{
+		get
+		{
+			return saturation;
+		}
+		set
+		{
+			saturation = value;
 			saturationBar.value = value;
-        }
-    }*/
-
+		}
+	}
     //-------------------------------------------------//
+
     void Awake()
     {
         if(Instance == null)
@@ -47,13 +65,21 @@ public class GameManager : MonoBehaviour {
         Canvas = GameObject.Find("Canvas");
 
         feedbackVDW = Resources.Load<GameObject>("Prefabs/Signes_Feedbacks/VDWFeedback");
-		saturationBar = Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
+		//saturationBar = Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
+		saturationBar = GameObject.Find("Canvas").transform.FindChild("EnergyBar").GetComponent<Slider>();
+
+		gravityButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Gravity_Button").GetComponent<Image> ();
+		inertiaButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Inertia_Button").GetComponent<Image> ();
+		brownianButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Brownian_Button").GetComponent<Image> ();
+		vdwButtonImage = GameObject.Find ("Buttons").transform.FindChild ("VDW_Button").GetComponent<Image> ();
+
     }
 	
 	// Update is called once per frame
 	void Update ()
 	{	// Powers get locked if the saturation bar reaches maximum
-		if (Player.lockedPowers) {
+		if (powersOverheat) {
+			LockAllPowers ();
 			// TODO : Colorise gray so they look disactivated
 			Player.HasGravity = false; 
 			ColoriseButton (Player.HasGravity, "Gravity_Button");
@@ -66,23 +92,23 @@ public class GameManager : MonoBehaviour {
 		}
         else
         {
-			if (Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.G)
-                || Input.GetKeyUp(KeyCode.Joystick1Button0) || Input.GetKeyUp(KeyCode.G))
+			if ((Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.G)
+				|| Input.GetKeyUp(KeyCode.Joystick1Button0) || Input.GetKeyUp(KeyCode.G)) && isGravityUnlocked) 
 			{
 				ToggleGravity();
 			}
-			else if(Input.GetKeyDown(KeyCode.Joystick1Button1) || Input.GetKeyDown(KeyCode.H)
-                || Input.GetKeyUp(KeyCode.Joystick1Button1) || Input.GetKeyUp(KeyCode.H))
+			else if((Input.GetKeyDown(KeyCode.Joystick1Button1) || Input.GetKeyDown(KeyCode.H)
+				|| Input.GetKeyUp(KeyCode.Joystick1Button1) || Input.GetKeyUp(KeyCode.H)) && isInertiaUnlocked)
 			{
 				ToggleInertia();
 			}
-			else if (Input.GetKeyDown(KeyCode.Joystick1Button2) || Input.GetKeyDown(KeyCode.F)
-                || Input.GetKeyUp(KeyCode.Joystick1Button2) || Input.GetKeyUp(KeyCode.F))
+			else if ((Input.GetKeyDown(KeyCode.Joystick1Button2) || Input.GetKeyDown(KeyCode.F)
+				|| Input.GetKeyUp(KeyCode.Joystick1Button2) || Input.GetKeyUp(KeyCode.F)) && isBrownianUnlocked)
 			{
 				ToggleBrownianMovement();
 			}
-			else if (Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.T)
-                || Input.GetKeyUp(KeyCode.Joystick1Button3) || Input.GetKeyUp(KeyCode.T))
+			else if ((Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.T)
+				|| Input.GetKeyUp(KeyCode.Joystick1Button3) || Input.GetKeyUp(KeyCode.T)) && isVDWUnlocked)
 			{
 				ToggleVanDerWaals();
 			}
@@ -94,6 +120,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+	void FixedUpdate() {
+		HandleSaturationBar ();
+	}
     public void ToggleGravity()
     {
 		Player.HasGravity = !Player.HasGravity;
@@ -210,4 +239,67 @@ public class GameManager : MonoBehaviour {
 		Player.animator.SetBool ("isAlive", true);
 		Player.IsStuck = false;
     }
+
+	public void HandleSaturationBar() {
+		bool powerActivated = Player.HasGravity || Player.HasInertia || !Player.CanFeelVDW || !Player.brownianBehaviour.canFeelBrownian;
+		float currSaturation = saturationBar.value;
+		float maxSaturation = saturationBar.maxValue;
+		float minSaturation = saturationBar.minValue;
+
+		if (powerActivated && currSaturation < maxSaturation) { 	// if any power is activated, increase the bar
+			Saturation += Time.fixedDeltaTime * barIncreaseSpeed; 	
+		}
+		if (!powerActivated && currSaturation > minSaturation) { 	// if no power is activated, decrease the bar
+			Saturation -= Time.fixedDeltaTime * barDecreaseSpeed;
+		}
+
+		if (currSaturation == maxSaturation) { 		// if the bar goes to 100% then lock all the powers
+			lockedPowers = true;
+			powersOverheat = true;
+		}
+		if (lockedPowers && powersOverheat) {
+			if (currSaturation == minSaturation) { // when the bar reaches 0% unlock the powers
+				powersOverheat = false;
+				UnlockPower ("all");
+			}
+		}
+
+	}
+
+	public void LockAllPowers() {
+		lockedPowers = true;
+		gravityButtonImage.color = Color.gray;
+		inertiaButtonImage.color = Color.gray;
+		brownianButtonImage.color = Color.gray;
+		vdwButtonImage.color = Color.gray;
+	}
+
+	public void UnlockPower(string s) {
+		lockedPowers = false;
+
+		if (s == "gravity") {
+			gravityButtonImage.color = new Color32 (128, 255, 128, 255);
+			isGravityUnlocked = true;
+		} else if (s == "inertia") {
+			inertiaButtonImage.color = new Color32 (255, 128, 128, 255);
+			isInertiaUnlocked = true;
+		} else if (s == "brownian") {
+			brownianButtonImage.color = new Color32 (128, 128, 255, 255);
+			isBrownianUnlocked = true;
+		} else if (s == "vdw") {
+			vdwButtonImage.color = new Color32 (255, 255, 128, 255);
+			isVDWUnlocked = true;
+		} else if (s == "all") {
+			if (isGravityUnlocked)
+				gravityButtonImage.color = new Color32 (128, 255, 128, 255);
+			if (isInertiaUnlocked)
+				inertiaButtonImage.color = new Color32 (255, 128, 128, 255);
+			if (isBrownianUnlocked)
+				brownianButtonImage.color = new Color32 (128, 128, 255, 255);
+			if (isVDWUnlocked)
+				vdwButtonImage.color = new Color32 (255, 255, 128, 255);
+		}
+
+
+	}
 }
