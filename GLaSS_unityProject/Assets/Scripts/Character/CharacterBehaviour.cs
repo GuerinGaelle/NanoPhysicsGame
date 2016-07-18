@@ -181,12 +181,14 @@ public class CharacterBehaviour : MonoBehaviour {
         {
             Instantiate(GameManager.Instance.feedbackVDW, transform.position, Quaternion.identity);
             rigid.mass = 500;
+            //rigid.constraints = RigidbodyConstraints2D.FreezeAll;
         }           
     }
 
     public void RestoreMovement()
     {
         rigid.mass = 1;
+        //rigid.constraints = RigidbodyConstraints2D.None;
     }
 
     void OnTriggerEnter2D(Collider2D other)
