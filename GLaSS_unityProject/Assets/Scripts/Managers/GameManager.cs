@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour {
 	public bool isBrownianUnlocked = false;
 	public bool lockedPowers;
 	public bool powersOverheat = false;
+	public bool alreadyDeactivated = false;
 
 	public Image gravityButtonImage;
 	public Image inertiaButtonImage;
@@ -75,17 +76,23 @@ public class GameManager : MonoBehaviour {
 
     }
 	
+	void Start() {
+		// TODO : Delete it from here when we are dealing with normal level progression. 
+		isGravityUnlocked = true;
+		isBrownianUnlocked = true;
+		isVDWUnlocked = true;
+		isInertiaUnlocked = true;
+	}
 	// Update is called once per frame
 	void Update ()
 	{	// Powers get locked if the saturation bar reaches maximum
 		if (powersOverheat) {
-
+			if (!alreadyDeactivated) {
 
             // DAVID : Added !lockedPower verification since it was creating bugs with gravity and interactions with other objects (because called at each frame).
             //if (!lockedPowers)
             //{
                 LockAllPowers();
-                // TODO : Colorise gray so they look disactivated
                 Player.HasGravity = false;
                 ColoriseButton(Player.HasGravity, "Gravity_Button");
                 Player.HasInertia = false;
@@ -95,7 +102,7 @@ public class GameManager : MonoBehaviour {
                 Player.CanFeelVDW = true;
                 ColoriseButton(!Player.CanFeelVDW, "VDW_Button");
             //}
-                
+			}     
 		}
         else
         {
@@ -267,10 +274,10 @@ public class GameManager : MonoBehaviour {
 		if (lockedPowers && powersOverheat) {
 			if (currSaturation == minSaturation) { // when the bar reaches 0% unlock the powers
 				powersOverheat = false;
+				alreadyDeactivated = false;
 				UnlockPower ("all");
 			}
 		}
-
 	}
 
     /// <summary>
@@ -318,7 +325,7 @@ public class GameManager : MonoBehaviour {
 			vdwButtonImage.color = new Color32 (255, 255, 128, 255);
 			isVDWUnlocked = true;
 		} else if (s == "all") {
-			if (isGravityUnlocked)
+			if (isGravityUnlocked)			
 				gravityButtonImage.color = new Color32 (128, 255, 128, 255);
 			if (isInertiaUnlocked)
 				inertiaButtonImage.color = new Color32 (255, 128, 128, 255);
