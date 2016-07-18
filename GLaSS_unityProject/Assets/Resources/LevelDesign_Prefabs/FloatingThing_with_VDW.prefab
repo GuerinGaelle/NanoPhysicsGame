@@ -17,7 +17,7 @@ GameObject:
   - 114: {fileID: 11464242}
   m_Layer: 0
   m_Name: FloatingThing_with_VDW
-  m_TagString: Untagged
+  m_TagString: Particule
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,8 +103,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 235ab798d85d4374592f5698c90f4d8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanFeelBrownian: 1
-  BrownianIntensity: 0.1
+  canFeelBrownian: 1
+  baseBrownianIntensity: 0.1
+  currentBrownianIntensity: 0
 --- !u!212 &21249650
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - ForceCurrent
+  - UnlockPower
+  - Particule
   layers:
   - Default
   - TransparentFX

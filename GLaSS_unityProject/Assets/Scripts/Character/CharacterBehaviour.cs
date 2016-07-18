@@ -107,6 +107,8 @@ public class CharacterBehaviour : MonoBehaviour {
     [HideInInspector]
     public Animator animator;
 
+    private bool isInForceCurrent;
+
     //-------------------------------------------------//
 
     void Awake()
@@ -114,8 +116,7 @@ public class CharacterBehaviour : MonoBehaviour {
         rigid = GetComponent<Rigidbody2D>();    
 		animator = transform.GetChild(0).GetComponent<Animator>();
         brownianBehaviour = GetComponent<BrownianBehaviour>();
-    }
-		
+    }		
 
 
 	void FixedUpdate()
@@ -131,6 +132,11 @@ public class CharacterBehaviour : MonoBehaviour {
         {
             Move(movDirection);
             RotateDirection(movDirection);
+        }
+
+        if(isInForceCurrent && HasInertia)
+        {
+            rigid.drag = 35; // will be overiten when HasInertia = false or when leaving forceCurrent
         }
 
     }
@@ -181,5 +187,26 @@ public class CharacterBehaviour : MonoBehaviour {
     public void RestoreMovement()
     {
         rigid.mass = 1;
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.GetComponent<AreaEffector2D>() == true)
+        {
+            isInForceCurrent = true;
+        }
+
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.GetComponent<AreaEffector2D>() == true)
+        {
+            isInForceCurrent = false;
+            if (!HasInertia)
+                rigid.drag = 50;
+            else
+                rigid.drag = 1;
+        }
     }
 }

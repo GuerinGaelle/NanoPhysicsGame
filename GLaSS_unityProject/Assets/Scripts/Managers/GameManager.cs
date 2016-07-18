@@ -79,16 +79,23 @@ public class GameManager : MonoBehaviour {
 	void Update ()
 	{	// Powers get locked if the saturation bar reaches maximum
 		if (powersOverheat) {
-			LockAllPowers ();
-			// TODO : Colorise gray so they look disactivated
-			Player.HasGravity = false; 
-			ColoriseButton (Player.HasGravity, "Gravity_Button");
-			Player.HasInertia = false;
-			ColoriseButton (Player.HasInertia, "Inertia_Button");
-			Player.brownianBehaviour.canFeelBrownian = true;
-			ColoriseButton (!Player.brownianBehaviour.canFeelBrownian, "Brownian_Button");
-			Player.CanFeelVDW = true;
-			ColoriseButton (!Player.CanFeelVDW, "VDW_Button");
+
+
+            // DAVID : Added !lockedPower verification since it was creating bugs with gravity and interactions with other objects (because called at each frame).
+            //if (!lockedPowers)
+            //{
+                LockAllPowers();
+                // TODO : Colorise gray so they look disactivated
+                Player.HasGravity = false;
+                ColoriseButton(Player.HasGravity, "Gravity_Button");
+                Player.HasInertia = false;
+                ColoriseButton(Player.HasInertia, "Inertia_Button");
+                Player.brownianBehaviour.canFeelBrownian = true;
+                ColoriseButton(!Player.brownianBehaviour.canFeelBrownian, "Brownian_Button");
+                Player.CanFeelVDW = true;
+                ColoriseButton(!Player.CanFeelVDW, "VDW_Button");
+            //}
+                
 		}
         else
         {
@@ -266,9 +273,30 @@ public class GameManager : MonoBehaviour {
 
 	}
 
+    /// <summary>
+    /// Stops any the active power
+    /// </summary>
+    public void StopAnyActivePower()
+    {
+        if (Player.HasInertia)
+            ToggleInertia();
+        if (Player.HasGravity)
+            ToggleGravity();
+        if (!Player.CanFeelVDW)
+            ToggleVanDerWaals();
+        if (!Player.brownianBehaviour.canFeelBrownian)
+            ToggleBrownianMovement();
+    }
+
 	public void LockAllPowers() {
 		lockedPowers = true;
-		gravityButtonImage.color = Color.gray;
+
+        // DAVID : We stop the powers so we are sure it does'nt create problems.
+        //StopAnyActivePower();
+
+
+        // then we grey out the buttons.
+        gravityButtonImage.color = Color.gray;
 		inertiaButtonImage.color = Color.gray;
 		brownianButtonImage.color = Color.gray;
 		vdwButtonImage.color = Color.gray;
