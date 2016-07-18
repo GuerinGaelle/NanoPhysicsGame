@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour {
 	public bool lockedPowers;
 	public bool powersOverheat = false;
 	public bool alreadyDeactivated = false;
+	public bool keyDown = false;
 
 	public Image gravityButtonImage;
 	public Image inertiaButtonImage;
@@ -78,20 +79,13 @@ public class GameManager : MonoBehaviour {
 	
 	void Start() {
 		// TODO : Delete it from here when we are dealing with normal level progression. 
-		isGravityUnlocked = true;
-		isBrownianUnlocked = true;
-		isVDWUnlocked = true;
-		isInertiaUnlocked = true;
+		UnlockPower("no tutorial");
 	}
-	// Update is called once per frame
+
 	void Update ()
 	{	// Powers get locked if the saturation bar reaches maximum
 		if (powersOverheat) {
 			if (!alreadyDeactivated) {
-
-            // DAVID : Added !lockedPower verification since it was creating bugs with gravity and interactions with other objects (because called at each frame).
-            //if (!lockedPowers)
-            //{
                 LockAllPowers();
                 Player.HasGravity = false;
                 ColoriseButton(Player.HasGravity, "Gravity_Button");
@@ -101,11 +95,10 @@ public class GameManager : MonoBehaviour {
                 ColoriseButton(!Player.brownianBehaviour.canFeelBrownian, "Brownian_Button");
                 Player.CanFeelVDW = true;
                 ColoriseButton(!Player.CanFeelVDW, "VDW_Button");
-            //}
 			}     
 		}
-        else
-        {
+		else // VICKY: need to reorganize those to correct the bug of activating 2 powers same time and make first one toggle (check earlier bug report on slack)
+		{
 			if ((Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.G)
 				|| Input.GetKeyUp(KeyCode.Joystick1Button0) || Input.GetKeyUp(KeyCode.G)) && isGravityUnlocked) 
 			{
@@ -151,6 +144,7 @@ public class GameManager : MonoBehaviour {
 			if (!Player.CanFeelVDW)
 				ToggleVanDerWaals ();
 		}
+		// VICKY: I think we need to remove those 2 lines to get rid of the bug where we get unstuck from walls when activating gravity
 		if (Player.IsStuck) {
 			Player.IsStuck = false;
 		
@@ -247,7 +241,6 @@ public class GameManager : MonoBehaviour {
     void DestroyPlayer()
     {  
         Instantiate(feedbackVDW, Player.transform.position, Quaternion.identity);
-        //Destroy(Player.gameObject);
 		Player.gameObject.transform.position = Checkpoint;
 		Player.gameObject.transform.rotation = new Quaternion ();
 		Player.animator.SetBool ("isAlive", true);
@@ -325,7 +318,7 @@ public class GameManager : MonoBehaviour {
 			vdwButtonImage.color = new Color32 (255, 255, 128, 255);
 			isVDWUnlocked = true;
 		} else if (s == "all") {
-			if (isGravityUnlocked)			
+			if (isGravityUnlocked)
 				gravityButtonImage.color = new Color32 (128, 255, 128, 255);
 			if (isInertiaUnlocked)
 				inertiaButtonImage.color = new Color32 (255, 128, 128, 255);
@@ -333,6 +326,16 @@ public class GameManager : MonoBehaviour {
 				brownianButtonImage.color = new Color32 (128, 128, 255, 255);
 			if (isVDWUnlocked)
 				vdwButtonImage.color = new Color32 (255, 255, 128, 255);
+		} else if (s == "no tutorial") {
+			isGravityUnlocked = true;
+			isBrownianUnlocked = true;
+			isVDWUnlocked = true;
+			isInertiaUnlocked = true;
+
+			gravityButtonImage.color = new Color32 (128, 255, 128, 255);
+			inertiaButtonImage.color = new Color32 (255, 128, 128, 255);
+			brownianButtonImage.color = new Color32 (128, 128, 255, 255);
+			vdwButtonImage.color = new Color32 (255, 255, 128, 255);
 		}
 
 
