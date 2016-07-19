@@ -79,14 +79,24 @@ public class GameManager : MonoBehaviour {
 	
 	void Start() {
 		// TODO : Delete it from here when we are dealing with normal level progression. 
-		UnlockPower("no tutorial");
+		if (SceneManager.GetActiveScene ().name == "Level 2") {			// Level 2 has already gravity unlocked
+			Debug.Log ("level 2");
+			LockedAllPowers ();
+			UnlockPower ("gravity");
+		} else if (SceneManager.GetActiveScene().name == "LD_Test_Vicky") {		// All powers are locked
+			LockedAllPowers ();
+		} 
+		else {																 // default level: all powers are already unlocked
+			UnlockPower ("no tutorial");
+		}
 	}
 
 	void Update ()
 	{	// Powers get locked if the saturation bar reaches maximum
 		if (powersOverheat) {
 			if (!alreadyDeactivated) {
-                LockAllPowers();
+                //LockAllPowers();
+				DeactivateAllPowers ();
                 Player.HasGravity = false;
                 ColoriseButton(Player.HasGravity, "Gravity_Button");
                 Player.HasInertia = false;
@@ -146,7 +156,8 @@ public class GameManager : MonoBehaviour {
 	void FixedUpdate() {
 		HandleSaturationBar ();
 	}
-    public void ToggleGravity(bool bActivate)
+    
+	public void ToggleGravity(bool bActivate)
     {
         if (bActivate == true)
             StopAnyActivePower();
@@ -319,18 +330,34 @@ public class GameManager : MonoBehaviour {
             ToggleBrownianMovement(true);
     }
 
-	public void LockAllPowers() {
+	public void DeactivateAllPowers() {
 		lockedPowers = true;
 
         // DAVID : We stop the powers so we are sure it does'nt create problems.
         //StopAnyActivePower();
-
 
         // then we grey out the buttons.
         gravityButtonImage.color = Color.gray;
 		inertiaButtonImage.color = Color.gray;
 		brownianButtonImage.color = Color.gray;
 		vdwButtonImage.color = Color.gray;
+
+
+	}
+		
+	public void LockedAllPowers() {
+		// grey them out:
+		gravityButtonImage.color = Color.gray;
+		inertiaButtonImage.color = Color.gray;
+		brownianButtonImage.color = Color.gray;
+		vdwButtonImage.color = Color.gray;
+		// make them unusuable:
+		isGravityUnlocked = false;
+		isBrownianUnlocked = false;
+		isVDWUnlocked = false;
+		isInertiaUnlocked = false;
+
+		lockedPowers = true;
 	}
 
 	public void UnlockPower(string s) {
