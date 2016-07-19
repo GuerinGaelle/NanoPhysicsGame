@@ -40,7 +40,7 @@ public class CharacterBehaviour : MonoBehaviour {
                 }
 
                 rigid.mass = 3;
-                IsStuck = false;
+                //IsStuck = false;
             }
             else
             {
@@ -109,6 +109,8 @@ public class CharacterBehaviour : MonoBehaviour {
 
     private bool isInForceCurrent;
 
+    public Vector2 actualWantedVelocity;
+
     //-------------------------------------------------//
 
     void Awake()
@@ -121,17 +123,16 @@ public class CharacterBehaviour : MonoBehaviour {
 
 	void FixedUpdate()
     {
-
         // Take the inputs
-        Vector2 movDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        if (movDirection.magnitude > 1)
-            movDirection.Normalize();
+        actualWantedVelocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if (actualWantedVelocity.magnitude > 1)
+            actualWantedVelocity.Normalize();
 
         // Move the player + add brownian movement
         if (!IsStuck)
         {
-            Move(movDirection);
-            RotateDirection(movDirection);
+            Move(actualWantedVelocity);
+            RotateDirection(actualWantedVelocity);
         }
 
         if(isInForceCurrent && HasInertia)

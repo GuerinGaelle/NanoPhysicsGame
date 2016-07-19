@@ -10,6 +10,7 @@ public class Rotifera : MonoBehaviour {
     {
         if(other.transform.tag == "Particule")
         {
+            Destroy(other.gameObject);
             transform.DOMove(endPoint.position, 2);
         }
     }

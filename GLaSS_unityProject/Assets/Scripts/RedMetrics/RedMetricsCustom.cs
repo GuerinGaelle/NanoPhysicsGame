@@ -4,14 +4,17 @@ using UnityEngine.SceneManagement;
 
 public class RedMetricsCustom : MonoBehaviour
 {
-    // Use this for initialization
     void Start ()
     {
-        RedMetricsManager.get().sendEvent(TrackingEvent.START);
+        CustomData customData = new CustomData();
+        customData.Add("Level_Name", Application.loadedLevelName);
+
+        RedMetricsManager.get().sendEvent(TrackingEvent.START, customData);
     }
 	
-	// Update is called once per frame
-	void Update () {
+
+	void Update ()
+    {
 	
 	}
 }

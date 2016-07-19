@@ -907,6 +907,10 @@ Prefab:
       propertyPath: m_Icon
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 11414970, guid: 80236f19a7bb4984ba3ce6355eb3ae6a, type: 2}
+      propertyPath: NormalSmooth
+      value: 0.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 80236f19a7bb4984ba3ce6355eb3ae6a, type: 2}
   m_IsPrefabParent: 0

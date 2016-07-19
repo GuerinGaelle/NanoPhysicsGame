@@ -8,13 +8,13 @@ public class CameraBehaviour : MonoBehaviour {
     public float CloseSmooth = 2f;
     public float NormalSmooth = 0.2f;
 
-    private GameObject player;
+    private CharacterBehaviour player;
     private Rigidbody2D playerRigid;
 
 	// Use this for initialization
 	void Start ()
     {
-        player = GameManager.Instance.Player.gameObject;
+        player = GameManager.Instance.Player;
         playerRigid = player.GetComponent<Rigidbody2D>();
     }
 	
@@ -24,7 +24,7 @@ public class CameraBehaviour : MonoBehaviour {
         if (player == null)
             return;
 
-        Vector2 velocityAddedForCam = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * 3.14f;
+        Vector2 velocityAddedForCam = player.actualWantedVelocity * 3.14f;
 
         Vector3 _newPos = new Vector3(player.transform.position.x + velocityAddedForCam.x, player.transform.position.y + velocityAddedForCam.y, -10);
         float _dist = Vector2.Distance(_newPos, transform.position);
