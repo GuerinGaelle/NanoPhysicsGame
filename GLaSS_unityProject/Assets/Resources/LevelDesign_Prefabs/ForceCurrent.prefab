@@ -90,7 +90,7 @@ AreaEffector2D:
   m_UseGlobalAngle: 0
   m_ForceAngle: 0
   m_ForceMagnitude: 500
-  m_ForceVariation: 100
+  m_ForceVariation: 0
   m_Drag: 0
   m_AngularDrag: 0
   m_ForceTarget: 0

@@ -270,6 +270,8 @@ MonoBehaviour:
   isBrownianUnlocked: 0
   lockedPowers: 0
   powersOverheat: 0
+  alreadyDeactivated: 0
+  keyDown: 0
   gravityButtonImage: {fileID: 0}
   inertiaButtonImage: {fileID: 0}
   brownianButtonImage: {fileID: 0}
@@ -2046,11 +2048,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 0
-  gravityButtonImage: {fileID: 0}
-  inertiaButtonImage: {fileID: 0}
-  brownianButtonImage: {fileID: 0}
-  vdwButtonImage: {fileID: 0}
-  Player: {fileID: 0}
 --- !u!4 &1590178551 stripped
 Transform:
   m_PrefabParentObject: {fileID: 442406, guid: 0bb8323e4a79dfd449e6f7578f14d073, type: 2}
@@ -2879,7 +2876,7 @@ Transform:
   m_Children:
   - {fileID: 293422607}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 12
 --- !u!4 &2021698975 stripped
 Transform:
   m_PrefabParentObject: {fileID: 442406, guid: 0bb8323e4a79dfd449e6f7578f14d073, type: 2}
