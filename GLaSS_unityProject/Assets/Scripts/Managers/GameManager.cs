@@ -95,31 +95,47 @@ public class GameManager : MonoBehaviour {
                 ColoriseButton(!Player.brownianBehaviour.canFeelBrownian, "Brownian_Button");
                 Player.CanFeelVDW = true;
                 ColoriseButton(!Player.CanFeelVDW, "VDW_Button");
-			}     
+
+                alreadyDeactivated = true;
+            }     
 		}
 		else // VICKY: need to reorganize those to correct the bug of activating 2 powers same time and make first one toggle (check earlier bug report on slack)
 		{
-			if ((Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.G)
-				|| Input.GetKeyUp(KeyCode.Joystick1Button0) || Input.GetKeyUp(KeyCode.G)) && isGravityUnlocked) 
+			if ((Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.G)) && isGravityUnlocked) 
 			{
-				ToggleGravity();
+				ToggleGravity(true);
 			}
-			else if((Input.GetKeyDown(KeyCode.Joystick1Button1) || Input.GetKeyDown(KeyCode.H)
-				|| Input.GetKeyUp(KeyCode.Joystick1Button1) || Input.GetKeyUp(KeyCode.H)) && isInertiaUnlocked)
+			else if((Input.GetKeyDown(KeyCode.Joystick1Button1) || Input.GetKeyDown(KeyCode.H)) && isInertiaUnlocked)
 			{
-				ToggleInertia();
+				ToggleInertia(true);
 			}
-			else if ((Input.GetKeyDown(KeyCode.Joystick1Button2) || Input.GetKeyDown(KeyCode.F)
-				|| Input.GetKeyUp(KeyCode.Joystick1Button2) || Input.GetKeyUp(KeyCode.F)) && isBrownianUnlocked)
+			else if ((Input.GetKeyDown(KeyCode.Joystick1Button2) || Input.GetKeyDown(KeyCode.F)) && isBrownianUnlocked)
 			{
-				ToggleBrownianMovement();
+				ToggleBrownianMovement(false);
 			}
-			else if ((Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.T)
-				|| Input.GetKeyUp(KeyCode.Joystick1Button3) || Input.GetKeyUp(KeyCode.T)) && isVDWUnlocked)
+			else if ((Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.T)) && isVDWUnlocked)
 			{
-				ToggleVanDerWaals();
+				ToggleVanDerWaals(false);
 			}
-		}
+
+            if ((Input.GetKeyUp(KeyCode.Joystick1Button0) || Input.GetKeyUp(KeyCode.G)) && isGravityUnlocked)
+            {
+                ToggleGravity(false);
+            }
+            else if ((Input.GetKeyUp(KeyCode.Joystick1Button1) || Input.GetKeyUp(KeyCode.H)) && isInertiaUnlocked)
+            {
+                ToggleInertia(false);
+            }
+            else if ((Input.GetKeyUp(KeyCode.Joystick1Button2) || Input.GetKeyUp(KeyCode.F)) && isBrownianUnlocked)
+            {
+                ToggleBrownianMovement(true);
+            }
+            else if ((Input.GetKeyUp(KeyCode.Joystick1Button3) || Input.GetKeyUp(KeyCode.T)) && isVDWUnlocked)
+            {
+                ToggleVanDerWaals(true);
+            }
+
+        }
 
 		if (Input.GetKeyDown(KeyCode.R)) // TODO remove it for GOLD version
         {
@@ -130,31 +146,38 @@ public class GameManager : MonoBehaviour {
 	void FixedUpdate() {
 		HandleSaturationBar ();
 	}
-    public void ToggleGravity()
+    public void ToggleGravity(bool bActivate)
     {
-		Player.HasGravity = !Player.HasGravity;
-		ColoriseButton (Player.HasGravity, "Gravity_Button");
+        if (bActivate == true)
+            StopAnyActivePower();
+
+		Player.HasGravity = bActivate;
+		ColoriseButton(Player.HasGravity, "Gravity_Button");
 
 		// We stop the others
-		if (Player.HasGravity) {
+		/*if (Player.HasGravity) {
 			if (Player.HasInertia)
 				ToggleInertia ();
 			if (!Player.brownianBehaviour.canFeelBrownian)
 				ToggleBrownianMovement ();
 			if (!Player.CanFeelVDW)
 				ToggleVanDerWaals ();
-		}
+		}*/
+
 		// VICKY: I think we need to remove those 2 lines to get rid of the bug where we get unstuck from walls when activating gravity
-		if (Player.IsStuck) {
-			Player.IsStuck = false;
-		
-		}
+		//if (Player.IsStuck) {
+		//	Player.IsStuck = false;		
+		//}
     }
-    public void ToggleInertia()
+    public void ToggleInertia(bool bActivate)
     {
-        Player.HasInertia = !Player.HasInertia;
+        if (bActivate == true)
+            StopAnyActivePower();
+
+        Player.HasInertia = bActivate;
         ColoriseButton(Player.HasInertia, "Inertia_Button");
 
+        /*
         // We stop the others
         if (Player.HasInertia)
         {
@@ -164,14 +187,18 @@ public class GameManager : MonoBehaviour {
                 ToggleBrownianMovement();
             if (!Player.CanFeelVDW)
                 ToggleVanDerWaals();
-        }
+        }*/
     }
 		
-    public void ToggleBrownianMovement()
-	{
-		Player.brownianBehaviour.canFeelBrownian = !Player.brownianBehaviour.canFeelBrownian;
+    public void ToggleBrownianMovement(bool bActivate)
+    {
+        if (bActivate == false)
+            StopAnyActivePower();
+
+        Player.brownianBehaviour.canFeelBrownian = !Player.brownianBehaviour.canFeelBrownian;
 		ColoriseButton (!Player.brownianBehaviour.canFeelBrownian, "Brownian_Button");
 
+        /*
 		// We stop the others
 		if (!Player.brownianBehaviour.canFeelBrownian) {
 			if (Player.HasGravity)
@@ -180,12 +207,15 @@ public class GameManager : MonoBehaviour {
 				ToggleInertia ();
 			if (!Player.CanFeelVDW)
 				ToggleVanDerWaals ();
-		}
+		}*/
 	}
 
-    public void ToggleVanDerWaals()
+    public void ToggleVanDerWaals(bool bActivate)
     {
-		if (Player.CanFeelVDW)
+        if (bActivate == false)
+            StopAnyActivePower();
+
+        if (Player.CanFeelVDW)
         {
             Player.IsStuck = false;
             Player.CanFeelVDW = false;
@@ -202,6 +232,7 @@ public class GameManager : MonoBehaviour {
             ColoriseButton(false, "VDW_Button");
         }
 
+        /*
         // We stop the others
         if (!Player.CanFeelVDW)
         {
@@ -211,7 +242,7 @@ public class GameManager : MonoBehaviour {
                 ToggleInertia();
             if (!Player.brownianBehaviour.canFeelBrownian)
                 ToggleBrownianMovement();
-        }
+        }*/
     }
 
     private void ColoriseButton(bool boolean, string button)
@@ -279,13 +310,13 @@ public class GameManager : MonoBehaviour {
     public void StopAnyActivePower()
     {
         if (Player.HasInertia)
-            ToggleInertia();
+            ToggleInertia(false);
         if (Player.HasGravity)
-            ToggleGravity();
+            ToggleGravity(false);
         if (!Player.CanFeelVDW)
-            ToggleVanDerWaals();
+            ToggleVanDerWaals(true);
         if (!Player.brownianBehaviour.canFeelBrownian)
-            ToggleBrownianMovement();
+            ToggleBrownianMovement(true);
     }
 
 	public void LockAllPowers() {

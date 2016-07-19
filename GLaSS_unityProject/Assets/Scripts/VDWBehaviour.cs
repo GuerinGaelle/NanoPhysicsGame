@@ -47,7 +47,7 @@ public class VDWBehaviour : MonoBehaviour {
     void Stuck(GameObject obj)
     {
         if (obj.GetComponent<CharacterBehaviour>().HasInertia)
-            GameManager.Instance.ToggleInertia();
+            GameManager.Instance.ToggleInertia(false);
 
         switch (typeOfVDW)
         {
