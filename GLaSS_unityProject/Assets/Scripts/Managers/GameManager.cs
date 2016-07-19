@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour {
                 alreadyDeactivated = true;
             }     
 		}
-		else // VICKY: need to reorganize those to correct the bug of activating 2 powers same time and make first one toggle (check earlier bug report on slack)
+		else 
 		{
 			if ((Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.G)) && isGravityUnlocked) 
 			{
