@@ -8,11 +8,12 @@ public class PowerControl : MonoBehaviour {
 		gravity,
 		inertia,
 		brownian,
-		VDW
+		VDW,
+		manager
 	}
 
 	public powerIntro power;
-	public float waitTimeUI = 6f;
+	private float waitTimeUI = 6f;		// to delete if not used!
 	public bool gameTutActive = false;
 
 
@@ -98,6 +99,8 @@ public class PowerControl : MonoBehaviour {
 				vdwTutGame.SetActive (true);
 				gameTutActive = true;
 			}
+			break;
+		default:
 			break;
 		}
 	}
