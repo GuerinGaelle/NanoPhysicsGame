@@ -5,7 +5,8 @@ public enum VDW_Type
 {
     StuckToPlayer,
     StuckToObject_moving,
-    StuckToObject_static
+    StuckToObject_static,
+	KillingWall
 }
 
 [RequireComponent(typeof(DistanceJoint2D))]
@@ -64,6 +65,9 @@ public class VDWBehaviour : MonoBehaviour {
             case VDW_Type.StuckToObject_static:
                 obj.GetComponent<CharacterBehaviour>().IsStuck = true;
                 break;
+			case VDW_Type.KillingWall:
+				GameManager.Instance.TouchedEnemy();
+				break;
             default:
                 break;
         }
