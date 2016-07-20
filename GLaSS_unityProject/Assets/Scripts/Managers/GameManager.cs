@@ -165,21 +165,6 @@ public class GameManager : MonoBehaviour {
 
 		Player.HasGravity = bActivate;
 		ColoriseButton(Player.HasGravity, "Gravity_Button");
-
-		// We stop the others
-		/*if (Player.HasGravity) {
-			if (Player.HasInertia)
-				ToggleInertia ();
-			if (!Player.brownianBehaviour.canFeelBrownian)
-				ToggleBrownianMovement ();
-			if (!Player.CanFeelVDW)
-				ToggleVanDerWaals ();
-		}*/
-
-		// VICKY: I think we need to remove those 2 lines to get rid of the bug where we get unstuck from walls when activating gravity
-		//if (Player.IsStuck) {
-		//	Player.IsStuck = false;		
-		//}
     }
     public void ToggleInertia(bool bActivate)
     {
@@ -188,18 +173,6 @@ public class GameManager : MonoBehaviour {
 
         Player.HasInertia = bActivate;
         ColoriseButton(Player.HasInertia, "Inertia_Button");
-
-        /*
-        // We stop the others
-        if (Player.HasInertia)
-        {
-            if (Player.HasGravity)
-                ToggleGravity();
-            if (!Player.brownianBehaviour.canFeelBrownian)
-                ToggleBrownianMovement();
-            if (!Player.CanFeelVDW)
-                ToggleVanDerWaals();
-        }*/
     }
 		
     public void ToggleBrownianMovement(bool bActivate)
@@ -207,19 +180,8 @@ public class GameManager : MonoBehaviour {
         if (bActivate == false)
             StopAnyActivePower();
 
-        Player.brownianBehaviour.canFeelBrownian = !Player.brownianBehaviour.canFeelBrownian;
-		ColoriseButton (!Player.brownianBehaviour.canFeelBrownian, "Brownian_Button");
-
-        /*
-		// We stop the others
-		if (!Player.brownianBehaviour.canFeelBrownian) {
-			if (Player.HasGravity)
-				ToggleGravity ();
-			if (Player.HasInertia)
-				ToggleInertia ();
-			if (!Player.CanFeelVDW)
-				ToggleVanDerWaals ();
-		}*/
+        Player.brownianBehaviour.canFeelBrownian = bActivate;
+		ColoriseButton (!bActivate, "Brownian_Button");
 	}
 
     public void ToggleVanDerWaals(bool bActivate)
@@ -227,34 +189,17 @@ public class GameManager : MonoBehaviour {
         if (bActivate == false)
             StopAnyActivePower();
 
+        Player.CanFeelVDW = bActivate;
+        ColoriseButton(!bActivate, "VDW_Button");
+
         if (Player.CanFeelVDW)
         {
             Player.IsStuck = false;
-            Player.CanFeelVDW = false;
-
-            foreach (VDWBehaviour vdwObj in GameObject.FindObjectsOfType<VDWBehaviour>())
+            foreach (VDWBehaviour vdwObj in FindObjectsOfType<VDWBehaviour>())
             {
                 vdwObj.StopJoint();
             }
-            ColoriseButton(true, "VDW_Button");
         }
-        else
-        {
-            Player.CanFeelVDW = true;
-            ColoriseButton(false, "VDW_Button");
-        }
-
-        /*
-        // We stop the others
-        if (!Player.CanFeelVDW)
-        {
-            if (Player.HasGravity)
-                ToggleGravity();
-            if (Player.HasInertia)
-                ToggleInertia();
-            if (!Player.brownianBehaviour.canFeelBrownian)
-                ToggleBrownianMovement();
-        }*/
     }
 
     private void ColoriseButton(bool boolean, string button)

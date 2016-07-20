@@ -34,8 +34,9 @@ public class CharacterBehaviour : MonoBehaviour {
             hasGravity = value;
             if (value == true)
             {
-                foreach (AreaEffector2D areaEffect2d in GameObject.FindObjectsOfType<AreaEffector2D>())
+                foreach (AreaEffector2D areaEffect2d in FindObjectsOfType<AreaEffector2D>())
                 {
+                    areaEffect2d.useColliderMask = true;
                     areaEffect2d.colliderMask -= 1 << LayerMask.NameToLayer("Player");
                 }
 
@@ -44,9 +45,9 @@ public class CharacterBehaviour : MonoBehaviour {
             }
             else
             {
-                foreach (AreaEffector2D areaEffect2d in GameObject.FindObjectsOfType<AreaEffector2D>())
+                foreach (AreaEffector2D areaEffect2d in FindObjectsOfType<AreaEffector2D>())
                 {
-                    areaEffect2d.colliderMask += 1 << LayerMask.NameToLayer("Player");
+                    areaEffect2d.useColliderMask = false;
                 }
 
                 //rigid.mass = 1;
