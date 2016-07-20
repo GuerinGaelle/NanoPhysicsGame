@@ -66,7 +66,7 @@ public class VDWBehaviour : MonoBehaviour {
                 obj.GetComponent<CharacterBehaviour>().IsStuck = true;
                 break;
 			case VDW_Type.KillingWall:
-				GameManager.Instance.TouchedEnemy();
+				GameManager.Instance.Death();
 				break;
             default:
                 break;
