@@ -192,7 +192,7 @@ public class GameManager : MonoBehaviour {
         Player.CanFeelVDW = bActivate;
         ColoriseButton(!bActivate, "VDW_Button");
 
-        if (Player.CanFeelVDW)
+        if (!Player.CanFeelVDW)
         {
             Player.IsStuck = false;
             foreach (VDWBehaviour vdwObj in FindObjectsOfType<VDWBehaviour>())
