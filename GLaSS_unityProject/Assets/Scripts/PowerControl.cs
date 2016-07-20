@@ -14,7 +14,8 @@ public class PowerControl : MonoBehaviour {
 
 	public powerIntro power;
 	private float waitTimeUI = 6f;		// to delete if not used!
-
+	private UIManager UI;
+	private GameManager Game;
 	/*// Gameplay Tutorial popups UI
 	private GameObject gravityTutGame;
 	private GameObject inertiaTutGame;
@@ -29,7 +30,10 @@ public class PowerControl : MonoBehaviour {
 
 	//-------------------------------------------//
 
-
+	void Awake() {
+		UI = FindObjectOfType<UIManager> ();
+		Game = FindObjectOfType<GameManager> ();
+	}
 
 
 	void OnTriggerEnter2D(Collider2D col) {
@@ -41,31 +45,35 @@ public class PowerControl : MonoBehaviour {
 	void PowerCheckpoints() {
 		switch (power) {
 		case powerIntro.gravity:
-			if (!GameManager.Instance.isGravityUnlocked) {
-				GameManager.Instance.UnlockPower ("gravity");
-				UIManager.Instance.gravityTutGame.SetActive (true);
-				UIManager.Instance.gameTutActive = true;
+			if (!Game.isGravityUnlocked) {
+				Game.UnlockPower ("gravity");
+				UI.gravityTutGame.SetActive (true);
+				UI.gameTutActive = true;
+				UI.tutList.Add (UI.gravityTutGame);
 			}
 			break;
 		case powerIntro.brownian:
-			if (!GameManager.Instance.isBrownianUnlocked) {
-				GameManager.Instance.UnlockPower ("brownian");
-				UIManager.Instance.brownianTutGame.SetActive (true);
-				UIManager.Instance.gameTutActive = true;
+			if (!Game.isBrownianUnlocked) {
+				Game.UnlockPower ("brownian");
+				UI.brownianTutGame.SetActive (true);
+				UI.gameTutActive = true;
+				UI.tutList.Add (UI.brownianTutGame);
 			}
 			break;
 		case powerIntro.inertia:
-			if (!GameManager.Instance.isInertiaUnlocked) {
-				GameManager.Instance.UnlockPower ("inertia");
-				UIManager.Instance.inertiaTutGame.SetActive (true);
-				UIManager.Instance.gameTutActive = true;
+			if (!Game.isInertiaUnlocked) {
+				Game.UnlockPower ("inertia");
+				UI.inertiaTutGame.SetActive (true);
+				UI.gameTutActive = true;
+				UI.tutList.Add (UI.inertiaTutGame);
 			}
 			break;
 		case powerIntro.VDW:
-			if (!GameManager.Instance.isVDWUnlocked) {
-				GameManager.Instance.UnlockPower ("vdw");
-				UIManager.Instance.vdwTutGame.SetActive (true);
-				UIManager.Instance.gameTutActive = true;
+			if (!Game.isVDWUnlocked) {
+				Game.UnlockPower ("vdw");
+				UI.vdwTutGame.SetActive (true);
+				UI.gameTutActive = true;
+				UI.tutList.Add (UI.vdwTutGame);
 			}
 			break;
 		default:
@@ -74,8 +82,11 @@ public class PowerControl : MonoBehaviour {
 	}
 		
 	IEnumerator WaitAndCloseUI() {
-		yield return new WaitForSeconds (waitTimeUI);
-		UIManager.Instance.gravityTutGame.SetActive (false);
+		//yield return new WaitForSeconds (waitTimeUI);
+		yield return new WaitForEndOfFrame();
+		UI.saturationTutGame.SetActive (true);
+
+		//UI.gravityTutGame.SetActive (false);
 	}
 		
 
