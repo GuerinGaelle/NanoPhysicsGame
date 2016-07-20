@@ -49,7 +49,7 @@ public class CrushingWalls : MonoBehaviour {
     {
         if (isCrushing && other.transform.tag == "Player")
         {
-            GameManager.Instance.TouchedEnemy();
+            GameManager.Instance.Death();
         }
     }
 }

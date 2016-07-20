@@ -149,6 +149,7 @@ public class GameManager : MonoBehaviour {
 
 		if (Input.GetKeyDown(KeyCode.R)) // TODO remove it for GOLD version
         {
+            SceneManager.LoadScene(SceneManager.GetSceneAt(0).ToString());
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
@@ -270,7 +271,7 @@ public class GameManager : MonoBehaviour {
         GameObject.Find(button).GetComponent<Button>().colors = newColorBlock;
     }
 
-    public void TouchedEnemy()
+    public void Death()
     {
         if (Player.animator.GetBool("isAlive"))
         {
@@ -283,10 +284,14 @@ public class GameManager : MonoBehaviour {
     void DestroyPlayer()
     {  
         Instantiate(feedbackVDW, Player.transform.position, Quaternion.identity);
-		Player.gameObject.transform.position = Checkpoint;
+        foreach (VDWBehaviour vdwObj in GameObject.FindObjectsOfType<VDWBehaviour>())
+        {
+            vdwObj.StopJoint();
+        }
+        Player.IsStuck = false;
+        Player.gameObject.transform.position = Checkpoint;
 		Player.gameObject.transform.rotation = new Quaternion ();
 		Player.animator.SetBool ("isAlive", true);
-		Player.IsStuck = false;
     }
 
 	public void HandleSaturationBar() {

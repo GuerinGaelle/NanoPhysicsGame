@@ -164,7 +164,7 @@ public class Enemy : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D co) {
 		if (co.gameObject.tag == "Player")
         {
-            GameManager.Instance.TouchedEnemy();
+            GameManager.Instance.Death();
         }		
 	}
 }

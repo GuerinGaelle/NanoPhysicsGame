@@ -39,7 +39,7 @@ public class CharacterBehaviour : MonoBehaviour {
                     areaEffect2d.colliderMask -= 1 << LayerMask.NameToLayer("Player");
                 }
 
-                rigid.mass = 3;
+                //rigid.mass = 3;
                 //IsStuck = false;
             }
             else
@@ -49,7 +49,7 @@ public class CharacterBehaviour : MonoBehaviour {
                     areaEffect2d.colliderMask += 1 << LayerMask.NameToLayer("Player");
                 }
 
-                rigid.mass = 1;
+                //rigid.mass = 1;
             }    
         }
     }

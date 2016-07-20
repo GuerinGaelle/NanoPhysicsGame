@@ -7,7 +7,7 @@ public class KillingTouch : MonoBehaviour {
     {
         if (co.gameObject.tag == "Player")
         {
-            GameManager.Instance.TouchedEnemy();
+            GameManager.Instance.Death();
         }
     }
 }
