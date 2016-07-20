@@ -30,10 +30,10 @@ public class UIManager : MonoBehaviour {
 
 		//UI = FindObjectOfType<Canvas> ();
 		Game = FindObjectOfType<GameManager> ();
-		gravityTutGame = GameObject.Find ("Tutorial Gravity");
-		inertiaTutGame = GameObject.Find ("Tutorial Inertia");
-		brownianTutGame = GameObject.Find ("Tutorial Brownian");
-		vdwTutGame = GameObject.Find ("Tutorial VDW");
+		//gravityTutGame = GameObject.Find ("Tutorial Gravity");
+		//inertiaTutGame = GameObject.Find ("Tutorial Inertia");
+		//brownianTutGame = GameObject.Find ("Tutorial Brownian");
+		//vdwTutGame = GameObject.Find ("Tutorial VDW");
 
 	}
 
