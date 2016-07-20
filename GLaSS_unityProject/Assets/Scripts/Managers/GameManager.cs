@@ -56,6 +56,9 @@ public class GameManager : MonoBehaviour {
 			saturationBar.value = value;
 		}
 	}
+
+
+    private int nbDeathInLevel = 0;
     //-------------------------------------------------//
 
     void Awake()
@@ -220,6 +223,7 @@ public class GameManager : MonoBehaviour {
     {
         if (Player.animator.GetBool("isAlive"))
         {
+            nbDeathInLevel++;
             Player.IsStuck = true;
             Player.animator.SetBool("isAlive", false);
             Invoke("DestroyPlayer", 0.5f);
@@ -345,7 +349,20 @@ public class GameManager : MonoBehaviour {
 			brownianButtonImage.color = new Color32 (128, 128, 255, 255);
 			vdwButtonImage.color = new Color32 (255, 255, 128, 255);
 		}
-
-
 	}
+
+    public void LevelFinished()
+    {
+        Scene activeScene = SceneManager.GetActiveScene();
+
+        CustomData customData = new CustomData();
+        customData.Add("NUMBER_OF_DEATH", nbDeathInLevel.ToString());
+        customData.Add("LEVEL_NAME", activeScene.ToString());
+        RedMetricsManager.get().sendEvent(TrackingEvent.DEATH_AVERAGE, customData);
+
+        // Not necessary since we are not keeping any object between scenes. But if so, we should do this.
+        nbDeathInLevel = 0;
+
+        SceneManager.LoadScene(activeScene.buildIndex + 1, LoadSceneMode.Single);
+    }
 }

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum TrackingEvent {
-	//standard events
+public enum TrackingEvent
+{
 	DEFAULT,
 	CREATEPLAYER,
 	START,
@@ -12,9 +12,11 @@ public enum TrackingEvent {
 	RESTART,
 	GAIN,
 	LOSE,
-
-	//other examples of events
 	CHANGEPLAYER,
 	JUMP,
-	BOUNCE
+	BOUNCE,
+
+    DEATH_POSITION,
+    DEATH_AVERAGE,
+    QUIT_POSITION
 }
