@@ -263,6 +263,7 @@ public class GameManager : MonoBehaviour {
         Player.IsStuck = false;
         Player.gameObject.transform.position = Checkpoint;
 		Player.gameObject.transform.rotation = new Quaternion ();
+		saturationBar.value = 0;
 		Player.animator.SetBool ("isAlive", true);
     }
 
