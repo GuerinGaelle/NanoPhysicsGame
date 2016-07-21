@@ -355,7 +355,7 @@ public class GameManager : MonoBehaviour {
 				brownianButtonImage.color = new Color32 (128, 128, 255, 255);
 			if (isVDWUnlocked)
 				vdwButtonImage.color = new Color32 (255, 255, 128, 255);
-		} else if (s == "no tutorial") {			// cheat for developing!
+		} else if (s == "no tutorial") {			// cheat for developing! unlocks everything
 			isGravityUnlocked = true;
 			isBrownianUnlocked = true;
 			isVDWUnlocked = true;
