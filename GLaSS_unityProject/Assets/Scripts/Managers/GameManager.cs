@@ -328,20 +328,25 @@ public class GameManager : MonoBehaviour {
 
 	public void UnlockPower(string s) {
 		lockedPowers = false;
-
+		// normal unlocking
 		if (s == "gravity") {
 			gravityButtonImage.color = new Color32 (128, 255, 128, 255);
 			isGravityUnlocked = true;
+			UIManager.Instance.tutList.Add (UIManager.Instance.gravityTutGame);
+			UIManager.Instance.tutList.Add (UIManager.Instance.saturationTutGame);
 		} else if (s == "inertia") {
 			inertiaButtonImage.color = new Color32 (255, 128, 128, 255);
 			isInertiaUnlocked = true;
+			UIManager.Instance.tutList.Add (UIManager.Instance.inertiaTutGame);
 		} else if (s == "brownian") {
 			brownianButtonImage.color = new Color32 (128, 128, 255, 255);
 			isBrownianUnlocked = true;
+			UIManager.Instance.tutList.Add (UIManager.Instance.brownianTutGame);
 		} else if (s == "vdw") {
 			vdwButtonImage.color = new Color32 (255, 255, 128, 255);
 			isVDWUnlocked = true;
-		} else if (s == "all") {
+			UIManager.Instance.tutList.Add (UIManager.Instance.vdwTutGame);
+		} else if (s == "all") {				// after saturation bar is to 0%:
 			if (isGravityUnlocked)
 				gravityButtonImage.color = new Color32 (128, 255, 128, 255);
 			if (isInertiaUnlocked)
@@ -350,7 +355,7 @@ public class GameManager : MonoBehaviour {
 				brownianButtonImage.color = new Color32 (128, 128, 255, 255);
 			if (isVDWUnlocked)
 				vdwButtonImage.color = new Color32 (255, 255, 128, 255);
-		} else if (s == "no tutorial") {
+		} else if (s == "no tutorial") {			// cheat for developing!
 			isGravityUnlocked = true;
 			isBrownianUnlocked = true;
 			isVDWUnlocked = true;
@@ -360,6 +365,12 @@ public class GameManager : MonoBehaviour {
 			inertiaButtonImage.color = new Color32 (255, 128, 128, 255);
 			brownianButtonImage.color = new Color32 (128, 128, 255, 255);
 			vdwButtonImage.color = new Color32 (255, 255, 128, 255);
+
+			UIManager.Instance.tutList.Add (UIManager.Instance.gravityTutGame);
+			UIManager.Instance.tutList.Add (UIManager.Instance.saturationTutGame);
+			UIManager.Instance.tutList.Add (UIManager.Instance.brownianTutGame);
+			UIManager.Instance.tutList.Add (UIManager.Instance.vdwTutGame);
+			UIManager.Instance.tutList.Add (UIManager.Instance.inertiaTutGame);
 		}
 	}
 
