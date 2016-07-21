@@ -36,23 +36,20 @@ public class UIManager : MonoBehaviour {
 	private float h;
 	private string input;
 	private bool gotInput;
+	//public Animator animRight;
 
 	//-------------------------------------------//
 
 	void Awake() {
 		if (Instance == null)
 			Instance = this;
-
-		//UI = FindObjectOfType<Canvas> ();
+		
 		Game = FindObjectOfType<GameManager> ();
-
-
-
-
+		//animRight = transform.FindChild("AnimRightSlide").GetComponent<Animator> ();
 	}
 
 	void Start() {
-		CloseAllPopups ();
+		CloseAllPopups ();				//  close all active UI windows, if any
 	}
 
 	void Update() {
@@ -61,8 +58,8 @@ public class UIManager : MonoBehaviour {
 				PauseGame ();
 			// TODO later: disable "pressing" powers while paused!
 			if (Input.GetKeyDown (KeyCode.JoystickButton5) || Input.GetKeyDown (KeyCode.P)) { 		// TO CLOSE. if u press RB then close the popup and resume the game 
-				revisit = false;
-				i = 0;
+				revisit = false;						// we are not revisiting the tutorials anymore
+				i = 0;									// reset it to zero			
 				CloseAllPopups ();
 				ResumeGame ();
 				if (!tutList.Contains (saturationTutGame)) {					// if we haven't seen saturiation tutorial yet, show it
@@ -77,6 +74,7 @@ public class UIManager : MonoBehaviour {
 				
 				if (tutList.Count > 0) {
 					item = tutList [i] as GameObject;
+					//animRight.
 					item.SetActive (true);
 					revisit = true;
 					if (!paused) {
@@ -146,7 +144,7 @@ public class UIManager : MonoBehaviour {
 		//Debug.Log ("mpe");
 	}
 
-	void CloseAllPopups() {
+	public void CloseAllPopups() {
 		// Gameplay tutorial popups
 		foreach (GameObject tut in tutList) { 
 			tut.SetActive (false);
