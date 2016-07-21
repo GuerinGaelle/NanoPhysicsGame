@@ -10,4 +10,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Credits.unity
   - enabled: 1
-    path: Assets/Scenes/LD_Test_Cindy.unity
+    path: Assets/Scenes/Level 0 version Adrien.unity
+  - enabled: 1
+    path: Assets/Scenes/Level 1.unity
+  - enabled: 1
+    path: Assets/Scenes/Level 2.unity
+  - enabled: 1
+    path: Assets/Scenes/Level 3.unity
