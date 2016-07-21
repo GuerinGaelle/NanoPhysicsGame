@@ -82,15 +82,27 @@ public class GameManager : MonoBehaviour {
 	
 	void Start() {
 		// TODO : Delete it from here when we are dealing with normal level progression. 
-		if (SceneManager.GetActiveScene ().name == "Level 2") {			// Level 2 has already gravity unlocked
+		if (SceneManager.GetActiveScene ().name == "Level 0 version Adrien") {
+			LockedAllPowers ();
+		} else if (SceneManager.GetActiveScene ().name == "LD_Test_Anne") {		// Level 1  has already gravity unlocked
+			LockedAllPowers ();
+			UnlockPower ("gravity");
+		} else if (SceneManager.GetActiveScene ().name == "Level 2") {			// Level 2 has already gravity unlocked
 			Debug.Log ("level 2");
 			LockedAllPowers ();
 			UnlockPower ("gravity");
-		} else if (SceneManager.GetActiveScene().name == "LD_Test_Vicky") {		// All powers are locked
+		} else if (SceneManager.GetActiveScene ().name == "LD_Test_Vicky") {		// All powers are locked
 			LockedAllPowers ();
-		} 
+		} else if (SceneManager.GetActiveScene ().name == "Level 3" || SceneManager.GetActiveScene ().name == "Level 3 version Adrien") {
+			LockedAllPowers ();
+			UnlockPower ("gravity");
+			UnlockPower ("brownian");
+			UnlockPower ("vdw");
+		}
+
 		else {																 // default level: all powers are already unlocked
 			UnlockPower ("no tutorial");
+			UIManager.Instance.CloseAllPopups();
 		}
 	}
 
@@ -227,6 +239,14 @@ public class GameManager : MonoBehaviour {
             Player.IsStuck = true;
             Player.animator.SetBool("isAlive", false);
             Invoke("DestroyPlayer", 0.5f);
+
+            Vector2 _deathPos = new Vector2((int)Player.transform.position.x, (int)Player.transform.position.y);
+
+            CustomData customData = new CustomData();
+            customData.Add("POSITION", Player.transform.position.ToString());
+            customData.Add("LEVEL_NAME", SceneManager.GetActiveScene().name);
+            RedMetricsManager.get().sendEvent(TrackingEvent.DEATH_POSITION, customData);
+
         }  
     }
 
@@ -357,7 +377,7 @@ public class GameManager : MonoBehaviour {
 
         CustomData customData = new CustomData();
         customData.Add("NUMBER_OF_DEATH", nbDeathInLevel.ToString());
-        customData.Add("LEVEL_NAME", activeScene.ToString());
+        customData.Add("LEVEL_NAME", activeScene.name);
         RedMetricsManager.get().sendEvent(TrackingEvent.DEATH_AVERAGE, customData);
 
         // Not necessary since we are not keeping any object between scenes. But if so, we should do this.
