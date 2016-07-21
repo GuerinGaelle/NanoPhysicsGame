@@ -1476,8 +1476,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1775f48f3e8ff245961cfe9d45740ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  introMusic: {fileID: 0}
-  loopingMusic: {fileID: 0}
+  introMusic: {fileID: 8300000, guid: 8492c3a43eb94f249b07591aba8681b8, type: 3}
+  loopingMusic: {fileID: 8300000, guid: 9b374322071783f429d1b60542235ab2, type: 3}
 --- !u!1 &1395377677
 GameObject:
   m_ObjectHideFlags: 0
