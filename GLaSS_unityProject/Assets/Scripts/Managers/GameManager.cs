@@ -227,6 +227,14 @@ public class GameManager : MonoBehaviour {
             Player.IsStuck = true;
             Player.animator.SetBool("isAlive", false);
             Invoke("DestroyPlayer", 0.5f);
+
+            Vector2 _deathPos = new Vector2((int)Player.transform.position.x, (int)Player.transform.position.y);
+
+            CustomData customData = new CustomData();
+            customData.Add("POSITION", Player.transform.position.ToString());
+            customData.Add("LEVEL_NAME", SceneManager.GetActiveScene().name);
+            RedMetricsManager.get().sendEvent(TrackingEvent.DEATH_POSITION, customData);
+
         }  
     }
 
@@ -357,7 +365,7 @@ public class GameManager : MonoBehaviour {
 
         CustomData customData = new CustomData();
         customData.Add("NUMBER_OF_DEATH", nbDeathInLevel.ToString());
-        customData.Add("LEVEL_NAME", activeScene.ToString());
+        customData.Add("LEVEL_NAME", activeScene.name);
         RedMetricsManager.get().sendEvent(TrackingEvent.DEATH_AVERAGE, customData);
 
         // Not necessary since we are not keeping any object between scenes. But if so, we should do this.
