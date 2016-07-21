@@ -13,20 +13,8 @@ public class PowerControl : MonoBehaviour {
 	}
 
 	public powerIntro power;
-	private float waitTimeUI = 6f;		// to delete if not used!
 	private UIManager UI;
 	private GameManager Game;
-	/*// Gameplay Tutorial popups UI
-	private GameObject gravityTutGame;
-	private GameObject inertiaTutGame;
-	private GameObject brownianTutGame;
-	private GameObject vdwTutGame;
-
-	// Scientific Tutorial popups UI: ++++ not done yet
-	private GameObject gravityTutScience;
-	private GameObject inertiaTutScience;
-	private GameObject brownianTutScience;
-	private GameObject vdwTutScience;*/
 
 	//-------------------------------------------//
 
@@ -45,7 +33,7 @@ public class PowerControl : MonoBehaviour {
 	void PowerCheckpoints() {
 		switch (power) {
 		case powerIntro.gravity:
-			if (!Game.isGravityUnlocked) {
+			if (!Game.isGravityUnlocked) {				// if gravity is not unlocked yet, unlock it and show the tutorial
 				Game.UnlockPower ("gravity");
 				UI.gravityTutGame.SetActive (true);
 				UI.gameTutActive = true;
@@ -80,14 +68,4 @@ public class PowerControl : MonoBehaviour {
 			break;
 		}
 	}
-		
-	IEnumerator WaitAndCloseUI() {
-		//yield return new WaitForSeconds (waitTimeUI);
-		yield return new WaitForEndOfFrame();
-		UI.saturationTutGame.SetActive (true);
-
-		//UI.gravityTutGame.SetActive (false);
-	}
-		
-
 }

@@ -82,15 +82,27 @@ public class GameManager : MonoBehaviour {
 	
 	void Start() {
 		// TODO : Delete it from here when we are dealing with normal level progression. 
-		if (SceneManager.GetActiveScene ().name == "Level 2") {			// Level 2 has already gravity unlocked
+		if (SceneManager.GetActiveScene ().name == "Level 0 version Adrien") {
+			LockedAllPowers ();
+		} else if (SceneManager.GetActiveScene ().name == "LD_Test_Anne") {		// Level 1  has already gravity unlocked
+			LockedAllPowers ();
+			UnlockPower ("gravity");
+		} else if (SceneManager.GetActiveScene ().name == "Level 2") {			// Level 2 has already gravity unlocked
 			Debug.Log ("level 2");
 			LockedAllPowers ();
 			UnlockPower ("gravity");
-		} else if (SceneManager.GetActiveScene().name == "LD_Test_Vicky") {		// All powers are locked
+		} else if (SceneManager.GetActiveScene ().name == "LD_Test_Vicky") {		// All powers are locked
 			LockedAllPowers ();
-		} 
+		} else if (SceneManager.GetActiveScene ().name == "Level 3" || SceneManager.GetActiveScene ().name == "Level 3 version Adrien") {
+			LockedAllPowers ();
+			UnlockPower ("gravity");
+			UnlockPower ("brownian");
+			UnlockPower ("vdw");
+		}
+
 		else {																 // default level: all powers are already unlocked
 			UnlockPower ("no tutorial");
+			UIManager.Instance.CloseAllPopups();
 		}
 	}
 
