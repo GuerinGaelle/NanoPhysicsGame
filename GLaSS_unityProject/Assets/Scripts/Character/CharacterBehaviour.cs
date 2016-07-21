@@ -37,7 +37,7 @@ public class CharacterBehaviour : MonoBehaviour {
                 foreach (AreaEffector2D areaEffect2d in FindObjectsOfType<AreaEffector2D>())
                 {
                     areaEffect2d.useColliderMask = true;
-                    rigid.drag = 150;
+                    rigid.drag = 300;
                 }
             }
             else
