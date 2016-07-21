@@ -23,19 +23,15 @@ public class UIManager : MonoBehaviour {
 	public GameObject brownianTutScience;
 	public GameObject vdwTutScience;
 
-	public Button nextButton;
-
-
-	//public GameObject[] gameTutArray;
 	public ArrayList tutList = new ArrayList();
-	private int i = 0;
-	private GameObject item;
 	public bool paused = false;
 	public bool revisit = false;
 
-	private float h;
-	private string input;
-	private bool gotInput;
+	public int i = 0;
+	public GameObject item;
+	public float h;
+	public string input;
+	public bool gotInput;
 	//public Animator animRight;
 
 	//-------------------------------------------//
@@ -63,6 +59,7 @@ public class UIManager : MonoBehaviour {
 				CloseAllPopups ();
 				ResumeGame ();
 				if (!tutList.Contains (saturationTutGame)) {					// if we haven't seen saturiation tutorial yet, show it
+					Debug.Log("saturation");
 					saturationTutGame.SetActive (true);
 					gameTutActive = true;
 					tutList.Add (saturationTutGame);
@@ -86,12 +83,12 @@ public class UIManager : MonoBehaviour {
 
 		if (revisit) {
 			h = Input.GetAxis ("Horizontal");
-			if (h == 1f) {
+			if ((h >= 0.7f && h <= 1f) || Input.GetKeyDown(KeyCode.RightArrow)) {
 				input = "right";
 				gotInput = true;
 				StartCoroutine ("WaitForQuiet");
 
-			} else if (h == -1) {
+			} else if ((h <= -0.7f && h >= -1) || Input.GetKeyDown(KeyCode.LeftArrow)) {
 				input = "left";
 				gotInput = true;
 				StartCoroutine ("WaitForQuiet");
@@ -127,8 +124,6 @@ public class UIManager : MonoBehaviour {
 	public void ShowPrevious() {
 		i--;
 		if (i < 0) {									// if we reach the first tutorial, go to the last one
-			Debug.Log ("i: " + i);
-			Debug.Log ("i is SMALL!");
 			i = tutList.Count-1;
 		}
 		item.SetActive (false);
@@ -136,13 +131,7 @@ public class UIManager : MonoBehaviour {
 		item.SetActive (true);
 		gotInput = false;
 	}
-
-	public void ShowTutorial() {
-		gameTutActive = true;
-		item = tutList [i] as GameObject;
-		item.SetActive (true);
-		//Debug.Log ("mpe");
-	}
+		
 
 	public void CloseAllPopups() {
 		// Gameplay tutorial popups

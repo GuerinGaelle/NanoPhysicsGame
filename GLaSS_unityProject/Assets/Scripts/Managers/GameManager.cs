@@ -86,18 +86,21 @@ public class GameManager : MonoBehaviour {
 			LockedAllPowers ();
 		} else if (SceneManager.GetActiveScene ().name == "LD_Test_Anne") {		// Level 1  has already gravity unlocked
 			LockedAllPowers ();
-			UnlockPower ("gravity");
+			UnlockPower ("gravity cheat");
+			UnlockPower ("saturation cheat");
 		} else if (SceneManager.GetActiveScene ().name == "Level 2") {			// Level 2 has already gravity unlocked
 			Debug.Log ("level 2");
 			LockedAllPowers ();
-			UnlockPower ("gravity");
+			UnlockPower ("gravity cheat");
+			UnlockPower ("saturation cheat");
 		} else if (SceneManager.GetActiveScene ().name == "LD_Test_Vicky") {		// All powers are locked
 			LockedAllPowers ();
 		} else if (SceneManager.GetActiveScene ().name == "Level 3" || SceneManager.GetActiveScene ().name == "Level 3 version Adrien") {
 			LockedAllPowers ();
-			UnlockPower ("gravity");
-			UnlockPower ("brownian");
-			UnlockPower ("vdw");
+			UnlockPower ("gravity cheat");
+			UnlockPower ("saturation cheat");
+			UnlockPower ("brownian cheat");
+			UnlockPower ("vdw cheat");
 		}
 
 		else {																 // default level: all powers are already unlocked
@@ -340,21 +343,42 @@ public class GameManager : MonoBehaviour {
 		if (s == "gravity") {
 			gravityButtonImage.color = new Color32 (128, 255, 128, 255);
 			isGravityUnlocked = true;
-			UIManager.Instance.tutList.Add (UIManager.Instance.gravityTutGame);
-			UIManager.Instance.tutList.Add (UIManager.Instance.saturationTutGame);
 		} else if (s == "inertia") {
 			inertiaButtonImage.color = new Color32 (255, 128, 128, 255);
 			isInertiaUnlocked = true;
-			UIManager.Instance.tutList.Add (UIManager.Instance.inertiaTutGame);
+
 		} else if (s == "brownian") {
 			brownianButtonImage.color = new Color32 (128, 128, 255, 255);
 			isBrownianUnlocked = true;
-			UIManager.Instance.tutList.Add (UIManager.Instance.brownianTutGame);
+
 		} else if (s == "vdw") {
 			vdwButtonImage.color = new Color32 (255, 255, 128, 255);
 			isVDWUnlocked = true;
-			UIManager.Instance.tutList.Add (UIManager.Instance.vdwTutGame);
-		} else if (s == "all") {				// after saturation bar is to 0%:
+		
+		}					// unlocking powers through GameManager (cheat!)
+							// TODO: delete for gold version
+		else if (s == "gravity cheat") {
+				gravityButtonImage.color = new Color32 (128, 255, 128, 255);
+				isGravityUnlocked = true;
+				UIManager.Instance.tutList.Add (UIManager.Instance.gravityTutGame);
+			} else if (s == "saturation cheat") {
+				UIManager.Instance.tutList.Add (UIManager.Instance.saturationTutGame);
+			}
+			else if (s == "inertia cheat") {
+				inertiaButtonImage.color = new Color32 (255, 128, 128, 255);
+				isInertiaUnlocked = true;
+				UIManager.Instance.tutList.Add (UIManager.Instance.inertiaTutGame);
+			} else if (s == "brownian cheat") {
+				brownianButtonImage.color = new Color32 (128, 128, 255, 255);
+				isBrownianUnlocked = true;
+				UIManager.Instance.tutList.Add (UIManager.Instance.brownianTutGame);
+			} else if (s == "vdw cheat") {
+				vdwButtonImage.color = new Color32 (255, 255, 128, 255);
+				isVDWUnlocked = true;
+				UIManager.Instance.tutList.Add (UIManager.Instance.vdwTutGame);	
+		}
+
+		else if (s == "all") {				// after saturation bar is to 0%:
 			if (isGravityUnlocked)
 				gravityButtonImage.color = new Color32 (128, 255, 128, 255);
 			if (isInertiaUnlocked)
