@@ -109,8 +109,10 @@ public class CharacterBehaviour : MonoBehaviour {
     public Animator animator;
 
     private bool isInForceCurrent;
-
     public Vector2 actualWantedVelocity;
+
+    private Vector3 scaleRight = new Vector3(1, 1, 1);
+    private Vector3 scaleLeft = new Vector3(1, -1, 1);
 
     //-------------------------------------------------//
 
@@ -128,6 +130,13 @@ public class CharacterBehaviour : MonoBehaviour {
         actualWantedVelocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (actualWantedVelocity.magnitude > 1)
             actualWantedVelocity.Normalize();
+
+        // We change the scale depending on the orientation
+        if (actualWantedVelocity.x < 0 && transform.localScale != scaleLeft)
+            transform.localScale = scaleLeft;
+
+        if (actualWantedVelocity.x > 0 && transform.localScale != scaleRight)
+            transform.localScale = scaleRight;
 
         // Move the player + add brownian movement
         if (!IsStuck)

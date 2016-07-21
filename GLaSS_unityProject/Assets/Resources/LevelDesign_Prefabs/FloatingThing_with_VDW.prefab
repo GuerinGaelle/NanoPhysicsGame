@@ -29,7 +29,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120826}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -43,7 +43,7 @@ Rigidbody2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120826}
   m_UseAutoMass: 0
-  m_Mass: 0.01
+  m_Mass: 0.1
   m_LinearDrag: 50
   m_AngularDrag: 5
   m_GravityScale: 0
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canFeelBrownian: 1
-  baseBrownianIntensity: 0.1
+  baseBrownianIntensity: 0.05
   currentBrownianIntensity: 0
 --- !u!212 &21249650
 SpriteRenderer:
