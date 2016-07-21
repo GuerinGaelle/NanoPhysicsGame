@@ -37,11 +37,7 @@ public class CharacterBehaviour : MonoBehaviour {
                 foreach (AreaEffector2D areaEffect2d in FindObjectsOfType<AreaEffector2D>())
                 {
                     areaEffect2d.useColliderMask = true;
-                    areaEffect2d.colliderMask -= 1 << LayerMask.NameToLayer("Player");
                 }
-
-                //rigid.mass = 3;
-                //IsStuck = false;
             }
             else
             {
@@ -49,8 +45,6 @@ public class CharacterBehaviour : MonoBehaviour {
                 {
                     areaEffect2d.useColliderMask = false;
                 }
-
-                //rigid.mass = 1;
             }    
         }
     }
@@ -202,7 +196,7 @@ public class CharacterBehaviour : MonoBehaviour {
         //rigid.constraints = RigidbodyConstraints2D.None;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         if (other.GetComponent<AreaEffector2D>() == true)
         {
