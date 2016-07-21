@@ -240,6 +240,7 @@ public class GameManager : MonoBehaviour {
         {
             nbDeathInLevel++;
             transform.localScale = new Vector3(1, 1, 1);
+            transform.rotation = Quaternion.identity;
             Player.IsStuck = true;
             Player.animator.SetBool("isAlive", false);
             Invoke("DestroyPlayer", 0.5f);
