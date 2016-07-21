@@ -9,7 +9,11 @@ public class PowerControl : MonoBehaviour {
 		inertia,
 		brownian,
 		VDW,
-		//manager
+		VDWScience,
+		gravityScience,
+		inertiaScience,
+		viscocityScience,
+		brownianScience
 	}
 
 	public powerIntro power;
@@ -37,7 +41,7 @@ public class PowerControl : MonoBehaviour {
 				Game.UnlockPower ("gravity");
 				UI.gravityTutGame.SetActive (true);
 				UI.gameTutActive = true;
-				UI.tutList.Add (UI.gravityTutGame);
+				UI.tutListGame.Add (UI.gravityTutGame);
 			}
 			break;
 		case powerIntro.brownian:
@@ -45,7 +49,7 @@ public class PowerControl : MonoBehaviour {
 				Game.UnlockPower ("brownian");
 				UI.brownianTutGame.SetActive (true);
 				UI.gameTutActive = true;
-				UI.tutList.Add (UI.brownianTutGame);
+				UI.tutListGame.Add (UI.brownianTutGame);
 			}
 			break;
 		case powerIntro.inertia:
@@ -53,7 +57,7 @@ public class PowerControl : MonoBehaviour {
 				Game.UnlockPower ("inertia");
 				UI.inertiaTutGame.SetActive (true);
 				UI.gameTutActive = true;
-				UI.tutList.Add (UI.inertiaTutGame);
+				UI.tutListGame.Add (UI.inertiaTutGame);
 			}
 			break;
 		case powerIntro.VDW:
@@ -61,7 +65,52 @@ public class PowerControl : MonoBehaviour {
 				Game.UnlockPower ("vdw");
 				UI.vdwTutGame.SetActive (true);
 				UI.gameTutActive = true;
-				UI.tutList.Add (UI.vdwTutGame);
+				UI.tutListGame.Add (UI.vdwTutGame);
+			}
+			break;
+
+			// SCIENTIFIC TUTORIALS:
+		case powerIntro.VDWScience:
+			if (!Game.visitedVDWSc) {
+				Game.visitedVDWSc = true;
+				UI.vdwTutScience.SetActive (true);
+				UI.tutListScience.Add (UI.vdwTutScience);
+				UI.scienceTutActive = true;
+			}
+			break;
+
+		case powerIntro.gravityScience:
+			if (!Game.visitedGravitySc) {
+				Game.visitedGravitySc = true;
+				UI.gravityTutScience.SetActive (true);
+				UI.tutListScience.Add (UI.gravityTutScience);
+				UI.scienceTutActive = true;
+			}
+			break;
+
+		case powerIntro.inertiaScience:
+			if (!Game.visitedInertiaSc) {
+				Game.visitedInertiaSc = true;
+				UI.inertiaTutScience.SetActive (true);
+				UI.tutListScience.Add (UI.inertiaTutScience);
+				UI.scienceTutActive = true;
+			}
+			break;
+
+		case powerIntro.viscocityScience:
+			if (!Game.visitedViscositySc) {
+				Game.visitedViscositySc = true;
+				UI.viscosityTutScience.SetActive (true);
+				UI.tutListScience.Add (UI.viscosityTutScience);
+				UI.scienceTutActive = true;
+			}
+			break;
+		case powerIntro.brownianScience:
+			if (!Game.visitedBrownianSc) {
+				Game.visitedBrownianSc = true;
+				UI.brownianTutScience.SetActive (true);
+				UI.tutListScience.Add (UI.brownianTutScience);
+				UI.scienceTutActive = true;
 			}
 			break;
 		default:

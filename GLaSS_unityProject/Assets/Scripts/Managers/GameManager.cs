@@ -20,17 +20,26 @@ public class GameManager : MonoBehaviour {
     [HideInInspector]
     public GameObject feedbackVDW;
 	public static Vector2 Checkpoint;
-	//public Slider saturationBar;
 
+	// powers booleans:
 	public bool isGravityUnlocked = false;
 	public bool isInertiaUnlocked = false;
 	public bool isVDWUnlocked = false;
 	public bool isBrownianUnlocked = false;
+
 	public bool lockedPowers;
 	public bool powersOverheat = false;
 	public bool alreadyDeactivated = false;
 	public bool keyDown = false;
 
+	// scientific tutorials booleans:
+	public bool visitedGravitySc = false;
+	public bool visitedInertiaSc = false;
+	public bool visitedBrownianSc = false;
+	public bool visitedVDWSc = false;
+	public bool visitedViscositySc = false;
+
+	// icons of powers
 	public Image gravityButtonImage;
 	public Image inertiaButtonImage;
 	public Image brownianButtonImage;
@@ -84,7 +93,7 @@ public class GameManager : MonoBehaviour {
 		// TODO : Delete it from here when we are dealing with normal level progression. 
 		if (SceneManager.GetActiveScene ().name == "Level 0 version Adrien") {
 			LockedAllPowers ();
-		} else if (SceneManager.GetActiveScene ().name == "LD_Test_Anne") {		// Level 1  has already gravity unlocked
+		} else if (SceneManager.GetActiveScene ().name == "Level 1") {		// Level 1  has already gravity unlocked
 			LockedAllPowers ();
 			UnlockPower ("gravity cheat");
 			UnlockPower ("saturation cheat");
@@ -105,7 +114,9 @@ public class GameManager : MonoBehaviour {
 
 		else {																 // default level: all powers are already unlocked
 			UnlockPower ("no tutorial");
-			UIManager.Instance.CloseAllPopups();
+			//UIManager.Instance.CloseAllPopups();
+			UIManager.Instance.CloseGameplayPopups();
+			UIManager.Instance.CloseScientificPopups ();
 		}
 	}
 
@@ -361,22 +372,22 @@ public class GameManager : MonoBehaviour {
 		else if (s == "gravity cheat") {
 				gravityButtonImage.color = new Color32 (128, 255, 128, 255);
 				isGravityUnlocked = true;
-				UIManager.Instance.tutList.Add (UIManager.Instance.gravityTutGame);
+				UIManager.Instance.tutListGame.Add (UIManager.Instance.gravityTutGame);
 			} else if (s == "saturation cheat") {
-				UIManager.Instance.tutList.Add (UIManager.Instance.saturationTutGame);
+				UIManager.Instance.tutListGame.Add (UIManager.Instance.saturationTutGame);
 			}
 			else if (s == "inertia cheat") {
 				inertiaButtonImage.color = new Color32 (255, 128, 128, 255);
 				isInertiaUnlocked = true;
-				UIManager.Instance.tutList.Add (UIManager.Instance.inertiaTutGame);
+				UIManager.Instance.tutListGame.Add (UIManager.Instance.inertiaTutGame);
 			} else if (s == "brownian cheat") {
 				brownianButtonImage.color = new Color32 (128, 128, 255, 255);
 				isBrownianUnlocked = true;
-				UIManager.Instance.tutList.Add (UIManager.Instance.brownianTutGame);
+				UIManager.Instance.tutListGame.Add (UIManager.Instance.brownianTutGame);
 			} else if (s == "vdw cheat") {
 				vdwButtonImage.color = new Color32 (255, 255, 128, 255);
 				isVDWUnlocked = true;
-				UIManager.Instance.tutList.Add (UIManager.Instance.vdwTutGame);	
+				UIManager.Instance.tutListGame.Add (UIManager.Instance.vdwTutGame);	
 		}
 
 		else if (s == "all") {				// after saturation bar is to 0%:
@@ -399,11 +410,11 @@ public class GameManager : MonoBehaviour {
 			brownianButtonImage.color = new Color32 (128, 128, 255, 255);
 			vdwButtonImage.color = new Color32 (255, 255, 128, 255);
 
-			UIManager.Instance.tutList.Add (UIManager.Instance.gravityTutGame);
-			UIManager.Instance.tutList.Add (UIManager.Instance.saturationTutGame);
-			UIManager.Instance.tutList.Add (UIManager.Instance.brownianTutGame);
-			UIManager.Instance.tutList.Add (UIManager.Instance.vdwTutGame);
-			UIManager.Instance.tutList.Add (UIManager.Instance.inertiaTutGame);
+			UIManager.Instance.tutListGame.Add (UIManager.Instance.gravityTutGame);
+			UIManager.Instance.tutListGame.Add (UIManager.Instance.saturationTutGame);
+			UIManager.Instance.tutListGame.Add (UIManager.Instance.brownianTutGame);
+			UIManager.Instance.tutListGame.Add (UIManager.Instance.vdwTutGame);
+			UIManager.Instance.tutListGame.Add (UIManager.Instance.inertiaTutGame);
 		}
 	}
 
