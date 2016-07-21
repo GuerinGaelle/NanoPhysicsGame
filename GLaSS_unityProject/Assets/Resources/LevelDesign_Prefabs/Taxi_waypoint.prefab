@@ -45,6 +45,7 @@ GameObject:
   - 232: {fileID: 23298046}
   - 114: {fileID: 11474854}
   - 114: {fileID: 11464252}
+  - 95: {fileID: 9539460}
   m_Layer: 0
   m_Name: WayPointWall_Taxi
   m_TagString: Untagged
@@ -197,6 +198,23 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 0.7, y: 0.7}
+--- !u!95 &9539460
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165078}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 73b74a9912fe38d408e451da83525473, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11422648
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -263,7 +281,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 92caa4de348759742ae2d5a4925ec685, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f426031a4b281bb438396e2da80b1d5f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
