@@ -239,6 +239,7 @@ public class GameManager : MonoBehaviour {
         if (Player.animator.GetBool("isAlive"))
         {
             nbDeathInLevel++;
+            transform.localScale = new Vector3(1, 1, 1);
             Player.IsStuck = true;
             Player.animator.SetBool("isAlive", false);
             Invoke("DestroyPlayer", 0.5f);
