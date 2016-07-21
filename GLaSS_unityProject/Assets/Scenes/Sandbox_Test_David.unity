@@ -1071,6 +1071,10 @@ Prefab:
       propertyPath: m_Navigation.m_Mode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 164970, guid: f31eda7c70271b944a88588e97fffb15, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f31eda7c70271b944a88588e97fffb15, type: 2}
   m_IsPrefabParent: 0
@@ -3714,11 +3718,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 440880, guid: 031e8d738aa6ff648b2e169eb9db4aee, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 440880, guid: 031e8d738aa6ff648b2e169eb9db4aee, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: 440880, guid: 031e8d738aa6ff648b2e169eb9db4aee, type: 2}
       propertyPath: m_LocalPosition.z
