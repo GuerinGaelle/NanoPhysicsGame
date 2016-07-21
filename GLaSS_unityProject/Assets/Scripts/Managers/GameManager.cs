@@ -412,15 +412,15 @@ public class GameManager : MonoBehaviour {
     public void LevelFinished()
     {
         Scene activeScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(activeScene.buildIndex + 1, LoadSceneMode.Single);
+
+
+        // Not necessary since we are not keeping any object between scenes. But if so, we should do this.
+        nbDeathInLevel = 0;
 
         CustomData customData = new CustomData();
         customData.Add("NUMBER_OF_DEATH", nbDeathInLevel.ToString());
         customData.Add("LEVEL_NAME", activeScene.name);
         RedMetricsManager.get().sendEvent(TrackingEvent.DEATH_AVERAGE, customData);
-
-        // Not necessary since we are not keeping any object between scenes. But if so, we should do this.
-        nbDeathInLevel = 0;
-
-        SceneManager.LoadScene(activeScene.buildIndex + 1, LoadSceneMode.Single);
     }
 }
