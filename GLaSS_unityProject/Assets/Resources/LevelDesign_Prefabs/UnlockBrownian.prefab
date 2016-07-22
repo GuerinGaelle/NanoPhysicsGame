@@ -57,11 +57,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 2
-  gravityButtonImage: {fileID: 0}
-  inertiaButtonImage: {fileID: 0}
-  brownianButtonImage: {fileID: 0}
-  vdwButtonImage: {fileID: 0}
-  Player: {fileID: 0}
 --- !u!212 &21205352
 SpriteRenderer:
   m_ObjectHideFlags: 1
