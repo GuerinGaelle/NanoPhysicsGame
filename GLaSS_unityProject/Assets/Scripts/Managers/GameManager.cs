@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour {
 	public float barDecreaseSpeed = 9f;
 
 	public Slider saturationBar;
+	public GameObject barObject;
+	public bool isBarDecreasing = false;
 
 	private float saturation = 0;
 	public float Saturation
@@ -66,7 +68,10 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-
+	public Image saturationColor;
+	public bool isRed = false;
+	public int count = 0;
+	public bool isBarVisible = true;
     private int nbDeathInLevel = 0;
     //-------------------------------------------------//
 
@@ -277,7 +282,7 @@ public class GameManager : MonoBehaviour {
         Player.gameObject.transform.position = Checkpoint;
 		Player.gameObject.transform.rotation = new Quaternion ();
 
-		Saturation = 0f;
+		Saturation = 0f;					
 		Player.animator.SetBool ("isAlive", true);
     }
 
@@ -287,11 +292,42 @@ public class GameManager : MonoBehaviour {
 		float maxSaturation = saturationBar.maxValue;
 		float minSaturation = saturationBar.minValue;
 
+		float saturPercentage;
+
+
+		saturPercentage = currSaturation / maxSaturation * 100;
+
 		if (powerActivated && currSaturation < maxSaturation) { 	// if any power is activated, increase the bar
-			Saturation += Time.fixedDeltaTime * barIncreaseSpeed; 	
+			Saturation += Time.fixedDeltaTime * barIncreaseSpeed; 
+			isBarDecreasing = false;
 		}
 		if (!powerActivated && currSaturation > minSaturation) { 	// if no power is activated, decrease the bar
 			Saturation -= Time.fixedDeltaTime * barDecreaseSpeed;
+			isBarDecreasing = true;
+			if (!barObject.activeSelf)
+				barObject.SetActive (true);
+		}
+
+		if (saturPercentage > 70 && !isRed) {
+			isRed = true;
+			saturationColor.color = Color.red;
+		}
+		if (saturPercentage <= 70 && isRed) {
+			isRed = false;
+			count = 0;
+
+			saturationColor.color = Color.yellow;
+		}
+
+		if (isRed && !isBarDecreasing) {					// flash the bar
+			count++;
+			if (count == 10) {
+				count = 0;
+				if (barObject.activeSelf)
+					barObject.SetActive (false);
+				else
+					barObject.SetActive (true);
+			}
 		}
 
 		if (currSaturation == maxSaturation) { 		// if the bar goes to 100% then lock all the powers
@@ -303,6 +339,7 @@ public class GameManager : MonoBehaviour {
 				powersOverheat = false;
 				alreadyDeactivated = false;
 				UnlockPower ("all");
+				isBarDecreasing = false;
 			}
 		}
 	}

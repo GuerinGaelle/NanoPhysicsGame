@@ -5,10 +5,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour {
 
 	public static UIManager Instance;
-	//public Canvas UI;
 	public GameManager Game;
-
-	public bool gameTutActive = false;
 
 	// Gameplay Tutorial popups UI
 	public GameObject gravityTutGame;
@@ -17,7 +14,7 @@ public class UIManager : MonoBehaviour {
 	public GameObject brownianTutGame;
 	public GameObject vdwTutGame;
 
-	// Scientific Tutorial popups UI: ++++ not done yet
+	// Scientific Tutorial popups UI:
 	public GameObject gravityTutScience;
 	public GameObject inertiaTutScience;
 	public GameObject brownianTutScience;
@@ -26,18 +23,18 @@ public class UIManager : MonoBehaviour {
 
 	public ArrayList tutListGame = new ArrayList();
 	public ArrayList tutListScience = new ArrayList();
-	public bool paused = false;
-	public bool revisit = false;
+	private bool paused = false;
+	private bool revisit = false;
+	private int i = 0;					// index of gameplay tutorials
+	private GameObject item;			// the current item that is active
+	private float h;				// value of the joystic horizontal axis
+	private string input;
+	private bool gotInput;
+	public bool gameTutActive = false;
 
-	public int i = 0;
-	public GameObject item;
-	public float h;
-	public string input;
-	public bool gotInput;
-
-	public bool scienceTutActive = false;
-	public bool revisitSc = false;
-	public int indexSc = 0;
+	public bool scienceTutActive = false;	
+	private bool revisitSc = false;
+	private int indexSc = 0;					// index for  for scientific tutorials
 
 
 	//public Animator animRight;
