@@ -66,11 +66,19 @@ public class CharacterBehaviour : MonoBehaviour {
             {
                 rigid.drag = 1;
                 rigid.angularDrag = 0;
+                foreach (BrownianArea broArea in FindObjectsOfType<BrownianArea>())
+                {
+                    broArea.brownianIntensity *= 3;
+                }
             }
             else
             {
                 rigid.drag = 50;
                 rigid.angularDrag = 10;
+                foreach (BrownianArea broArea in FindObjectsOfType<BrownianArea>())
+                {
+                    broArea.brownianIntensity /= 3;
+                }
             }
         }
     }
