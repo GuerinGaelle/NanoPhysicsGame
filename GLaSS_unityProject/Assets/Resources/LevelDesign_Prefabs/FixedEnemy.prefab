@@ -10,10 +10,10 @@ GameObject:
   - 4: {fileID: 495504}
   - 212: {fileID: 21224650}
   - 114: {fileID: 11453006}
-  - 61: {fileID: 6123558}
   - 50: {fileID: 5054134}
   - 114: {fileID: 11468796}
   - 95: {fileID: 9539548}
+  - 58: {fileID: 5830962}
   m_Layer: 0
   m_Name: FixedEnemy
   m_TagString: Untagged
@@ -51,8 +51,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &6123558
-BoxCollider2D:
+--- !u!58 &5830962
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -62,9 +62,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.04, y: -0.04}
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 0.7}
+  m_Radius: 0.28
 --- !u!95 &9539548
 Animator:
   serializedVersion: 3

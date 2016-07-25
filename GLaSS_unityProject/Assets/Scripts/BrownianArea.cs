@@ -3,20 +3,10 @@ using System.Collections;
 
 public class BrownianArea : MonoBehaviour {
 
-    [Range(0f, 10f)]
+    [Range(0f, 20f)]
     public float brownianIntensity;
 
-	void Start ()
-    {
-	    
-	}
-
-	void Update ()
-    {
-	    
-	}
-
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         if(other.GetComponent<BrownianBehaviour>())
         {

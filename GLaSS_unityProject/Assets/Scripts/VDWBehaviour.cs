@@ -79,5 +79,6 @@ public class VDWBehaviour : MonoBehaviour {
             joint.enabled = false;
 
         this.transform.gameObject.layer = LayerMask.NameToLayer("Default");
+
     }
 }
