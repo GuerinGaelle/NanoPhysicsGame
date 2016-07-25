@@ -288,6 +288,8 @@ MonoBehaviour:
   barIncreaseSpeed: 13
   barDecreaseSpeed: 9
   saturationBar: {fileID: 0}
+  saturationColor: {fileID: 955950483}
+  isRed: 0
 --- !u!4 &124165950
 Transform:
   m_ObjectHideFlags: 0
@@ -1568,6 +1570,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1399093550}
   m_RootOrder: 3
+--- !u!114 &955950483 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11494266, guid: f31eda7c70271b944a88588e97fffb15,
+    type: 2}
+  m_PrefabInternal: {fileID: 1435504726}
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1001 &970449254
 Prefab:
   m_ObjectHideFlags: 0

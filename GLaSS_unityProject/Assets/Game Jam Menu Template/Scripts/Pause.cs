@@ -21,13 +21,13 @@ public class Pause : MonoBehaviour {
 	void Update () {
 
 		//Check if the Cancel button in Input Manager is down this frame (default is Escape key) and that game is not paused, and that we're not in main menu
-		if (Input.GetKeyDown(KeyCode.Escape) && !isPaused && !startScript.inMainMenu) 
+		if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)) && !isPaused && !startScript.inMainMenu) 
 		{
 			//Call the DoPause function to pause the game
 			DoPause();
 		} 
 		//If the button is pressed and the game is paused and not in main menu
-		else if (Input.GetKeyDown(KeyCode.Escape) && isPaused && !startScript.inMainMenu) 
+		else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)) && isPaused && !startScript.inMainMenu) 
 		{
 			//Call the UnPause function to unpause the game
 			UnPause ();
@@ -44,6 +44,7 @@ public class Pause : MonoBehaviour {
 		Time.timeScale = 0;
 		//call the ShowPausePanel function of the ShowPanels script
 		showPanels.ShowPausePanel ();
+		//showPanels.optionsTint.SetActive (true);
 	}
 
 

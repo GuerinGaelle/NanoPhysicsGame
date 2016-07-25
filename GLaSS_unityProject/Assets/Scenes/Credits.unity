@@ -1135,7 +1135,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "David Birg\xE9-Cotte\nVicky Kapa"
+  m_Text: "David Birg\xE9-Cotte\nVasiliki Kirtsou"
 --- !u!222 &1725980432
 CanvasRenderer:
   m_ObjectHideFlags: 0
