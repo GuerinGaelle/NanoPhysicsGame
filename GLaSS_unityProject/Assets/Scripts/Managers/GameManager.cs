@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour
         feedbackVDW = Resources.Load<GameObject>("Prefabs/Signes_Feedbacks/VDWFeedback");
 		//saturationBar = Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
 		saturationBar = GameObject.Find("Canvas").transform.FindChild("EnergyBar").GetComponent<Slider>();
+		barObject = GameObject.Find ("EnergyBar");
 
         gravityButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Gravity_Button").GetComponent<Image> ();
 		inertiaButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Inertia_Button").GetComponent<Image> ();
@@ -97,14 +98,13 @@ public class GameManager : MonoBehaviour
 	
 	void Start() {
 		// TODO : Delete it from here when we are dealing with normal level progression. 
-		if (SceneManager.GetActiveScene ().name == "Level 0 version Adrien") {
+		if (SceneManager.GetActiveScene ().name == "Level 0 version Adrien" || SceneManager.GetActiveScene ().name == "Level 0") {
 			LockedAllPowers ();
 		} else if (SceneManager.GetActiveScene ().name == "Level 1") {		// Level 1  has already gravity unlocked
 			LockedAllPowers ();
 			UnlockPower ("gravity cheat");
 			UnlockPower ("saturation cheat");
 		} else if (SceneManager.GetActiveScene ().name == "Level 2") {			// Level 2 has already gravity unlocked
-			Debug.Log ("level 2");
 			LockedAllPowers ();
 			UnlockPower ("gravity cheat");
 			UnlockPower ("saturation cheat");
