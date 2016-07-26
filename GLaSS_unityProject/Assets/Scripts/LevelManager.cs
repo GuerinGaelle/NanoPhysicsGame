@@ -7,7 +7,7 @@ public static class LevelManager
 
     public static void LoadData()
     {
-        UnlockedLevels = PlayerPrefs.GetInt("UnlockedLevels");
+        UnlockedLevels = PlayerPrefs.GetInt("UnlockedLevels", 1);
     }
 
     public static void SaveData(int _levelUnlocked)
