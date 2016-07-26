@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     //-------------------------------------------------//
     //------------------- VARIABLES -------------------//
@@ -86,8 +87,9 @@ public class GameManager : MonoBehaviour {
         feedbackVDW = Resources.Load<GameObject>("Prefabs/Signes_Feedbacks/VDWFeedback");
 		//saturationBar = Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
 		saturationBar = GameObject.Find("Canvas").transform.FindChild("EnergyBar").GetComponent<Slider>();
+		barObject = GameObject.Find ("EnergyBar");
 
-		gravityButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Gravity_Button").GetComponent<Image> ();
+        gravityButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Gravity_Button").GetComponent<Image> ();
 		inertiaButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Inertia_Button").GetComponent<Image> ();
 		brownianButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Brownian_Button").GetComponent<Image> ();
 		vdwButtonImage = GameObject.Find ("Buttons").transform.FindChild ("VDW_Button").GetComponent<Image> ();
@@ -96,14 +98,13 @@ public class GameManager : MonoBehaviour {
 	
 	void Start() {
 		// TODO : Delete it from here when we are dealing with normal level progression. 
-		if (SceneManager.GetActiveScene ().name == "Level 0 version Adrien") {
+		if (SceneManager.GetActiveScene ().name == "Level 0 version Adrien" || SceneManager.GetActiveScene ().name == "Level 0") {
 			LockedAllPowers ();
 		} else if (SceneManager.GetActiveScene ().name == "Level 1") {		// Level 1  has already gravity unlocked
 			LockedAllPowers ();
 			UnlockPower ("gravity cheat");
 			UnlockPower ("saturation cheat");
 		} else if (SceneManager.GetActiveScene ().name == "Level 2") {			// Level 2 has already gravity unlocked
-			Debug.Log ("level 2");
 			LockedAllPowers ();
 			UnlockPower ("gravity cheat");
 			UnlockPower ("saturation cheat");
@@ -461,8 +462,15 @@ public class GameManager : MonoBehaviour {
     public void LevelFinished()
     {
         Scene activeScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(activeScene.buildIndex + 1, LoadSceneMode.Single);
+        int nbScene = activeScene.buildIndex - 2; // TODO watch if we modify the build order
 
+        if (LevelManager.UnlockedLevels == nbScene)
+        {
+            nbScene++;
+            LevelManager.SaveData(nbScene);
+        }
+
+        SceneManager.LoadScene(2, LoadSceneMode.Single); // Menu
 
         // Not necessary since we are not keeping any object between scenes. But if so, we should do this.
         nbDeathInLevel = 0;
