@@ -37,7 +37,7 @@ public class CharacterBehaviour : MonoBehaviour {
                 foreach (AreaEffector2D areaEffect2d in FindObjectsOfType<AreaEffector2D>())
                 {
                     areaEffect2d.useColliderMask = true;
-                    rigid.drag = 300;
+                    //rigid.drag = 300;
                 }
             }
             else
@@ -45,7 +45,7 @@ public class CharacterBehaviour : MonoBehaviour {
                 foreach (AreaEffector2D areaEffect2d in FindObjectsOfType<AreaEffector2D>())
                 {
                     areaEffect2d.useColliderMask = false;
-                    rigid.drag = 50;
+                    //rigid.drag = 50;
                 }
             }    
         }
@@ -113,6 +113,8 @@ public class CharacterBehaviour : MonoBehaviour {
     public Animator animator;
 
     private bool isInForceCurrent;
+    private AreaEffector2D forceCurrent;
+
     public Vector2 actualWantedVelocity;
 
     private Vector3 scaleRight = new Vector3(1, 1, 1);
@@ -162,6 +164,44 @@ public class CharacterBehaviour : MonoBehaviour {
     /// </summary>
     void Move(Vector2 inputDir)
     {
+        #region Scripting for direction forbiddeness
+        if (isInForceCurrent && forceCurrent.forceMagnitude != 0)
+        {
+            switch ((int)forceCurrent.forceAngle)
+            {
+                case 0:
+                    // Pas le droit d'aller vers le bas
+                    if (inputDir.y < 0)
+                        inputDir.y = 0;
+                    break;
+                case 90:
+                    // Pas le droit d'aller vers le droite
+                    if (inputDir.x > 0)
+                        inputDir.x = 0;
+                    break;
+                case 180:
+                    // Pas le droit d'aller vers le haut
+                    if (inputDir.y > 0)
+                        inputDir.y = 0;
+                    break;
+                case 270:
+                    // Pas le droit d'aller vers la gauche
+                    if (inputDir.x < 0)
+                        inputDir.x = 0;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (HasGravity)
+        {
+            // Pas le droit d'aller doublement vers le bas
+            if (inputDir.y < 0)
+                inputDir.y = 0;
+        }
+        #endregion
+
         rigid.AddForce((inputDir * Time.fixedDeltaTime * Speed * 400) * ((rigid.drag / 15) + 0.1f));
 
         // Not good since at each frame
@@ -211,6 +251,7 @@ public class CharacterBehaviour : MonoBehaviour {
         if (other.GetComponent<AreaEffector2D>() == true)
         {
             isInForceCurrent = true;
+            forceCurrent = other.GetComponent<AreaEffector2D>();
         }
 
     }
@@ -220,6 +261,8 @@ public class CharacterBehaviour : MonoBehaviour {
         if (other.GetComponent<AreaEffector2D>() == true)
         {
             isInForceCurrent = false;
+            forceCurrent = null;
+
             if (!HasInertia)
                 rigid.drag = 50;
             else
