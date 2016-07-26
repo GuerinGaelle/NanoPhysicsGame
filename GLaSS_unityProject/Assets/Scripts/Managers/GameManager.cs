@@ -313,7 +313,14 @@ public class GameManager : MonoBehaviour
 			isRed = true;
 			saturationColor.color = Color.red;
 		}
-		if (saturPercentage <= 70 && isRed) {
+		if (saturPercentage <= 1f && isRed && powersOverheat) {
+			isRed = false;
+			count = 0;
+
+			saturationColor.color = Color.yellow;
+		}
+
+		if (saturPercentage <= 70 && isRed && !powersOverheat) {
 			isRed = false;
 			count = 0;
 
