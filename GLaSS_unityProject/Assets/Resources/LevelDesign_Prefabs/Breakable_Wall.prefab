@@ -88,7 +88,7 @@ Animator:
   m_GameObject: {fileID: 179240}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0df74de7770a35042a324d20b8a2bfd6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minVelocityToBreak: 20
-  anim: {fileID: 9100000, guid: 0ea24aa0e5283a6479adb6c9215d3397, type: 2}
+  anim: {fileID: 9100000, guid: 0df74de7770a35042a324d20b8a2bfd6, type: 2}
 --- !u!212 &21291692
 SpriteRenderer:
   m_ObjectHideFlags: 1
