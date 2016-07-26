@@ -169,22 +169,22 @@ public class CharacterBehaviour : MonoBehaviour {
         {
             switch ((int)forceCurrent.forceAngle)
             {
-                case 0:
+                case 90:
                     // Pas le droit d'aller vers le bas
                     if (inputDir.y < 0)
                         inputDir.y = 0;
                     break;
-                case 90:
-                    // Pas le droit d'aller vers le droite
+                case 180:
+                    // Pas le droit d'aller vers la droite
                     if (inputDir.x > 0)
                         inputDir.x = 0;
                     break;
-                case 180:
+                case 270:
                     // Pas le droit d'aller vers le haut
                     if (inputDir.y > 0)
                         inputDir.y = 0;
                     break;
-                case 270:
+                case 0:
                     // Pas le droit d'aller vers la gauche
                     if (inputDir.x < 0)
                         inputDir.x = 0;

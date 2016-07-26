@@ -4,9 +4,18 @@ using System.Collections;
 public class BreakableWall : MonoBehaviour {
 
     public float minVelocityToBreak = 20;
+    public RuntimeAnimatorController anim;
+    private Animator animator;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     void BreakWall()
     {
+        GetComponent<Animator>().runtimeAnimatorController = anim;
+        GetComponent<Animator>().StartPlayback();
         Invoke("DestroyMe", 1);
         
     }
