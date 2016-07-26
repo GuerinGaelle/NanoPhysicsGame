@@ -10,14 +10,13 @@ public class BreakableWall : MonoBehaviour {
     void Start()
     {
         animator = GetComponent<Animator>();
+        animator.enabled = false;
     }
 
     void BreakWall()
     {
-        GetComponent<Animator>().runtimeAnimatorController = anim;
-        GetComponent<Animator>().StartPlayback();
-        Invoke("DestroyMe", 1);
-        
+        animator.enabled = true;
+        Invoke("DestroyMe", 0.6f);       
     }
 
     void DestroyMe()
