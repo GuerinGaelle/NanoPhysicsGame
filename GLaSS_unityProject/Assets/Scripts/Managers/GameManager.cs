@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     //-------------------------------------------------//
     //------------------- VARIABLES -------------------//
@@ -87,7 +88,7 @@ public class GameManager : MonoBehaviour {
 		//saturationBar = Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
 		saturationBar = GameObject.Find("Canvas").transform.FindChild("EnergyBar").GetComponent<Slider>();
 
-		gravityButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Gravity_Button").GetComponent<Image> ();
+        gravityButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Gravity_Button").GetComponent<Image> ();
 		inertiaButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Inertia_Button").GetComponent<Image> ();
 		brownianButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Brownian_Button").GetComponent<Image> ();
 		vdwButtonImage = GameObject.Find ("Buttons").transform.FindChild ("VDW_Button").GetComponent<Image> ();
@@ -461,8 +462,15 @@ public class GameManager : MonoBehaviour {
     public void LevelFinished()
     {
         Scene activeScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(activeScene.buildIndex + 1, LoadSceneMode.Single);
+        int nbScene = activeScene.buildIndex - 2; // TODO watch if we modify the build order
 
+        if (LevelManager.UnlockedLevels == nbScene)
+        {
+            nbScene++;
+            LevelManager.SaveData(nbScene);
+        }
+
+        SceneManager.LoadScene(2, LoadSceneMode.Single); // Menu
 
         // Not necessary since we are not keeping any object between scenes. But if so, we should do this.
         nbDeathInLevel = 0;
