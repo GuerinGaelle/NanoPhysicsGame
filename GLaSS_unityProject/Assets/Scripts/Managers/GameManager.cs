@@ -88,6 +88,7 @@ public class GameManager : MonoBehaviour
 		//saturationBar = Canvas.transform.FindChild("EnergyBar").GetComponent<Slider>();
 		saturationBar = GameObject.Find("Canvas").transform.FindChild("EnergyBar").GetComponent<Slider>();
 		barObject = GameObject.Find ("EnergyBar");
+        saturationColor = barObject.transform.FindChild("Fill Area").GetChild(0).GetComponent<Image>();
 
         gravityButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Gravity_Button").GetComponent<Image> ();
 		inertiaButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Inertia_Button").GetComponent<Image> ();
@@ -287,8 +288,9 @@ public class GameManager : MonoBehaviour
 		Player.animator.SetBool ("isAlive", true);
     }
 
-	public void HandleSaturationBar() {
-		bool powerActivated = Player.HasGravity || Player.HasInertia || !Player.CanFeelVDW || !Player.brownianBehaviour.canFeelBrownian;
+	public void HandleSaturationBar()
+    {
+        bool powerActivated = Player.HasGravity || Player.HasInertia || !Player.CanFeelVDW || !Player.brownianBehaviour.canFeelBrownian;
 		float currSaturation = saturationBar.value;
 		float maxSaturation = saturationBar.maxValue;
 		float minSaturation = saturationBar.minValue;
