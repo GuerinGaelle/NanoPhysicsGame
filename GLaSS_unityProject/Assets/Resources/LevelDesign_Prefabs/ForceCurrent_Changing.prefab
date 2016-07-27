@@ -119,6 +119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TimeStopped: 3
   TimeFlowing: 3
+  particle: {fileID: 19810664}
 --- !u!198 &19810664
 ParticleSystem:
   m_ObjectHideFlags: 1
