@@ -39,9 +39,7 @@ public class LevelChoosingScene : MonoBehaviour
     public void LoadScene(Button btn)
     {
         int nb = levelButtons.IndexOf(btn) + 1;
-        Debug.Log("Loading a scene !");
         int _realNb = nb + 2;
         SceneManager.LoadScene(_realNb);
-        Debug.Log("Supposed to have loaded a scene? " + _realNb + ", " + nb);
     }
 }

@@ -202,6 +202,7 @@ public class GameManager : MonoBehaviour
 		Player.HasGravity = bActivate;
 		ColoriseButton(Player.HasGravity, "Gravity_Button");
     }
+
     public void ToggleInertia(bool bActivate)
     {
         if (bActivate == true)
@@ -475,11 +476,17 @@ public class GameManager : MonoBehaviour
 
         if (LevelManager.UnlockedLevels == nbScene)
         {
-            nbScene++;
-            LevelManager.SaveData(nbScene);
+            int nbScene1 = nbScene++;
+            LevelManager.SaveData(nbScene1);
         }
 
-        SceneManager.LoadScene(2, LoadSceneMode.Single); // Menu
+        MovieTexture _movTexture = Resources.Load<MovieTexture>("Movies/Carte_" + nbScene);
+        GameObject.Find("MoviePlayer").GetComponent<MeshRenderer>().enabled = true;
+        GameObject.Find("MoviePlayer").GetComponent<Renderer>().material.mainTexture = _movTexture;
+
+        ((MovieTexture)GameObject.Find("MoviePlayer").GetComponent<Renderer>().material.mainTexture).Play();
+
+        Invoke("ReturnToMenu", 2);
 
         // Not necessary since we are not keeping any object between scenes. But if so, we should do this.
         nbDeathInLevel = 0;
@@ -488,5 +495,10 @@ public class GameManager : MonoBehaviour
         customData.Add("NUMBER_OF_DEATH", nbDeathInLevel.ToString());
         customData.Add("LEVEL_NAME", activeScene.name);
         RedMetricsManager.get().sendEvent(TrackingEvent.DEATH_AVERAGE, customData);
+    }
+
+    void ReturnToMenu()
+    {
+        SceneManager.LoadScene(2, LoadSceneMode.Single); // Menu
     }
 }
