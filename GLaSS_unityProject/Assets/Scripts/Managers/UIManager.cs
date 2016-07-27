@@ -88,17 +88,11 @@ public class UIManager : MonoBehaviour {
 				PauseGame ();
 			// TODO later: disable "pressing" powers while paused!
 			if (Input.GetKeyDown (KeyCode.JoystickButton4) || Input.GetKeyDown (KeyCode.O)) { 			// TO CLOSE SCIENCE with LB	
-				//CloseAllPopups ();
 				CloseScientificPopups ();
 				ResumeGame ();
 			} else if ((Input.GetKeyDown (KeyCode.JoystickButton5) || Input.GetKeyDown (KeyCode.P)) && tutListGame.Count > 1) {		// TO OPEN GAMEPLAY
-				//CloseAllPopups ();
-				Debug.Log ("3");
 				CloseScientificPopups ();					// close scientific tutorials
-				Debug.Log ("4");
 				ShowGameplayTutorials ();
-				//gameTutActive = true;
-				//scienceTutActive = false;
 			}
 		} else if (Input.GetKeyDown (KeyCode.JoystickButton4) || Input.GetKeyDown (KeyCode.O)) { 				// TO OPEN SCIENCE with LB
 			ShowScientificTutorials ();
@@ -152,12 +146,9 @@ public class UIManager : MonoBehaviour {
 	}
 
 	void ShowGameplayTutorials() {
-		Debug.Log ("1");
 		if (!gameTutActive) {
 			if (tutListGame.Count > 0) {
 				item = tutListGame [i] as GameObject;
-				//animRight.
-				Debug.Log ("2");
 				item.SetActive (true);
 				revisit = true;
 				gameTutActive = true;		// TEST?
@@ -185,7 +176,6 @@ public class UIManager : MonoBehaviour {
 		// power progression: gravity, antibrownian, antiVDW, inertia
 
 	void AddSaturation() {	
-		Debug.Log("saturation");
 		saturationTutGame.SetActive (true);
 		gameTutActive = true;
 		tutListGame.Add (saturationTutGame);
