@@ -12,17 +12,24 @@ public class ChangingCurrent : MonoBehaviour {
     private float Power;
 
     private List<SpriteRenderer> ObjectsToFade;
-    public ParticleSystem particle;
+    private List<ParticleSystem> ParticleSystems;
 
     private Color transparent = new Color(1, 1, 1, 0);
 
 	void Start ()
     {
         ObjectsToFade = new List<SpriteRenderer>();
+        ParticleSystems = new List<ParticleSystem>();
+
         foreach (SpriteRenderer spr in transform.parent.GetComponentsInChildren<SpriteRenderer>())
         {
             if (spr.transform != transform)
                 ObjectsToFade.Add(spr);
+        }
+
+        foreach (ParticleSystem ps in transform.parent.GetComponentsInChildren<ParticleSystem>())
+        {
+                ParticleSystems.Add(ps);
         }
 
         ae2d = GetComponent<AreaEffector2D>();
@@ -56,17 +63,23 @@ public class ChangingCurrent : MonoBehaviour {
         foreach (SpriteRenderer spr in ObjectsToFade)
         {
             spr.DOColor(color, 0.25f);
-            particle.startColor = color;
         }
-       
+
         if(color == Color.white)
         {
-            particle.Play();
-
+            foreach (ParticleSystem ps in ParticleSystems)
+            {
+                ps.Stop();
+                ps.transform.gameObject.SetActive(false);
+            }
         }
         else
         {
-            particle.Stop();
-        }       
+            foreach (ParticleSystem ps in ParticleSystems)
+            {
+                ps.Play();
+                ps.transform.gameObject.SetActive(true);
+            }
+        }     
     }
 }
