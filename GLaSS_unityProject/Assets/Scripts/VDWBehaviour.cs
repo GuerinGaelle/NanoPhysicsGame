@@ -42,7 +42,7 @@ public class VDWBehaviour : MonoBehaviour {
     void MoveToSurface(GameObject obj)
     {
         Vector2 dir = transform.position - obj.transform.position;
-        obj.GetComponent<Rigidbody2D>().AddForce(dir * 5000 * Time.fixedDeltaTime);
+        obj.GetComponent<Rigidbody2D>().AddForce(dir * 10000 * Time.fixedDeltaTime);
     }
 
     void Stuck(GameObject obj)
