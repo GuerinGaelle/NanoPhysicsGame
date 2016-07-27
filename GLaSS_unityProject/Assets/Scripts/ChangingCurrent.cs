@@ -65,7 +65,7 @@ public class ChangingCurrent : MonoBehaviour {
             spr.DOColor(color, 0.25f);
         }
 
-        if(color == Color.white)
+        if(color != Color.white)
         {
             foreach (ParticleSystem ps in ParticleSystems)
             {
