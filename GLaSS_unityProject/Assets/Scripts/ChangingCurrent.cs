@@ -12,6 +12,7 @@ public class ChangingCurrent : MonoBehaviour {
     private float Power;
 
     private List<SpriteRenderer> ObjectsToFade;
+    public ParticleSystem particle;
 
     private Color transparent = new Color(1, 1, 1, 0);
 
@@ -55,6 +56,17 @@ public class ChangingCurrent : MonoBehaviour {
         foreach (SpriteRenderer spr in ObjectsToFade)
         {
             spr.DOColor(color, 0.25f);
+            particle.startColor = color;
         }
+       
+        if(color == Color.white)
+        {
+            particle.Play();
+
+        }
+        else
+        {
+            particle.Stop();
+        }       
     }
 }
