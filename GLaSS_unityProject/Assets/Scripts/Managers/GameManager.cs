@@ -471,20 +471,26 @@ public class GameManager : MonoBehaviour
 
     public void LevelFinished()
     {
+        Player.IsStuck = true;
+
         Scene activeScene = SceneManager.GetActiveScene();
         int nbScene = activeScene.buildIndex - 2; // TODO watch if we modify the build order
 
         if (LevelManager.UnlockedLevels == nbScene)
         {
-            int nbScene1 = nbScene++;
+            Debug.Log("CurrentScene:" + nbScene);
+
+            int nbScene1 = nbScene + 1;
             LevelManager.SaveData(nbScene1);
         }
 
-        MovieTexture _movTexture = Resources.Load<MovieTexture>("Movies/Carte_" + nbScene);
+        MovieTexture _movTexture = Resources.Load<MovieTexture>("Movies/Carte_" + nbScene) as MovieTexture;
         GameObject.Find("MoviePlayer").GetComponent<MeshRenderer>().enabled = true;
         GameObject.Find("MoviePlayer").GetComponent<Renderer>().material.mainTexture = _movTexture;
 
         ((MovieTexture)GameObject.Find("MoviePlayer").GetComponent<Renderer>().material.mainTexture).Play();
+        _movTexture.Play();
+
 
         Invoke("ReturnToMenu", 2);
 
