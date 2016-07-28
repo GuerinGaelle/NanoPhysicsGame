@@ -8,7 +8,6 @@ public class EndLevelArea : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            Debug.Log("trigg");
             GameManager.Instance.LevelFinished();
         }
     }

@@ -18,7 +18,7 @@ public class BrownianArea : MonoBehaviour {
         {
             other.GetComponent<BrownianBehaviour>().currentBrownianIntensity = brownianIntensity;
 
-            if (!source.isPlaying)
+            if (other.tag == "Player" && !source.isPlaying)
                 source.Play();
         }
     }
@@ -28,7 +28,9 @@ public class BrownianArea : MonoBehaviour {
         if (other.GetComponent<BrownianBehaviour>())
         {
             other.GetComponent<BrownianBehaviour>().currentBrownianIntensity = other.GetComponent<BrownianBehaviour>().baseBrownianIntensity;
-            source.Stop();
+
+            if (other.tag == "Player")
+                source.Stop();
         }
     }
 }
