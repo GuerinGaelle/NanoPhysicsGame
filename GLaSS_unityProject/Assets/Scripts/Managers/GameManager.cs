@@ -478,7 +478,9 @@ public class GameManager : MonoBehaviour
 
         if (LevelManager.UnlockedLevels == nbScene)
         {
-            int nbScene1 = nbScene++;
+            Debug.Log("CurrentScene:" + nbScene);
+
+            int nbScene1 = nbScene + 1;
             LevelManager.SaveData(nbScene1);
         }
 

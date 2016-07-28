@@ -12,6 +12,8 @@ public static class LevelManager
 
     public static void SaveData(int _levelUnlocked)
     {
+        Debug.Log("unlocked : " + _levelUnlocked);
+
         UnlockedLevels = _levelUnlocked;
         PlayerPrefs.SetInt("UnlockedLevels", _levelUnlocked);
         PlayerPrefs.Save();
