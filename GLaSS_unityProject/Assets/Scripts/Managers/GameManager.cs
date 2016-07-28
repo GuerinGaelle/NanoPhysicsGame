@@ -117,14 +117,32 @@ public class GameManager : MonoBehaviour
 			UnlockPower ("saturation cheat");
 			UnlockPower ("brownian cheat");
 			UnlockPower ("vdw cheat");
-		}
+		} else if (SceneManager.GetActiveScene().name == "Level 4")
+        {
+            LockedAllPowers();
+            UnlockPower("gravity cheat");
+            UnlockPower("saturation cheat");
+            UnlockPower("brownian cheat");
+            UnlockPower("vdw cheat");
+            UnlockPower("inertia cheat");
+        }
+        else if (SceneManager.GetActiveScene().name == "Level 5")
+        {
+            LockedAllPowers();
+            UnlockPower("gravity cheat");
+            UnlockPower("saturation cheat");
+            UnlockPower("brownian cheat");
+            UnlockPower("vdw cheat");
+            UnlockPower("inertia cheat");
+        }
 
-		else {																 // default level: all powers are already unlocked
+        else {																 // default level: all powers are already unlocked
 			UnlockPower ("no tutorial");
 			//UIManager.Instance.CloseAllPopups();
 			UIManager.Instance.CloseGameplayPopups();
 			UIManager.Instance.CloseScientificPopups ();
 		}
+
 	}
 
 	void Update ()
