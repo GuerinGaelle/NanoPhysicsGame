@@ -59,6 +59,7 @@ public class VDWBehaviour : MonoBehaviour {
                 break;
             case VDW_Type.StuckToObject_moving:
                 obj.GetComponent<CharacterBehaviour>().IsStuck = true;
+                obj.GetComponent<Rigidbody2D>().freezeRotation = true;
                 joint.enabled = true;
                 joint.connectedBody = obj.gameObject.GetComponent<Rigidbody2D>();
                 break;
@@ -78,6 +79,7 @@ public class VDWBehaviour : MonoBehaviour {
         if(joint != null)
             joint.enabled = false;
 
+        GameManager.Instance.Player.GetComponent<Rigidbody2D>().freezeRotation = false;
         this.transform.gameObject.layer = LayerMask.NameToLayer("Default");
 
     }
