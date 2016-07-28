@@ -40,6 +40,24 @@ public class LevelChoosingScene : MonoBehaviour
     {
         int nb = levelButtons.IndexOf(btn) + 1;
         int _realNb = nb + 2;
-        SceneManager.LoadScene(_realNb);
+
+        canvas.gameObject.SetActive(false); // we hide the menu
+
+        MovieTexture _movTexture = Resources.Load<MovieTexture>("Movies/LEVEL" + nb) as MovieTexture;
+        GameObject.Find("MoviePlayer").GetComponent<MeshRenderer>().enabled = true;
+        GameObject.Find("MoviePlayer").GetComponent<Renderer>().material.mainTexture = _movTexture;
+
+        ((MovieTexture)GameObject.Find("MoviePlayer").GetComponent<Renderer>().material.mainTexture).Play();
+        _movTexture.Play();
+
+        StartCoroutine(LoadScene(_realNb));
+    }
+
+    IEnumerator LoadScene(int nb)
+    {
+        Debug.Log("Coroutine mon gars");
+        yield return new WaitForSeconds(4);
+        SceneManager.LoadScene(nb);
+        yield return null;
     }
 }
