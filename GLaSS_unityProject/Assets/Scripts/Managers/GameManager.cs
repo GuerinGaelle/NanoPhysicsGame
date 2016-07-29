@@ -170,36 +170,36 @@ public class GameManager : MonoBehaviour
 		}
 		else 
 		{
-			if ((Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.G)) && isGravityUnlocked) 
+			if ((Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.G) || Input.GetKeyDown(KeyCode.JoystickButton2)) && isGravityUnlocked) 
 			{
 				ToggleGravity(true);
 			}
-			else if((Input.GetKeyDown(KeyCode.Joystick1Button1) || Input.GetKeyDown(KeyCode.H)) && isInertiaUnlocked)
+			else if((Input.GetKeyDown(KeyCode.Joystick1Button1) || Input.GetKeyDown(KeyCode.H) || Input.GetKeyDown(KeyCode.JoystickButton1)) && isInertiaUnlocked)
 			{
 				ToggleInertia(true);
 			}
-			else if ((Input.GetKeyDown(KeyCode.Joystick1Button2) || Input.GetKeyDown(KeyCode.F)) && isBrownianUnlocked)
+			else if ((Input.GetKeyDown(KeyCode.Joystick1Button2) || Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.JoystickButton3)) && isBrownianUnlocked)
 			{
 				ToggleBrownianMovement(false);
 			}
-			else if ((Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.T)) && isVDWUnlocked)
+			else if ((Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.T) || Input.GetKeyDown(KeyCode.JoystickButton0)) && isVDWUnlocked)
 			{
 				ToggleVanDerWaals(false);
 			}
 
-            if ((Input.GetKeyUp(KeyCode.Joystick1Button0) || Input.GetKeyUp(KeyCode.G)) && isGravityUnlocked)
+			if ((Input.GetKeyUp(KeyCode.Joystick1Button0) || Input.GetKeyUp(KeyCode.G) || Input.GetKeyUp(KeyCode.JoystickButton2)) && isGravityUnlocked)
             {
                 ToggleGravity(false);
             }
-            else if ((Input.GetKeyUp(KeyCode.Joystick1Button1) || Input.GetKeyUp(KeyCode.H)) && isInertiaUnlocked)
+			else if ((Input.GetKeyUp(KeyCode.Joystick1Button1) || Input.GetKeyUp(KeyCode.H) || Input.GetKeyUp(KeyCode.JoystickButton1)) && isInertiaUnlocked)
             {
                 ToggleInertia(false);
             }
-            else if ((Input.GetKeyUp(KeyCode.Joystick1Button2) || Input.GetKeyUp(KeyCode.F)) && isBrownianUnlocked)
+			else if ((Input.GetKeyUp(KeyCode.Joystick1Button2) || Input.GetKeyUp(KeyCode.F) || Input.GetKeyUp(KeyCode.JoystickButton3)) && isBrownianUnlocked)
             {
                 ToggleBrownianMovement(true);
             }
-            else if ((Input.GetKeyUp(KeyCode.Joystick1Button3) || Input.GetKeyUp(KeyCode.T)) && isVDWUnlocked)
+			else if ((Input.GetKeyUp(KeyCode.Joystick1Button3) || Input.GetKeyUp(KeyCode.T) || Input.GetKeyUp(KeyCode.JoystickButton0)) && isVDWUnlocked)
             {
                 ToggleVanDerWaals(true);
             }
@@ -338,6 +338,8 @@ public class GameManager : MonoBehaviour
 				barObject.SetActive (true);
 		}
 
+
+		// ----- MAKING THE BAR RED & FLASHING WHEN OVERLOADING -----
 		if (saturPercentage > 70 && !isRed) {
 			isRed = true;
 			saturationColor.color = Color.red;
@@ -366,6 +368,8 @@ public class GameManager : MonoBehaviour
 					barObject.SetActive (true);
 			}
 		}
+		// ----------------------------------------------------------
+
 
 		if (currSaturation == maxSaturation) { 		// if the bar goes to 100% then lock all the powers
 			lockedPowers = true;

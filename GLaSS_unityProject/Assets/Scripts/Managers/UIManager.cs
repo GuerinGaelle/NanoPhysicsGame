@@ -189,10 +189,12 @@ public class UIManager : MonoBehaviour {
 				indexSc = tutListScience.Count - 1;
 				item = tutListScience [indexSc] as GameObject;
 				ShowMoreScience ();
+				firstVisitSc = false;
 			} else if (input == "up" && gotInput && v == 0 && showingMoreScience) {
 				indexSc = tutListScience.Count - 1;
 				item = tutListScienceExtra [indexSc] as GameObject;
-				HideMoreScience ();		
+				HideMoreScience ();	
+				firstVisitSc = false;
 			}
 		}
 	}
