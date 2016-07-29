@@ -40,6 +40,10 @@ public class GameManager : MonoBehaviour
 	public bool visitedVDWSc = false;
 	public bool visitedViscositySc = false;
 
+	public bool visitedRotiferaPop = false;
+	public bool visitedCheckpointPop = false;
+	public bool visitedParticlesPop = false;
+
 	// icons of powers
 	public Image gravityButtonImage;
 	public Image inertiaButtonImage;

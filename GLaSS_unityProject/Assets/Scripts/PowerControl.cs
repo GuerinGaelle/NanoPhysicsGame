@@ -13,7 +13,10 @@ public class PowerControl : MonoBehaviour {
 		gravityScience,
 		inertiaScience,
 		viscocityScience,
-		brownianScience
+		brownianScience,
+		checkpoint,
+		rotifera,
+		particles
 	}
 
 	public powerIntro power;
@@ -125,6 +128,30 @@ public class PowerControl : MonoBehaviour {
 				UI.tutListScienceExtra.Add (UI.extraBrownian);
 				UI.scienceTutActive = true;
 				UI.firstVisitSc = true;
+			}
+			break;
+		case powerIntro.checkpoint: 
+			if (!Game.visitedCheckpointPop) {
+				Game.visitedCheckpointPop = true;
+				UI.item = UI.checkpoint;
+				UI.item.SetActive (true);
+				UI.oneTimePopupActive = true;
+			}
+			break;
+		case powerIntro.rotifera:
+			if (!Game.visitedRotiferaPop) {
+				Game.visitedRotiferaPop = true;
+				UI.item = UI.rotifera;
+				UI.item.SetActive (true);
+				UI.oneTimePopupActive = true;
+			}
+			break;
+		case powerIntro.particles:
+			if (!Game.visitedParticlesPop) {
+				Game.visitedParticlesPop = true;
+				UI.item = UI.particles;
+				UI.item.SetActive (true);
+				UI.oneTimePopupActive = true;
 			}
 			break;
 		default:
