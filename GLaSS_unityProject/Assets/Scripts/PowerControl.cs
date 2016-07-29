@@ -31,6 +31,10 @@ public class PowerControl : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col) {
 		if (col.CompareTag ("Player")) {
 			PowerCheckpoints ();
+
+            AudioClip sound = Resources.Load<AudioClip>("Music/son/Power finding");
+            GameManager.Instance.GetComponent<AudioSource>().PlayOneShot(sound);
+            Destroy(this.gameObject);
 		}
 	}
 

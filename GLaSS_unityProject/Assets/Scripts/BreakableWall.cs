@@ -7,8 +7,11 @@ public class BreakableWall : MonoBehaviour {
     public RuntimeAnimatorController anim;
     private Animator animator;
 
+    private AudioClip BarrerExplosion;
+
     void Start()
     {
+        BarrerExplosion = Resources.Load<AudioClip>("Music/son/Barrer explosion");
         animator = GetComponent<Animator>();
         animator.enabled = false;
     }
@@ -16,6 +19,7 @@ public class BreakableWall : MonoBehaviour {
     void BreakWall()
     {
         animator.enabled = true;
+        GameManager.Instance.GetComponent<AudioSource>().PlayOneShot(BarrerExplosion);
         Invoke("DestroyMe", 0.6f);       
     }
 

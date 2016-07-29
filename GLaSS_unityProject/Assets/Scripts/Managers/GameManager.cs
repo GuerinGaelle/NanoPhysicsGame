@@ -97,7 +97,12 @@ public class GameManager : MonoBehaviour
 
     }
 	
-	void Start() {
+	void Start()
+    {
+        // We set the checkpoint to the spawning point
+        if (Checkpoint == null || Checkpoint == Vector2.zero)
+            Checkpoint = Player.transform.position;
+
 		// TODO : Delete it from here when we are dealing with normal level progression. 
 		if (SceneManager.GetActiveScene ().name == "Level 0 version Adrien" || SceneManager.GetActiveScene ().name == "Level 0") {
 			LockedAllPowers ();
@@ -275,6 +280,9 @@ public class GameManager : MonoBehaviour
     {
         if (Player.animator.GetBool("isAlive"))
         {
+            AudioClip deathClip = Resources.Load<AudioClip>("Music/son/Death");
+            GetComponentInChildren<AudioSource>().PlayOneShot(deathClip);
+
             nbDeathInLevel++;
             transform.localScale = new Vector3(1, 1, 1);
             transform.rotation = Quaternion.identity;
@@ -362,7 +370,11 @@ public class GameManager : MonoBehaviour
 		if (currSaturation == maxSaturation) { 		// if the bar goes to 100% then lock all the powers
 			lockedPowers = true;
 			powersOverheat = true;
-		}
+
+            AudioClip FullCharge = Resources.Load<AudioClip>("Music/son/Full charge");
+            GetComponent<AudioSource>().PlayOneShot(FullCharge);
+
+        }
 		if (lockedPowers && powersOverheat) {
 			if (currSaturation == minSaturation) { // when the bar reaches 0% unlock the powers
 				powersOverheat = false;
@@ -510,7 +522,7 @@ public class GameManager : MonoBehaviour
         _movTexture.Play();
 
 
-        Invoke("ReturnToMenu", 2);
+        Invoke("ReturnToMenu", 4);
 
         // Not necessary since we are not keeping any object between scenes. But if so, we should do this.
         nbDeathInLevel = 0;

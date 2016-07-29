@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class CreditSceneScript : MonoBehaviour
 {
-
 	void Start ()
     {
 	
@@ -12,7 +11,10 @@ public class CreditSceneScript : MonoBehaviour
 	
 	void Update ()
     {
-	
+        if (SceneManager.GetActiveScene().buildIndex == 1 && Input.GetKeyDown(KeyCode.Joystick1Button1))
+        {
+            ReturnToMain();
+        }
 	}
 
     public void ReturnToMain()
