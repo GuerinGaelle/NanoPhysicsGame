@@ -9,7 +9,6 @@ public class BrownianBehaviour : MonoBehaviour{
 
     public bool canFeelBrownian = true;
     public float baseBrownianIntensity = 0.1f; // Intensity of the random movement 
-    [HideInInspector]
     public float currentBrownianIntensity;
 
     void Start ()
