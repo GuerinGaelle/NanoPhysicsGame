@@ -50,7 +50,7 @@ public class UIManager : MonoBehaviour {
 	private bool revisitSc = false;
 	private int indexSc = 0;					// index for  for scientific tutorials
 	public bool firstVisitSc = false;
-	private bool showingMoreScience = false;
+	public bool showingMoreScience = false;
 
 	public bool oneTimePopupActive = false;
 
@@ -118,12 +118,9 @@ public class UIManager : MonoBehaviour {
 		else if (oneTimePopupActive) {
 			if (!paused) {
 				PauseGame ();
-				Debug.Log ("pause");
 			}
 			if (Input.GetKeyDown (KeyCode.JoystickButton5) || Input.GetKeyDown (KeyCode.P)) {				// TO CLOSE POPUPS WITH RB
-				Debug.Log("moo");
 				item.SetActive (false);
-				//Destroy(item);
 				ResumeGame ();
 			}
 		}
@@ -177,6 +174,7 @@ public class UIManager : MonoBehaviour {
 				gotInput = true;
 				StartCoroutine ("WaitForQuietV");
 			} else if ((v >= 0.7f && v <= 1f) || Input.GetKeyDown(KeyCode.UpArrow)) {
+				Debug.Log ("up2");
 				input = "up";
 				gotInput = true;
 				StartCoroutine ("WaitForQuietV");
@@ -213,7 +211,7 @@ public class UIManager : MonoBehaviour {
 				ShowMoreScience ();
 		
 			} else if (input == "up" && gotInput && v == 0 && showingMoreScience) {
-				indexSc = tutListScience.Count - 1;
+				indexSc = tutListScienceExtra.Count - 1;
 				item = tutListScienceExtra [indexSc] as GameObject;
 				HideMoreScience ();	
 
@@ -227,7 +225,7 @@ public class UIManager : MonoBehaviour {
 		item.SetActive (true);
 		showingMoreScience = true;
 		gotInput = false;
-		firstVisitSc = false;
+
 	}
 
 	void HideMoreScience() {
@@ -236,7 +234,7 @@ public class UIManager : MonoBehaviour {
 		item.SetActive (true);
 		showingMoreScience = false;
 		gotInput = false;
-		firstVisitSc = false;
+
 	}
 
 	void ShowGameplayTutorials() {
@@ -367,6 +365,7 @@ public class UIManager : MonoBehaviour {
 		gameTutActive = false;
 		scienceTutActive = false;
 		oneTimePopupActive = false;
+		firstVisitSc = false;
 		paused = false;
 	}
 
