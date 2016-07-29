@@ -171,6 +171,30 @@ public class UIManager : MonoBehaviour {
 				HideMoreScience ();		
 			}
 		}
+
+		if (firstVisitSc) {
+			v = Input.GetAxis ("Vertical");
+			if ((v <= -0.7f && v >= -1) || Input.GetKeyDown (KeyCode.DownArrow)) {
+				input = "down";
+				gotInput = true;
+				StartCoroutine ("WaitForQuietV");
+			} else if ((v >= 0.7f && v <= 1f) || Input.GetKeyDown(KeyCode.UpArrow)) {
+				input = "up";
+				gotInput = true;
+				StartCoroutine ("WaitForQuietV");
+			}
+
+
+			if (input == "down" && gotInput && v == 0) {
+				indexSc = tutListScience.Count - 1;
+				item = tutListScience [indexSc] as GameObject;
+				ShowMoreScience ();
+			} else if (input == "up" && gotInput && v == 0 && showingMoreScience) {
+				indexSc = tutListScience.Count - 1;
+				item = tutListScienceExtra [indexSc] as GameObject;
+				HideMoreScience ();		
+			}
+		}
 	}
 
 	void ShowMoreScience() {
