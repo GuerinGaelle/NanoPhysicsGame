@@ -11,7 +11,7 @@ public class CreditSceneScript : MonoBehaviour
 	
 	void Update ()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 1 && Input.GetKeyDown(KeyCode.Joystick1Button1))
+        if ((SceneManager.GetActiveScene().buildIndex == 1 || SceneManager.GetActiveScene().buildIndex == 2) && Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             ReturnToMain();
         }
