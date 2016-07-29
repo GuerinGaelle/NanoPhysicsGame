@@ -21,21 +21,32 @@ public class UIManager : MonoBehaviour {
 	public GameObject vdwTutScience;
 	public GameObject viscosityTutScience;
 
+	// Extra Science popups UI: 
+	public GameObject extraGravity;
+	public GameObject extraInertia;
+	public GameObject extraBrownian;
+	public GameObject extraVDW;
+	public GameObject extraViscosity;
+
 	public ArrayList tutListGame = new ArrayList();
 	public ArrayList tutListScience = new ArrayList();
+	public ArrayList tutListScienceExtra = new ArrayList ();
+
 	private bool paused = false;
 	private bool revisit = false;
 	private int i = 0;					// index of gameplay tutorials
-	private GameObject item;			// the current item that is active
+	public GameObject item;			// the current item that is active
 	private float h;				// value of the joystic horizontal axis
-	private string input;
-	private bool gotInput;
+	public float v; 				// value of the joystic vertical axis
+	public string input;
+	public bool gotInput;
 	public bool gameTutActive = false;
 
 	public bool scienceTutActive = false;	
-	private bool revisitSc = false;
+	public bool revisitSc = false;
 	private int indexSc = 0;					// index for  for scientific tutorials
-
+	public bool firstVisitSc = false;
+	public bool showingMoreScience = false;
 
 	//public Animator animRight;
 
@@ -89,14 +100,18 @@ public class UIManager : MonoBehaviour {
 			// TODO later: disable "pressing" powers while paused!
 			if (Input.GetKeyDown (KeyCode.JoystickButton4) || Input.GetKeyDown (KeyCode.O)) { 			// TO CLOSE SCIENCE with LB	
 				CloseScientificPopups ();
+				CloseExtraSciencePopups ();
 				ResumeGame ();
-			} else if ((Input.GetKeyDown (KeyCode.JoystickButton5) || Input.GetKeyDown (KeyCode.P)) && tutListGame.Count > 1) {		// TO OPEN GAMEPLAY
+			} else if ((Input.GetKeyDown (KeyCode.JoystickButton5) || Input.GetKeyDown (KeyCode.P)) && tutListGame.Count > 1) {		// TO OPEN GAMEPLAY WHILE SCIENCE IS OPEN
 				CloseScientificPopups ();					// close scientific tutorials
+				CloseExtraSciencePopups();
 				ShowGameplayTutorials ();
 			}
-		} else if (Input.GetKeyDown (KeyCode.JoystickButton4) || Input.GetKeyDown (KeyCode.O)) { 				// TO OPEN SCIENCE with LB
+
+		// ------- OPENING TUTORIALS DURING GAMEPLAY -------
+		} else if (Input.GetKeyDown (KeyCode.JoystickButton4) || Input.GetKeyDown (KeyCode.O)) { 				// DURING GAMEPLAY: TO OPEN SCIENCE with LB
 			ShowScientificTutorials ();
-		} else if (Input.GetKeyDown (KeyCode.JoystickButton5) || Input.GetKeyDown (KeyCode.P)) {
+		} else if (Input.GetKeyDown (KeyCode.JoystickButton5) || Input.GetKeyDown (KeyCode.P)) {				// DURING GAMEPLAY: TO OPEN Game Tutorials with RB
 			ShowGameplayTutorials ();
 		}
 
@@ -126,23 +141,52 @@ public class UIManager : MonoBehaviour {
 		if (revisitSc) {
 			scienceTutActive = true;
 			h = Input.GetAxis ("Horizontal");
-			if ((h >= 0.7f && h <= 1f) || Input.GetKeyDown(KeyCode.RightArrow)) {
+			v = Input.GetAxis ("Vertical");
+			if ((h >= 0.7f && h <= 1f) || Input.GetKeyDown (KeyCode.RightArrow)) {
 				input = "right";
 				gotInput = true;
 				StartCoroutine ("WaitForQuiet");
 
-			} else if ((h <= -0.7f && h >= -1) || Input.GetKeyDown(KeyCode.LeftArrow)) {
+			} else if ((h <= -0.7f && h >= -1) || Input.GetKeyDown (KeyCode.LeftArrow)) {
 				input = "left";
 				gotInput = true;
 				StartCoroutine ("WaitForQuiet");
+			} else if ((v <= -0.7f && v >= -1) || Input.GetKeyDown (KeyCode.DownArrow)) {
+				input = "down";
+				gotInput = true;
+				StartCoroutine ("WaitForQuietV");
+			} else if ((v >= 0.7f && v <= 1f) || Input.GetKeyDown(KeyCode.UpArrow)) {
+				input = "up";
+				gotInput = true;
+				StartCoroutine ("WaitForQuietV");
 			}
+
 			if (input == "right" && gotInput && h == 0) {
 				ShowNextSc ();
-			}
-			else if (input == "left" && gotInput && h == 0) {
+			} else if (input == "left" && gotInput && h == 0) {
 				ShowPreviousSc ();	
+			} else if (input == "down" && gotInput && v == 0) {
+				ShowMoreScience ();
+			} else if (input == "up" && gotInput && v == 0 && showingMoreScience) {
+				HideMoreScience ();		
 			}
 		}
+	}
+
+	void ShowMoreScience() {
+		item.SetActive (false);
+		item = tutListScienceExtra [indexSc] as GameObject;
+		item.SetActive (true);
+		showingMoreScience = true;
+		gotInput = false;
+	}
+
+	void HideMoreScience() {
+		item.SetActive (false);
+		item = tutListScience [indexSc] as GameObject;
+		item.SetActive (true);
+		showingMoreScience = false;
+		gotInput = false;
 	}
 
 	void ShowGameplayTutorials() {
@@ -182,6 +226,10 @@ public class UIManager : MonoBehaviour {
 	}
 	IEnumerator WaitForQuiet() {
 		yield return new WaitUntil (() => (h == 0));
+	}
+
+	IEnumerator WaitForQuietV() {
+		yield return new WaitUntil (() => (v == 0));
 	}
 
 	public void ShowNext() {
@@ -228,6 +276,8 @@ public class UIManager : MonoBehaviour {
 		gotInput = false;
 	}
 
+
+
 	public void CloseGameplayPopups() {
 		// Gameplay tutorial popups
 		foreach (GameObject tut in tutListGame) { 
@@ -247,6 +297,14 @@ public class UIManager : MonoBehaviour {
 		}
 	}
 
+	public void CloseExtraSciencePopups() {
+		foreach (GameObject extraSc in tutListScienceExtra) {
+			extraSc.SetActive (false);
+			revisitSc = false;
+			indexSc = 0;
+			scienceTutActive = false;
+		}
+	}
 	void PauseGame() {
 		Time.timeScale = 0f;
 		paused = true;

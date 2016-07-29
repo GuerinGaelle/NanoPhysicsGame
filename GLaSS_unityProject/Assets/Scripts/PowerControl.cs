@@ -79,7 +79,9 @@ public class PowerControl : MonoBehaviour {
 				Game.visitedVDWSc = true;
 				UI.vdwTutScience.SetActive (true);
 				UI.tutListScience.Add (UI.vdwTutScience);
+				UI.tutListScienceExtra.Add (UI.extraVDW);
 				UI.scienceTutActive = true;
+				UI.firstVisitSc = true;
 			}
 			break;
 
@@ -88,7 +90,9 @@ public class PowerControl : MonoBehaviour {
 				Game.visitedGravitySc = true;
 				UI.gravityTutScience.SetActive (true);
 				UI.tutListScience.Add (UI.gravityTutScience);
+				UI.tutListScienceExtra.Add (UI.extraGravity);
 				UI.scienceTutActive = true;
+				UI.firstVisitSc = true;
 			}
 			break;
 
@@ -97,7 +101,9 @@ public class PowerControl : MonoBehaviour {
 				Game.visitedInertiaSc = true;
 				UI.inertiaTutScience.SetActive (true);
 				UI.tutListScience.Add (UI.inertiaTutScience);
+				UI.tutListScienceExtra.Add (UI.extraInertia);
 				UI.scienceTutActive = true;
+				UI.firstVisitSc = true;
 			}
 			break;
 
@@ -106,7 +112,9 @@ public class PowerControl : MonoBehaviour {
 				Game.visitedViscositySc = true;
 				UI.viscosityTutScience.SetActive (true);
 				UI.tutListScience.Add (UI.viscosityTutScience);
+				UI.tutListScienceExtra.Add (UI.extraViscosity);
 				UI.scienceTutActive = true;
+				UI.firstVisitSc = true;
 			}
 			break;
 		case powerIntro.brownianScience:
@@ -114,7 +122,9 @@ public class PowerControl : MonoBehaviour {
 				Game.visitedBrownianSc = true;
 				UI.brownianTutScience.SetActive (true);
 				UI.tutListScience.Add (UI.brownianTutScience);
+				UI.tutListScienceExtra.Add (UI.extraBrownian);
 				UI.scienceTutActive = true;
+				UI.firstVisitSc = true;
 			}
 			break;
 		default:
