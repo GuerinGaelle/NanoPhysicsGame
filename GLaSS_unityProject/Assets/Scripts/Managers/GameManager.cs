@@ -174,36 +174,36 @@ public class GameManager : MonoBehaviour
 		}
 		else 
 		{
-			if ((Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.G) || Input.GetKeyDown(KeyCode.JoystickButton2)) && isGravityUnlocked) 
+			if ((Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.G)) && isGravityUnlocked) 
 			{
 				ToggleGravity(true);
 			}
-			else if((Input.GetKeyDown(KeyCode.Joystick1Button1) || Input.GetKeyDown(KeyCode.H) || Input.GetKeyDown(KeyCode.JoystickButton1)) && isInertiaUnlocked)
+			else if((Input.GetKeyDown(KeyCode.Joystick1Button1) || Input.GetKeyDown(KeyCode.H)) && isInertiaUnlocked)
 			{
 				ToggleInertia(true);
 			}
-			else if ((Input.GetKeyDown(KeyCode.Joystick1Button2) || Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.JoystickButton3)) && isBrownianUnlocked)
+			else if ((Input.GetKeyDown(KeyCode.Joystick1Button2) || Input.GetKeyDown(KeyCode.F)) && isBrownianUnlocked)
 			{
 				ToggleBrownianMovement(false);
 			}
-			else if ((Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.T) || Input.GetKeyDown(KeyCode.JoystickButton0)) && isVDWUnlocked)
+			else if ((Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.T)) && isVDWUnlocked)
 			{
 				ToggleVanDerWaals(false);
 			}
 
-			if ((Input.GetKeyUp(KeyCode.Joystick1Button0) || Input.GetKeyUp(KeyCode.G) || Input.GetKeyUp(KeyCode.JoystickButton2)) && isGravityUnlocked)
+			if ((Input.GetKeyUp(KeyCode.Joystick1Button0) || Input.GetKeyUp(KeyCode.G)) && isGravityUnlocked)
             {
                 ToggleGravity(false);
             }
-			else if ((Input.GetKeyUp(KeyCode.Joystick1Button1) || Input.GetKeyUp(KeyCode.H) || Input.GetKeyUp(KeyCode.JoystickButton1)) && isInertiaUnlocked)
+			else if ((Input.GetKeyUp(KeyCode.Joystick1Button1) || Input.GetKeyUp(KeyCode.H)) && isInertiaUnlocked)
             {
                 ToggleInertia(false);
             }
-			else if ((Input.GetKeyUp(KeyCode.Joystick1Button2) || Input.GetKeyUp(KeyCode.F) || Input.GetKeyUp(KeyCode.JoystickButton3)) && isBrownianUnlocked)
+			else if ((Input.GetKeyUp(KeyCode.Joystick1Button2) || Input.GetKeyUp(KeyCode.F)) && isBrownianUnlocked)
             {
                 ToggleBrownianMovement(true);
             }
-			else if ((Input.GetKeyUp(KeyCode.Joystick1Button3) || Input.GetKeyUp(KeyCode.T) || Input.GetKeyUp(KeyCode.JoystickButton0)) && isVDWUnlocked)
+			else if ((Input.GetKeyUp(KeyCode.Joystick1Button3) || Input.GetKeyUp(KeyCode.T)) && isVDWUnlocked)
             {
                 ToggleVanDerWaals(true);
             }
