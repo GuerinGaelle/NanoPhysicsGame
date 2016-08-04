@@ -522,7 +522,16 @@ public class GameManager : MonoBehaviour
             LevelManager.SaveData(nbScene1);
         }
 
-        MovieTexture _movTexture = Resources.Load<MovieTexture>("Movies/Carte_" + nbScene) as MovieTexture;
+        // Invoke to return to main menu
+        if (SceneManager.GetActiveScene().buildIndex == 8)
+            Invoke("ReturnToMenu", 12);
+        else
+            Invoke("ReturnToMenu", 6);
+
+
+        // Handles the movie playing
+        int nbMovie = nbScene++;
+        MovieTexture _movTexture = Resources.Load<MovieTexture>("Movies/Carte_" + nbMovie) as MovieTexture;
 
         if (SceneManager.GetActiveScene().buildIndex == 8) // END LEVEL
             _movTexture = Resources.Load<MovieTexture>("Movies/ANIMATION FIN") as MovieTexture;
@@ -533,10 +542,7 @@ public class GameManager : MonoBehaviour
         ((MovieTexture)GameObject.Find("MoviePlayer").GetComponent<Renderer>().material.mainTexture).Play();
         _movTexture.Play();
 
-        if(SceneManager.GetActiveScene().buildIndex == 8)
-            Invoke("ReturnToMenu", 12);
-        else
-            Invoke("ReturnToMenu", 6);
+
 
         // Not necessary since we are not keeping any object between scenes. But if so, we should do this.
         nbDeathInLevel = 0;
