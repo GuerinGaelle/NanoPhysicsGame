@@ -26,5 +26,10 @@ public class DontDestroy : MonoBehaviour {
         {
             transform.GetChild(0).gameObject.SetActive(true);
         }
+		else 		//	added in order to hide UI of menu buttons when loading scene of credits
+			if (SceneManager.GetActiveScene().buildIndex == 1 && transform.GetChild(0).gameObject.activeSelf)
+			{
+				transform.GetChild(0).gameObject.SetActive(false);
+			}
     }
 }
