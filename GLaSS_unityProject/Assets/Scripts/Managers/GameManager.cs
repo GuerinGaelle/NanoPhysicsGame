@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public GameObject feedbackVDW;
 	public static Vector2 Checkpoint;
+	public static bool inLevelSelectMenu = false;
 
 	// powers booleans:
 	public bool isGravityUnlocked = false;
@@ -98,7 +99,7 @@ public class GameManager : MonoBehaviour
 		inertiaButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Inertia_Button").GetComponent<Image> ();
 		brownianButtonImage = GameObject.Find ("Buttons").transform.FindChild ("Brownian_Button").GetComponent<Image> ();
 		vdwButtonImage = GameObject.Find ("Buttons").transform.FindChild ("VDW_Button").GetComponent<Image> ();
-
+		inLevelSelectMenu = false;
     }
 	
 	void Start()

@@ -7,6 +7,7 @@ public class CreditSceneScript : MonoBehaviour
 	private StartOptions options;
 	private static GameObject UIMenu;
 
+
 	void Start ()
     {
 		options = FindObjectOfType<StartOptions> ();
@@ -26,12 +27,15 @@ public class CreditSceneScript : MonoBehaviour
     {
         SceneManager.LoadScene(0);
 		options.sceneToStart = 2;
+		options.inCreditsMenu = false;
+		options.inMainMenu = true;
     }
 
     public void GoToCredits()
     {
         options.sceneToStart = 1;
         options.StartButtonClicked();
+		options.inCreditsMenu = true;
     }
 		
 }

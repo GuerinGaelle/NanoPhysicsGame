@@ -14,6 +14,7 @@ public class StartOptions : MonoBehaviour {
 
 
 	[HideInInspector] public bool inMainMenu = true;					//If true, pause button disabled in main menu (Cancel in input manager, default escape key)
+	[HideInInspector] public bool inCreditsMenu = false;
 	[HideInInspector] public Animator animColorFade; 					//Reference to animator which will fade to and from black when starting game.
 	[HideInInspector] public Animator animMenuAlpha;					//Reference to animator that will fade out alpha of MenuPanel canvas group
 	 public AnimationClip fadeColorAnimationClip;		//Animation clip fading to color (black default) when changing scenes

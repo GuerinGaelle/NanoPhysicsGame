@@ -60,6 +60,8 @@ public class LevelChoosingScene : MonoBehaviour
         // Select a button
         EventSystem.current.SetSelectedGameObject(levelButtons[0].gameObject);
         InvokeRepeating("FadeOutIn", 1, 1);
+		GameManager.inLevelSelectMenu = true;
+
     }
 
     void Update()
@@ -121,6 +123,7 @@ public class LevelChoosingScene : MonoBehaviour
     IEnumerator LoadSceneCoroutine(int nb)
     {
         yield return new WaitForSeconds(4);
+		//GameManager.Instance.inLevelSelectMenu = false;
         SceneManager.LoadScene(nb);
         yield return null;
     }
