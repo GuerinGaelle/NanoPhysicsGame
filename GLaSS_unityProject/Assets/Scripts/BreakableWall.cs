@@ -19,8 +19,11 @@ public class BreakableWall : MonoBehaviour {
     void BreakWall()
     {
         animator.enabled = true;
-        GameManager.Instance.GetComponent<AudioSource>().PlayOneShot(BarrerExplosion);
-        Invoke("DestroyMe", 0.6f);       
+        Invoke("DestroyMe", 0.6f);
+
+        if (GameManager.Instance.GetComponent<AudioSource>())
+            GameManager.Instance.GetComponent<AudioSource>().PlayOneShot(BarrerExplosion);
+             
     }
 
     void DestroyMe()
